@@ -406,7 +406,8 @@ video {
   height: 0.25rem}.h-1\/3{
   height: 33.333333%}.h-10{
   height: 2.5rem}.h-12{
-  height: 3rem}.h-2{
+  height: 3rem}.h-16{
+  height: 4rem}.h-2{
   height: 0.5rem}.h-2\.5{
   height: 0.625rem}.h-4{
   height: 1rem}.h-5{
@@ -417,8 +418,7 @@ video {
   height: auto}.h-fit{
   height: -moz-fit-content;
   height: fit-content}.h-full{
-  height: 100%}.h-16{
-  height: 4rem}.min-h-screen{
+  height: 100%}.min-h-screen{
   min-height: 100vh}.w-1\/3{
   width: 33.333333%}.w-10{
   width: 2.5rem}.w-12{
@@ -435,7 +435,8 @@ video {
   width: 2rem}.w-fit{
   width: -moz-fit-content;
   width: fit-content}.w-full{
-  width: 100%}.max-w-\[20ch\]{
+  width: 100%}.max-w-\[1440px\]{
+  max-width: 1440px}.max-w-\[20ch\]{
   max-width: 20ch}.max-w-\[8ch\]{
   max-width: 8ch}.max-w-full{
   max-width: 100%}.max-w-md{
@@ -579,7 +580,9 @@ video {
   padding-top: 1.5rem;
   padding-bottom: 1.5rem}.py-8{
   padding-top: 2rem;
-  padding-bottom: 2rem}.pb-16{
+  padding-bottom: 2rem}.py-16{
+  padding-top: 4rem;
+  padding-bottom: 4rem}.pb-16{
   padding-bottom: 4rem}.pb-2{
   padding-bottom: 0.5rem}.pb-48{
   padding-bottom: 12rem}.pl-3{
@@ -845,7 +848,7 @@ http://nicolasgallagher.com/micro-clearfix-hack/
 .entry-content > *{
   margin-left: auto;
   margin-right: auto;
-  max-width: 960px}.entry-content h1, .block-editor-block-list__layout h1{
+  max-width: 1440px}.entry-content h1, .block-editor-block-list__layout h1{
   font-size: 1.5rem;
   line-height: 2rem}.entry-content h2, .block-editor-block-list__layout h2{
   font-size: 1.25rem;
@@ -899,7 +902,7 @@ http://nicolasgallagher.com/micro-clearfix-hack/
 }.pika-row .is-selected .pika-button {
   background-color: #000!important;
   color: #fff!important;
-}* {
+}/* Main column width */.wp-block { max-width: 100%; }/* Width of "wide" blocks */.wp-block[data-align="wide"] { max-width: 100%; }/* Width of "full-width" blocks */.wp-block[data-align="full"] { max-width: none; }* {
   font-family: 'Krona One', sans-serif;
   letter-spacing: -0.075em;
 }.has-cross {
@@ -968,7 +971,9 @@ http://nicolasgallagher.com/micro-clearfix-hack/
   --tw-content: '';
   content: var(--tw-content)}.group:hover .group-hover\:block{
   display: block}@media (min-width: 600px){.sm\:grid-cols-4{
-    grid-template-columns: repeat(4, minmax(0, 1fr))}.sm\:text-3xl{
+    grid-template-columns: repeat(4, minmax(0, 1fr))}.sm\:grid-cols-3{
+    grid-template-columns: repeat(3, minmax(0, 1fr))}.sm\:grid-cols-2{
+    grid-template-columns: repeat(2, minmax(0, 1fr))}.sm\:text-3xl{
     font-size: 1.875rem;
     line-height: 2.25rem}}@media (min-width: 782px){.md\:col-span-1{
     grid-column: span 1 / span 1}.md\:col-span-5{
@@ -986,7 +991,8 @@ http://nicolasgallagher.com/micro-clearfix-hack/
     width: 8rem}.md\:grow-0{
     flex-grow: 0}.md\:grid-cols-2{
     grid-template-columns: repeat(2, minmax(0, 1fr))}.md\:grid-cols-3{
-    grid-template-columns: repeat(3, minmax(0, 1fr))}.md\:flex-row{
+    grid-template-columns: repeat(3, minmax(0, 1fr))}.md\:grid-cols-4{
+    grid-template-columns: repeat(4, minmax(0, 1fr))}.md\:flex-row{
     flex-direction: row}.md\:flex-nowrap{
     flex-wrap: nowrap}.md\:gap-x-8{
     -moz-column-gap: 2rem;
@@ -1017,7 +1023,9 @@ http://nicolasgallagher.com/micro-clearfix-hack/
     display: none}.lg\:w-60{
     width: 15rem}.lg\:max-w-prose{
     max-width: 65ch}.lg\:grid-cols-2{
-    grid-template-columns: repeat(2, minmax(0, 1fr))}.lg\:items-center{
+    grid-template-columns: repeat(2, minmax(0, 1fr))}.lg\:grid-cols-4{
+    grid-template-columns: repeat(4, minmax(0, 1fr))}.lg\:grid-cols-3{
+    grid-template-columns: repeat(3, minmax(0, 1fr))}.lg\:items-center{
     align-items: center}.lg\:justify-between{
     justify-content: space-between}.lg\:bg-transparent{
     background-color: transparent}.lg\:p-0{
@@ -1028,11 +1036,13 @@ http://nicolasgallagher.com/micro-clearfix-hack/
     line-height: 1rem}}@media (min-width: 1280px){.xl\:mr-24{
     margin-right: 6rem}.xl\:grid-cols-3{
     grid-template-columns: repeat(3, minmax(0, 1fr))}.xl\:grid-cols-5{
-    grid-template-columns: repeat(5, minmax(0, 1fr))}.xl\:gap-6{
+    grid-template-columns: repeat(5, minmax(0, 1fr))}.xl\:grid-cols-4{
+    grid-template-columns: repeat(4, minmax(0, 1fr))}.xl\:gap-6{
     gap: 1.5rem}.xl\:text-sm{
     font-size: 0.875rem;
     line-height: 1.25rem}}@media (min-width: 1440px){.\32xl\:grid-cols-4{
-    grid-template-columns: repeat(4, minmax(0, 1fr))}.\32xl\:gap-8{
+    grid-template-columns: repeat(4, minmax(0, 1fr))}.\32xl\:grid-cols-5{
+    grid-template-columns: repeat(5, minmax(0, 1fr))}.\32xl\:gap-8{
     gap: 2rem}}.\[\&\.is-active\]\:bg-turquoise.is-active{
   --tw-bg-opacity: 1;
   background-color: rgb(102 199 154 / var(--tw-bg-opacity))}.\[\&\>a\]\:whitespace-nowrap>a{

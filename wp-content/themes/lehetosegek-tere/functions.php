@@ -270,7 +270,7 @@ add_action('acf/init', 'my_acf_init');
 function my_disable_gutenberg( $current_status, $post_type ) {
 
 	// Disabled post types
-	$disabled_post_types = array( 'staff', 'gallery' );
+	$disabled_post_types = array( 'staff', 'gallery', 'publication' );
 
 	// Change $can_edit to false for any post types in the disabled post types array
 	if ( in_array( $post_type, $disabled_post_types, true ) ) {
@@ -286,7 +286,9 @@ add_filter( 'use_block_editor_for_post_type', 'my_disable_gutenberg', 10, 2 );
 if(function_exists('pll_register_string')) {
 	pll_register_string( 'cpttitles', 'Stáb' );
 	pll_register_string( 'cpttitles', 'Galéria' );
+	pll_register_string( 'cpttitles', 'Kiadványaink' );
 	pll_register_string( 'sectiontitles', 'Iratkozz fel a
 	programajánlónk' );
 	pll_register_string( 'sectiontitles', 'Rólunk mondták' );
+	pll_register_string( 'random', 'elérhető' );
 }

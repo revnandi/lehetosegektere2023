@@ -203,6 +203,9 @@
 .h-12 {
     height: 3rem
 }
+.h-16 {
+    height: 4rem
+}
 .h-2 {
     height: 0.5rem
 }
@@ -233,9 +236,6 @@
 }
 .h-full {
     height: 100%
-}
-.h-16 {
-    height: 4rem
 }
 .min-h-screen {
     min-height: 100vh
@@ -300,6 +300,9 @@
 }
 .max-w-sm {
     max-width: 24rem
+}
+.max-w-\[1440px\] {
+    max-width: 1440px
 }
 .flex-grow {
     flex-grow: 1
@@ -616,6 +619,10 @@
     padding-top: 2rem;
     padding-bottom: 2rem
 }
+.py-16 {
+    padding-top: 4rem;
+    padding-bottom: 4rem
+}
 .pb-16 {
     padding-bottom: 4rem
 }
@@ -928,6 +935,12 @@ body {
     .sm\:grid-cols-4 {
         grid-template-columns: repeat(4, minmax(0, 1fr))
     }
+    .sm\:grid-cols-3 {
+        grid-template-columns: repeat(3, minmax(0, 1fr))
+    }
+    .sm\:grid-cols-2 {
+        grid-template-columns: repeat(2, minmax(0, 1fr))
+    }
     .sm\:text-3xl {
         font-size: 1.875rem;
         line-height: 2.25rem
@@ -979,6 +992,9 @@ body {
     }
     .md\:grid-cols-3 {
         grid-template-columns: repeat(3, minmax(0, 1fr))
+    }
+    .md\:grid-cols-4 {
+        grid-template-columns: repeat(4, minmax(0, 1fr))
     }
     .md\:flex-row {
         flex-direction: row
@@ -1053,6 +1069,12 @@ body {
     .lg\:grid-cols-2 {
         grid-template-columns: repeat(2, minmax(0, 1fr))
     }
+    .lg\:grid-cols-4 {
+        grid-template-columns: repeat(4, minmax(0, 1fr))
+    }
+    .lg\:grid-cols-3 {
+        grid-template-columns: repeat(3, minmax(0, 1fr))
+    }
     .lg\:items-center {
         align-items: center
     }
@@ -1084,6 +1106,9 @@ body {
     .xl\:grid-cols-5 {
         grid-template-columns: repeat(5, minmax(0, 1fr))
     }
+    .xl\:grid-cols-4 {
+        grid-template-columns: repeat(4, minmax(0, 1fr))
+    }
     .xl\:gap-6 {
         gap: 1.5rem
     }
@@ -1095,6 +1120,9 @@ body {
 @media (min-width: 1440px) {
     .\32xl\:grid-cols-4 {
         grid-template-columns: repeat(4, minmax(0, 1fr))
+    }
+    .\32xl\:grid-cols-5 {
+        grid-template-columns: repeat(5, minmax(0, 1fr))
     }
     .\32xl\:gap-8 {
         gap: 2rem

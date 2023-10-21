@@ -1,6 +1,6 @@
 article > *:not(.entry-content),
 .entry-content > * {
-  @apply mx-auto max-w-content;
+  @apply mx-auto max-w-[1440px];
 }
 
 .entry-content,
@@ -99,3 +99,10 @@ article > *:not(.entry-content),
   background-color: #000!important;
   color: #fff!important;
 }
+
+/* Main column width */
+.wp-block { max-width: 100%; }
+/* Width of "wide" blocks */
+.wp-block[data-align="wide"] { max-width: 100%; }
+/* Width of "full-width" blocks */
+.wp-block[data-align="full"] { max-width: none; }
