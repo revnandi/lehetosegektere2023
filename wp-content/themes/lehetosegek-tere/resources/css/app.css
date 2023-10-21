@@ -1,0 +1,49 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+@import "glider-js/glider.min.css";
+@import "pikaday/css/pikaday.css";
+
+@import "custom.css";
+
+* {
+  font-family: 'Krona One', sans-serif;
+  letter-spacing: -0.075em;
+}
+
+.has-cross {
+  position: relative;
+}
+
+.has-cross::before, .has-cross::after {
+  content: '';
+  position: absolute;
+  background-color: #fff;
+}
+
+.has-cross::before {
+  width: 35%;
+  height: 1px;
+  top: 50%;
+  left: 50%;
+  transform: translateY(-50%) translateX(-50%);
+}
+
+.has-cross::after {
+  width: 1px;
+  height: 35%;
+  top: 50%;
+  left: 50%;
+  transform: translateY(-50%);
+}
+
+.absolute-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateY(-50%) translateX(-50%);
+}
+
+.-translate-x-50 {
+  transform: translateX(-50%);
+}

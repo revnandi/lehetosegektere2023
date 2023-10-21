@@ -1,0 +1,101 @@
+article > *:not(.entry-content),
+.entry-content > * {
+  @apply mx-auto max-w-content;
+}
+
+.entry-content,
+.block-editor-block-list__layout {
+  h1 {
+    @apply text-2xl;
+  }
+
+  h2 {
+    @apply text-xl;
+  }
+
+  h3 {
+    @apply text-lg;
+  }
+
+  p,
+  ul,
+  ol {
+    a {
+      @apply text-blue-500 underline;
+
+      &:hover {
+        @apply no-underline;
+      }
+    }
+
+    @apply mb-8;
+  }
+
+  ul:not(.block-editor-block-variation-picker__variations) {
+    li {
+      @apply list-disc list-inside;
+    }
+  }
+
+  ol {
+    li {
+      @apply list-decimal list-inside;
+    }
+  }
+}
+
+#lt_big_carousel .glider-track, #lt_small_carousel .glider-track {
+  height: 100%;
+}
+
+#lt_big_carousel_dots {
+  bottom: 2rem;
+  left: 4rem;
+}
+
+#lt_big_carousel_dots .glider-dot {
+  width: 1.15rem;
+  height: 1.15rem;
+  margin: 0;
+  background-color: #000;
+}
+
+#lt_small_carousel_dots .glider-dot {
+  width: 0.625rem;
+  height: 0.625rem;
+  margin: 0;
+  background-color: #000;
+}
+
+#lt_big_carousel_dots .glider-dot + * {
+  margin-left: .45rem;
+}
+
+#lt_small_carousel_dots .glider-dot + * {
+  margin-left: .125rem;
+}
+
+#lt_big_carousel_dots .glider-dot.active {
+  background-color: #fff;
+}
+
+#lt_small_carousel_dots .glider-dot.active {
+  background-color: #66c79a;
+}
+
+.pika-button.pika-day {
+  background-color: #fff!important;
+  color: #000!important;
+}
+
+.pika-row.pick-whole-week.is-selected .pika-button.pika-day {
+  box-shadow: none!important;
+  background: #000!important;
+  border-radius: 0!important;
+  color: #fff!important;
+}
+
+.pika-row .is-selected .pika-button {
+  background-color: #000!important;
+  color: #fff!important;
+}

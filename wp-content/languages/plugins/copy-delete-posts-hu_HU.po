@@ -1,0 +1,1371 @@
+# Translation of Plugins - Duplicate Post - Stable (latest release) in Hungarian
+# This file is distributed under the same license as the Plugins - Duplicate Post - Stable (latest release) package.
+msgid ""
+msgstr ""
+"PO-Revision-Date: 2023-02-28 13:59:55+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: GlotPress/4.0.0-alpha.9\n"
+"Language: hu\n"
+"Project-Id-Version: Plugins - Duplicate Post - Stable (latest release)\n"
+
+#: menu/modal.php:226
+msgid "click here to select multiple sites"
+msgstr "kattintsunk ide több oldal kiválasztásához"
+
+#: menu/modal.php:56 menu/tooltips.php:118
+msgid "Select all"
+msgstr "Összes kijelölése"
+
+#: menu/configuration.php:343 menu/modal.php:196 menu/tooltips.php:257
+msgid "All post meta"
+msgstr "Minden bejegyzés meta"
+
+#: menu/variables.php:113
+msgid "Ok, done!"
+msgstr "Oké, kész!"
+
+#: menu/variables.php:82
+msgid "Copy worked!"
+msgstr "Másolás kész!"
+
+#: copy-delete-posts.php:897
+msgid "Copy to clipboard was successfull."
+msgstr "Másolás a vágólapra sikerült."
+
+#: post/handler.php:1494
+msgid "We couldn't catch current tasks, please try again later."
+msgstr "Nem tudtunk elérni jelenlegi feladatokat, kérlek, próbáld újra később."
+
+#: post/handler.php:1479
+msgid "We can't confirm that we killed this task now, please try again later or check if it't killed."
+msgstr "Nem tudjuk megerősíteni, hogy most kivégeztük ezt a feladatot, kérlek, próbáld újra később vagy nézd meg, hogy ki lett-e végezve."
+
+#: post/handler.php:1456
+msgid "This task has already ended this work, please wait for list refresh and try again."
+msgstr "Ez a feladat már befejezte ezt a munkát, kérlek, várj a lista újratöltődésére és próbáld újra."
+
+#: post/handler.php:1440
+msgid "We can't hide this task now, – maybe it't already hidden. Please try again later."
+msgstr "Nem tudjuk most elrejteni ezt a feladatot, – lehet, hogy már el van rejtve. Kérlek, próbáld újra később."
+
+#: post/handler.php:1365
+msgid "You can't clear messages when tasks are in progress, please firstly kill tasks or wait till the end."
+msgstr "Nem tudod kitörölni az üzeneteket, amikor a feladatok folyamatban vannak, kérlek, először végezd ki a feladatokat vagy várj a végéig."
+
+#: post/handler.php:448
+msgid "Untitled Copy"
+msgstr "Névtelen Másolat"
+
+#: menu/variables.php:144
+msgid "Average time is 8 copies per second."
+msgstr "Az átlagos idő 8 másolat másodpercenként."
+
+#: menu/variables.php:141
+msgid ""
+"If you’re making a lot of copies it can take a while\n"
+"        <br>(up to 5 minutes if you’re on a slow server)."
+msgstr ""
+"Ha sok másolatot készítesz, beletelhet egy bizonyos időbe\n"
+"        <br>(akár 5 perc is, ha egy lassú szerveren vagy)."
+
+#: menu/variables.php:139
+msgid "Please wait, copying in progress..."
+msgstr "Kérlek, várj, másolás folyamatban..."
+
+#: menu/variables.php:134
+msgid "Successfull copy image"
+msgstr "Sikeres képmásolás"
+
+#: menu/tooltips.php:275
+msgid "to"
+msgstr "-hoz"
+
+#: menu/tooltips.php:223
+msgid "Link cats"
+msgstr "Link cat-ok"
+
+#: menu/tooltips.php:219
+msgid "Nav Menus"
+msgstr "Nav Menük"
+
+#: menu/tooltips.php:99
+msgid "define it for this case"
+msgstr "határozd meg ehhez az esethez"
+
+#: menu/tooltips.php:72
+msgid "Settings:"
+msgstr "Beállítások:"
+
+#: menu/tooltips.php:46
+msgid "Copy now!"
+msgstr "Másolás most!"
+
+#: menu/notifications.php:95
+msgid "Clear notifiactions"
+msgstr "Értesítések törlése"
+
+#: menu/notifications.php:68
+msgid "Done:"
+msgstr "Kész:"
+
+#: menu/notifications.php:45
+msgid "In progress:"
+msgstr "Folyamatban:"
+
+#: menu/notifications.php:38
+msgid "Copy & Delete"
+msgstr "Másolás & Törlés"
+
+#: menu/modal.php:245 menu/tooltips.php:296
+msgid "Copy and jump to editing"
+msgstr "Másolás és ugrás a szerkesztéshez"
+
+#: menu/modal.php:243 menu/tooltips.php:294
+msgid "Copy it!"
+msgstr "Másold!"
+
+#: menu/modal.php:239 menu/tooltips.php:103 menu/tooltips.php:290
+msgid "Making more than 50 copies will take some time. – depending on your server."
+msgstr "Több, mint 50 másolat készítése fel fog venni egy kis időt. – a szerveredtől függően."
+
+#: menu/modal.php:218 menu/modal.php:230 menu/tooltips.php:63
+#: menu/tooltips.php:279
+msgid "this site"
+msgstr "ez az oldal"
+
+#: menu/modal.php:189 menu/tooltips.php:250
+msgid "USM Settings"
+msgstr "USM Beállítások"
+
+#: menu/modal.php:181 menu/tooltips.php:242
+msgid "Yoast Settings"
+msgstr "Yoast Beállítások"
+
+#: menu/modal.php:173 menu/tooltips.php:234
+msgid "Woo Settings"
+msgstr "Woo Beállítások"
+
+#: menu/modal.php:167 menu/tooltips.php:228
+msgid "Plugin options:"
+msgstr "Bővítmény opciók:"
+
+#: menu/modal.php:104 menu/tooltips.php:165
+msgid "Feat. image"
+msgstr "Kiemelt kép"
+
+#: menu/modal.php:58 menu/tooltips.php:120
+msgid "–– Profiles ––"
+msgstr "–– Profilok ––"
+
+#: menu/modal.php:57 menu/tooltips.php:119
+msgid "Clean slate"
+msgstr "Tiszta lap"
+
+#: menu/modal.php:55 menu/tooltips.php:77 menu/tooltips.php:117
+msgid "–– Select ––"
+msgstr "–– Kiválasztás ––"
+
+#: menu/modal.php:52 menu/tooltips.php:115
+msgid "Use as basis settings"
+msgstr "Használd alapbeállításokként"
+
+#: menu/modal.php:48 menu/tooltips.php:111
+msgid "Elements to copy:"
+msgstr "Másolandó elemek:"
+
+#: menu/configuration.php:990 menu/variables.php:105
+msgid "Your account on Wordpress.org (where you open a new support thread) is different to the one you login to your WordPress dashboard (where you are now). If you don't have a WordPress.org account yet, please sign up at the top right on here. It only takes a minute :) Thank you!"
+msgstr "A fiókod a WordPress.org-on (ahol megnyitasz egy új támogatási fonalat) különbözik attól, amelyikkel a WordPress irányítópultodba jelentkezel be (ahol most vagy). Ha nincs még WordPress.org fiókod, kérlek, regisztrálj itt jobbról felül. Csak egy percbe telik :) Köszönjük!"
+
+#: menu/configuration.php:969
+msgid "You will be notified when the deletion process ends via <span class=\"cdp-green\">Admin Bar Menu</span>."
+msgstr "Értesítve leszel, amikor a törlési folyamat befejeződik a <span class=\"cdp-green\">Rendszergazda Sáv Menü</span>által."
+
+#: menu/configuration.php:966
+msgid "Delete selected pages/posts!"
+msgstr "Töröld a kiválasztott oldalakat/bejegyzéseket!"
+
+#: menu/configuration.php:963
+msgid "I completed <u>all</u> steps, it’s ok!"
+msgstr "Befejeztem az <u>összes</u> lépést, rendben van!"
+
+#: menu/configuration.php:950
+msgid "Select this option to move deleted posts to trash (instead of deleting them permanently right away)."
+msgstr "Válaszd ki ezt az opciót, hogy áthelyezd a törölt bejegyzéseket a kukába (ahelyett, hogy rögtön véglegesen törölnéd őket)."
+
+#: menu/configuration.php:948
+msgid "Yes, keep deleted posts in trash!"
+msgstr "Igen, tartsd a törölt bejegyzéseket a kukában!"
+
+#: menu/configuration.php:944
+msgid "Move post(s) to trash?"
+msgstr "Áthelyezed a bejegyzést(-eket) a kukába?"
+
+#: menu/configuration.php:938
+msgid "If it’s necessary the process will dynamically slow down - depending on your server’s resource consumption. For example, if you’re using another plugin which is running a background process and it takes a lot of resources (+50%), our plugin will wait/slow down until the other process is complete."
+msgstr "Ha szükséges, a folyamat dinamikusan le fog lassulni - függően a szervered erőforrás használatától. Például, ha egy másik bővítményt használsz, amelyik egy háttérfolyamatot futtat és sok erőforrást igényel (+50%),a bővítményünk várni fog/le fog lassulni, amíg a másik folyamat befejeződik."
+
+#: menu/configuration.php:936
+msgid "Enable this if you want to have your posts/pages getting deleted in batches (instead of all at once).<br />This reduces the risk of timeouts if you have a lot to delete.<br />"
+msgstr "Engedélyezd ezt, ha azt akarod, hogy a bejegyzéseid/oldalaid halmokban legyenek törölve (ahelyett, hogy egyszerre az egész).<br />Ez csökkenti a szünetek esélyét, ha sok törölnivalód van.<br />"
+
+#: menu/configuration.php:931
+msgid "per minute"
+msgstr "percenként"
+
+#: menu/configuration.php:925
+msgid "Delete"
+msgstr "Törlés"
+
+#: menu/configuration.php:916
+msgid "Deletion throttling"
+msgstr "Törlés elfojtása"
+
+#: menu/configuration.php:912
+msgid "Enable this if you want to redirect the urls from your deleted posts/pages to the main one you decided to keep."
+msgstr "Engedélyezd ezt, ha át akarod irányítani az url-eket a törölt bejegyzéseidről/oldalaidról a főre, amelyikről úgy döntöttél, hogy meghagyod."
+
+#: menu/configuration.php:907 menu/configuration.php:921
+msgid "Enabled"
+msgstr "Engedélyezett"
+
+#: menu/configuration.php:906 menu/configuration.php:920
+msgid "Disabled"
+msgstr "Letiltott"
+
+#: menu/configuration.php:901
+msgid "Automatic redirection"
+msgstr "Automatikus átirányítás"
+
+#: menu/configuration.php:894
+msgid "Check if you need these features (optional):"
+msgstr "Ellenőrizd, hogy szükséged lesz-e ezekre a funkciókra (nem kötelező):"
+
+#: menu/configuration.php:890
+msgid "Select all the posts & pages which should be deleted (by ticking the checkboxes in the table above)."
+msgstr "Válaszd ki az összes bejegyzést & oldalt, amelyet ki kellene töröni (kipipálván a dobozokat a fenti táblázatban)."
+
+#: menu/configuration.php:880
+msgid "Steps to deletion:"
+msgstr "Lépések a törléshez:"
+
+#: menu/configuration.php:875
+msgid "You selected <b class=\"cdp-t-d-ct cdp-f-w-light\">0</b> pages/posts to be deleted"
+msgstr "Kiválasztottál <b class=\"cdp-t-d-ct cdp-f-w-light\">0</b> oldalt/bejegyzést a törléshez"
+
+#: menu/configuration.php:867
+msgid "<u class=\"cdp-d-select-all cdp-f-w-light\">Select all</u> (also from other pages)"
+msgstr "<u class=\"cdp-d-select-all cdp-f-w-light\">Összes kiválasztása</u> (más oldalakról is)"
+
+#: menu/configuration.php:850
+msgid "# of words"
+msgstr "szavak száma"
+
+#: menu/configuration.php:849
+msgid "Date created"
+msgstr "A létrehozás dátuma"
+
+#: menu/configuration.php:848
+msgid "Type"
+msgstr "Típus"
+
+#: menu/configuration.php:847
+msgid "Slug/URL"
+msgstr "Slug/URL"
+
+#: menu/configuration.php:834
+msgid "per page"
+msgstr "oldalanként"
+
+#: menu/configuration.php:821
+msgid "Show"
+msgstr "Mutatás"
+
+#: menu/configuration.php:813
+msgid "Scan has found [<span id=\"cdp-d-table-pagi-ilosc-wynikow\" class=\"cdp-f-w-bold\"></span>] duplicates"
+msgstr "A szkennelés talált [<span id=\"cdp-d-table-pagi-ilosc-wynikow\" class=\"cdp-f-w-bold\"></span>] másolatokat"
+
+#: menu/configuration.php:806
+msgid "Scan for duplicates now!<br /><small class=\"cdp-sm-d cdp-f-s-17 cdp-f-w-medium\">(at this point nothing gets deleted)</small>"
+msgstr "Szkennelés másolatokért most!<br /><small class=\"cdp-sm-d cdp-f-s-17 cdp-f-w-medium\">(ezen a ponton semmi nem lesz törölve)</small>"
+
+#: menu/configuration.php:800
+msgid "<b>Filter results (optional)</b>: Only list them, if they<span id=\"cdpp-switch-mf\"> […]</span>"
+msgstr "<b>Találatok</b>: Csak akkor sorold fel őket, ha<span id=\"cdpp-switch-mf\"> […]</span>"
+
+#: menu/configuration.php:794
+msgid "Delete ALL duplicates, don’t keep any (Be careful!)"
+msgstr "ÖSSZES másolat törlése, ne hagyj meg egyet sem (Légy óvatos!)"
+
+#: menu/configuration.php:793
+msgid "Keep the newest duplicate (typically the last copy you made)"
+msgstr "Tartsd meg a legújabb másolatot (általában az utolsó másolat, amit készítettél)"
+
+#: menu/configuration.php:792
+msgid "Keep the oldest duplicate (typically the original)"
+msgstr "Tartsd meg a legrégebbi másolatot (általában az eredeti)"
+
+#: menu/configuration.php:788
+msgid "Which version do you want to keep?"
+msgstr "Melyik verziót akarod megtartani?"
+
+#: menu/configuration.php:780
+msgid "Huh?"
+msgstr "Tessék?"
+
+#: menu/configuration.php:776
+msgid "Also count pages/posts of different types as duplicates"
+msgstr "Számold a különböző típusú oldalakat/bejegyzéseket is másolatokként"
+
+#: menu/configuration.php:775
+msgid "Only count pages/posts of the same type as duplicates"
+msgstr "Csak az ugyanolyan oldalakat/bejegyzéseket számold másolatként"
+
+#: menu/configuration.php:768
+msgid "...need others? <a href=\"mailto:hi@copy-delete-posts.com\" target=\"_blank\">Suggest them!</a>"
+msgstr "...szükséged van másokra is? <a href=\"mailto:hi@copy-delete-posts.com\" target=\"_blank\">Ajánld őket!</a>"
+
+#: menu/configuration.php:766
+msgid "Word count"
+msgstr "Szószám"
+
+#: menu/configuration.php:764
+msgid "Excerpt (<span class=\"cdp-no-empty-text\"><b>including</b> empty</span>)"
+msgstr "Excerpt (<span class=\"cdp-no-empty-text\"><b>tartalmazva</b> üres</span>)"
+
+#: menu/configuration.php:757
+msgid "When does “yes” make sense here?"
+msgstr "Mikor van az \"igen\"-nek itt értelme?"
+
+#: menu/configuration.php:756
+msgid "Yes"
+msgstr "Igen"
+
+#: menu/configuration.php:755
+msgid "No"
+msgstr "Nem"
+
+#: menu/configuration.php:752
+msgid "Do you want to consider different titles still to be identical if a) the copied posts/pages<br />were created by this plugin and b) they were not modified thereafter?"
+msgstr "Azt akarod, hogy a különböző címek is egyformának legyenek tekintve, ha a) a másolt bejegyzések/oldalak<br />ezen bővítmény által voltak létrehozva és b) azután nem voltak módosítva?"
+
+#: menu/configuration.php:747
+msgid "Slugs are never 100% identical (i.e. Wordpress adds a counter automatically to ensure they are unique). The rule to only have them at least 85% identical does the job fine (you can see after the scan which posts are considered identical)."
+msgstr "A slug-ok sose 100% egyformák (pl. a WordPress automatikusan számlálót ad hozzá, hogy biztosítsa, hogy egyediek). A szabály, hogy legalább 85%-ban legyenek egyformák megfelel erre a célra (a szkennelés után láthatod melyik bejegyzések vannak egyformának tekintve)."
+
+#: menu/configuration.php:747
+msgid "Similar slug"
+msgstr "Hasonló slug"
+
+#: menu/configuration.php:744
+msgid "(show more options)"
+msgstr "(mutass több opciót)"
+
+#: menu/configuration.php:736
+msgid "Count them as duplicates if they are identical with respect to <u class=\"cdp-f-w-bold\">all</u> of the below..."
+msgstr "Tekintsd őket másolatnak, ha egyformák, tisztelettel az<u class=\"cdp-f-w-bold\">összes</u> alábbira..."
+
+#: menu/configuration.php:757
+msgid "The copies you created may have been given different titles automatically (according to the rules in <a href=\"#\" class=\"cdp-go-to-names-chapter\">this section</a>) and therefore would not count as duplicates as they have different titles.<br /><br />To remedy this, you can select “Yes” here so that those posts/pages also get considered as duplicates."
+msgstr "A másolatok, amelyeket létrehoztál, lehet, hogy automatikusan más neveket kaptak (az <a href=\"#\" class=\"cdp-go-to-names-chapter\">ebben a szakaszban</a> való szabályoknak megfelelően), és következésképpen nem számítanak másolatoknak, mivel különböző címük van.<br /><br />Hogy ezt orvosold, kiválaszthatod itt az \"Igen\"-t, hogy azok a bejegyzések/oldalak is másolatnak legyenek véve."
+
+#: menu/configuration.php:731
+msgid "Custom posts"
+msgstr "Egyedi bejegyzések"
+
+#: menu/configuration.php:726
+msgid "Scan for duplicates in..."
+msgstr "Szkennelj másolatokért ennyi időn belül..."
+
+#: menu/configuration.php:709
+msgid "Go premium now"
+msgstr "Válj prémiumossá most"
+
+#: menu/configuration.php:702
+msgid ""
+"And: you can also use this feature for any other redirections you may need\n"
+"                      (not only redirects from deleted posts/pages)!"
+msgstr ""
+"És: használhatod ezt a funkciót bármely más átirányításhoz is, amelyre szükséged lehet\n"
+"                      (nem csak a törölt bejegyzésekről/oldalakról való átirányításokhoz)!"
+
+#: menu/configuration.php:699
+msgid "This isn’t just good for your visitors, but also for SEO: the “link juice” from your old (deleted) articles will be forwarded to the versions you keep, helping you to rank higher in search engines."
+msgstr "Ez nem csak a látogatóidnak jó, de a SEO-nak is: a \"link nedv\" a régi (törölt) cikkjeidből továbítva lesznek a megtartott verziókhoz, segítve téged a magasabb helyezésben a keresőmotrokban."
+
+#: menu/configuration.php:696
+msgid "As part of the <span class=\"cdp-green\">premium plugin</span> you can enable redirects, so that the URLs of your deleted posts/pages automatically take visitors to the version which you decided to keep."
+msgstr "A <span class=\"cdp-green\">prémium bővítmény</span> részeként engedélyezhetsz átirányításokat, hogy a törölt bejegyzéseid/oldalaid URL-jei automatikusan fogadjanak látogatókat a verzióhoz, amelyről úgy döntöttél, hogy megtartod."
+
+#: menu/configuration.php:683
+msgid "Redirection"
+msgstr "Átrirányítás"
+
+#: menu/configuration.php:680
+msgid "Automatic Cleanup"
+msgstr "Automatikus Tisztítás"
+
+#: menu/configuration.php:677
+msgid "Manual Cleanup"
+msgstr "Manuális Tisztítás"
+
+#: menu/configuration.php:657
+msgid "...and after your copy frenzy, you may need to…"
+msgstr "...és amiután őrülten másolod, lehet szükséges lesz..."
+
+#: menu/configuration.php:640
+msgid "Show post export & import buttons"
+msgstr "Mutasd a bejegyzés export & import gombokat"
+
+#: menu/configuration.php:628
+msgid "Hide copy tooltip on hover and only show the button"
+msgstr "Rejtsd el a másolás lebegő tooltip-et és jelenítsd meg csak a gombot"
+
+#: menu/configuration.php:623
+msgid "Additional features"
+msgstr "Hozzáadott funkciók"
+
+#: menu/configuration.php:584
+msgid "If checked, you will see a reference to the original post/page (on the copied version)."
+msgstr "Ha ki van pipálva, fogsz látni egy hivatkozást az eredeti bejegyzéshez/oldalhoz (a másolt verzión)."
+
+#: menu/configuration.php:583
+msgid "Show reference to original item?"
+msgstr "Legyen hivatkozás megjelenítve az eredeti tételhez?"
+
+#: menu/configuration.php:581
+msgid "Gutenberg editor"
+msgstr "Gutenberg szerkesztő"
+
+#: menu/configuration.php:580
+msgid "Bulk actions menu"
+msgstr "Tömeges műveletek menü"
+
+#: menu/configuration.php:578 menu/configuration.php:587
+msgid "Edit screens"
+msgstr "Képernyők szerkesztése"
+
+#: menu/configuration.php:577 menu/configuration.php:586
+msgid "Posts/pages lists"
+msgstr "Bejegyzések/oldalak listái"
+
+#: menu/configuration.php:575
+msgid "Display copy option on..."
+msgstr "Jeleníts meg másolás opciót..."
+
+#: menu/configuration.php:573
+msgid "Custom posts types"
+msgstr "Egyedi bejegyzés típusok"
+
+#: menu/configuration.php:572 menu/configuration.php:729
+msgid "Posts"
+msgstr "Bejegyzések"
+
+#: menu/configuration.php:571 menu/configuration.php:730
+msgid "Pages"
+msgstr "Oldalak"
+
+#: menu/configuration.php:569
+msgid "Content types which can be copied"
+msgstr "Másolható tartalomtípusok"
+
+#: menu/configuration.php:549
+msgid "Which user role(s) should be able to copy & delete? <i style=\"color: gray\">– The role also must have access to the dashboard.</i>"
+msgstr "Melyik felhasználói szerepnek(-eknek) legyen lehetősége másolni & törölni? <i style=\"color: gray\">– A szerepnek hozzáférése kell legyen az irányítópulthoz is.</i>"
+
+#: menu/configuration.php:548
+msgid "User level permissions"
+msgstr "Felhasználói szintű engedélyek"
+
+#: menu/configuration.php:544
+msgid "ALWAYS change the type when copied (posts will become pages, pages will become posts)"
+msgstr "MINDIG cseréld ki a típust, amikor másolod (a bejegyzések oldalakká válnak, az oldalak bejegyzésekké válnak)"
+
+#: menu/configuration.php:543
+msgid "Copies will be the same type as the original"
+msgstr "A másolatok ugyanolyan típusúak lesznek, mint az eredeti"
+
+#: menu/configuration.php:538
+msgid "However, if you want it as a <b class=\"cdp-f-w-bold\">default setting option</b>, then please select it below: "
+msgstr "Viszont, ha <b class=\"cdp-f-w-bold\">alapértelmezett beállítási opcióként</b> akarod, akkor kérlek, válaszd ki alább: "
+
+#: menu/configuration.php:537
+msgid "If you want to make a page out of a post, or vice versa, then you can do this on a <b class=\"cdp-f-w-bold\">case by case basis</b> if you select the option “Define it specifically for this case” in the copy-tooltip, and then select this option on the following screen in the tooltip."
+msgstr "Ha egy oldalt akarsz készíteni egy bejegyzésből, vagy fordítva, akkor megteheted ezt <b class=\"cdp-f-w-bold\">esetenkénti alapon</b>, ha kiválasztod a \"Határoozd meg kifejezetten ehhez az esethez\" opciót a másolás tooltip-ben, majd válaszd ki ezt az opciót a következő képernyőn a tooltip-ben."
+
+#: menu/configuration.php:536
+msgid "By default, the type of what you copy does not change, i.e. if you copy a post the new version will also be a post, and the same for pages."
+msgstr "Alapértelmezetten annak a típusa, amit másolsz, nem változik, pl. ha másolsz egy bejegyzést, az új verzió is egy bejegyzés lesz, és ugyanígy az oldalakkal."
+
+#: menu/configuration.php:532
+msgid "Pages vs. Posts converter"
+msgstr "Oldalak vs. Bejegyzések átalakító"
+
+#: menu/configuration.php:528
+msgid "If you created multiple copies in one go, you’ll be taken to the first copy."
+msgstr "Ha egyszerre több másolatot hoztál létre, az első másolathoz leszel irányítva."
+
+#: menu/configuration.php:525
+msgid "Decide on a case-by-case basis (adds new button on copy screen)"
+msgstr "Határozd meg esetenkénti alapon (új gombot ad hozzá a másolási képernyőhöz)"
+
+#: menu/configuration.php:524
+msgid "Take me to the edit-page of the created copy"
+msgstr "Vigyél a létrehozott másolat szerkesztési oldalára"
+
+#: menu/configuration.php:523
+msgid "Leave me where I was"
+msgstr "Hagyj ott, ahol voltam"
+
+#: menu/configuration.php:519
+msgid "Navigation after copying"
+msgstr "Irányítás másolás után"
+
+#: menu/configuration.php:513
+msgid "<b class=\"cdp-ff-b4\">Other</b> options"
+msgstr "<b class=\"cdp-ff-b4\">Más</b> opciók"
+
+#: menu/configuration.php:497
+msgid "If you make multiple copies in one go, use the Counter-option as otherwise some copies will have the same name."
+msgstr "Ha egyszerre több másolatot hozol létre, használd a Számláló opciót, mert másképp néhány másolatnak ugyanaz lesz a neve."
+
+#: menu/configuration.php:496
+msgid "If you’re not of the drag & droppy-type, you can also enter shortcodes [Counter], [CurrentDate] and [CurrentTime]."
+msgstr "Ha nem az a húzás & elengedés típusú vagy, megadhatsz shortcode-okat is [Számláló], [JelenegiDátum] and [JelenlegiIdő]."
+
+#: menu/configuration.php:495
+msgid "You can also type tailored text into the fields above."
+msgstr "Írhatsz megszabott szöveget is a fenti mezőkbe."
+
+#: menu/configuration.php:491
+msgid "Adds the <b class=\"cdp-f-w-semi-bold\">current time</b> in hh:mm:ss format"
+msgstr "A <b class=\"cdp-f-w-semi-bold\">jelenlegi idő</b> hozzáadása óó:pp:mm formátumban"
+
+#: menu/configuration.php:489
+msgid "CurrentTime"
+msgstr "JelenlegiIdő"
+
+#: menu/configuration.php:482
+msgid "format."
+msgstr "formátum."
+
+#: menu/configuration.php:479 menu/modal.php:59 menu/tooltips.php:121
+msgid "Custom"
+msgstr "Egyedi"
+
+#: menu/configuration.php:478
+msgid "dd/mm/yyyy"
+msgstr "nn/hh/éééé"
+
+#: menu/configuration.php:477
+msgid "mm/dd/yyyy"
+msgstr "hh/nn/éééé"
+
+#: menu/configuration.php:474
+msgid "Adds the <b class=\"cdp-f-w-semi-bold\">current date</b> in"
+msgstr "A <b class=\"cdp-f-w-semi-bold\">jelenlegi dátum</b> hozzáadása"
+
+#: menu/configuration.php:469
+msgid "CurrentDate"
+msgstr "JelenegiDátum"
+
+#: menu/configuration.php:465
+msgid "Adds an <b class=\"cdp-f-w-semi-bold\">incremental counter</b> (starting with “2”)"
+msgstr "A <b class=\"cdp-f-w-semi-bold\">járulékos számláló</b> hozzáadása (\"2\"-vel kezdve)"
+
+#: menu/configuration.php:463
+msgid "Counter"
+msgstr "Számláló"
+
+#: menu/configuration.php:459
+msgid "Drag & drop the automatic elements into the Prefix/Suffix fields to add them."
+msgstr "Húzd & engedd el az automatikus elemeket az Előtag/Utótag mezőkbe, hogy hozzáadd őket."
+
+#: menu/configuration.php:452
+msgid "Example based on current selections:"
+msgstr "Példa a jelenlegi válogatások alapján:"
+
+#: menu/configuration.php:443
+msgid "Change to blank"
+msgstr "Cseréld ki üresre"
+
+#: menu/configuration.php:434
+msgid "Suffix"
+msgstr "Utótag"
+
+#: menu/configuration.php:432
+msgid "Prefix"
+msgstr "Előtag"
+
+#: menu/configuration.php:428
+msgid "Build your preferred naming logic for the copies:"
+msgstr "Építsd meg a kedvelt elnevezési logikád a másolatokhoz:"
+
+#: menu/configuration.php:422
+msgid "What <b class=\"cdp-ff-b4\">name(s)</b> should the copies have?"
+msgstr "Milyen <b class=\"cdp-ff-b4\">nevei(-k)</b> legyenek a másolatoknak?"
+
+#: menu/configuration.php:411 menu/configuration.php:502
+#: menu/configuration.php:650 menu/configuration.php:973
+msgid "Close section"
+msgstr "Szakasz bezárása"
+
+#: menu/configuration.php:409 menu/configuration.php:500
+#: menu/configuration.php:648
+msgid "Save"
+msgstr "Mentés"
+
+#: menu/configuration.php:405
+msgid ""
+"Do you know anything else you want to have copied (e.g. data added by a different plugin)? <br />\n"
+"                Please <a href=\"mailto:hi@copy-delete-posts.com\" target=\"_blank\"><span class=\"cdp-green\">tell us about it</span></a>, we always want to further improve this plugin! :) "
+msgstr ""
+"Tudsz valami mást, amiről másolatot szeretnél készíteni (pl. más bővítmény által hozzáadott adatok)? <br />\n"
+"                Kérlek, <a href=\"mailto:hi@copy-delete-posts.com\" target=\"_blank\"><span class=\"cdp-green\">mondd el nekünk</span></a>, mindig tovább szeretnénk fejleszteni ezt a bővítményt! :) "
+
+#: menu/configuration.php:398
+msgid "…the same settings from the <a href=\"https://wordpress.org/plugins/wordpress-seo/\" target=\"_blank\"><span class=\"cdp-green\">Yoast SEO plugin</span></a> as the original."
+msgstr "...ugyanazok a beállítások a <a href=\"https://wordpress.org/plugins/wordpress-seo/\" target=\"_blank\"><span class=\"cdp-green\">Yoast SEO bővítményből</span></a> mint az eredeti."
+
+#: menu/configuration.php:393
+msgid "Yoast SEO Settings"
+msgstr "Yoast SEO Beállítások"
+
+#: menu/configuration.php:381
+msgid "…the same settings from the <a href=\"https://www.ultimatelysocial.com/usm-premium/\" target=\"_blank\"><span class=\"cdp-green\">Ultimate Social Media plugin</span></a> as the original."
+msgstr "...ugyanazok a beállítások az <a href=\"https://www.ultimatelysocial.com/usm-premium/\" target=\"_blank\"><span class=\"cdp-green\">Alapvető Közösségi Média bővítményből</span></a> mint az eredeti."
+
+#: menu/configuration.php:376
+msgid "Ultimate Social Media Settings"
+msgstr "Alapvető Közösségi Média Beállítások"
+
+#: menu/configuration.php:365 menu/configuration.php:382
+#: menu/configuration.php:399
+msgid "…get empty settings."
+msgstr "...kapj üres beállításokat."
+
+#: menu/configuration.php:364
+msgid "…the same settings from the <a href=\"https://wordpress.org/plugins/woocommerce/\" target=\"_blank\"><span class=\"cdp-green\">WooCommerce plugin</span></a> as the original."
+msgstr "...ugyanazok a beállítások a <a href=\"https://wordpress.org/plugins/woocommerce/\" target=\"_blank\"><span class=\"cdp-green\">WooCommerce bővítményből</span></a> mint az eredeti."
+
+#: menu/configuration.php:359
+msgid "WooCommerce Settings"
+msgstr "WooCommerce Beállítások"
+
+#: menu/configuration.php:349
+msgid "…copy only required post/page metadata."
+msgstr "...csak a szükséges bejegyzések/oldalak metaadatainak másolása."
+
+#: menu/configuration.php:348
+msgid "…clone all metadata tags assigned to post/page."
+msgstr "...az összes bejegyzéshez/oldalhoz kötött metaadat címke másolása."
+
+#: menu/configuration.php:330 menu/modal.php:162
+msgid "Link categories"
+msgstr "Link kategóriák"
+
+#: menu/configuration.php:327 menu/configuration.php:332
+msgid "…be without private taxonomy."
+msgstr "...privát rendszertan nélkül legyen."
+
+#: menu/configuration.php:326 menu/configuration.php:331
+msgid "…get this private taxonomy from the original."
+msgstr "...szerezd meg ezt a privát rendszertant az eredetiből."
+
+#: menu/configuration.php:321 menu/modal.php:158
+msgid "Navigation Menus"
+msgstr "Irányítás Menük"
+
+#: menu/configuration.php:311
+msgid "…be without custom taxonomy."
+msgstr "...egyedi rendszertan nélküli legyen."
+
+#: menu/configuration.php:310
+msgid "…get all custom taxonomy from the original."
+msgstr "...szerezd meg az összes egyedi rendszertant az eredetiből."
+
+#: menu/configuration.php:309 menu/modal.php:154 menu/tooltips.php:215
+msgid "Taxonomies"
+msgstr "Rendszertanok"
+
+#: menu/configuration.php:306
+msgid "…be without any tags."
+msgstr "...bármilyen címke nélküli legyen."
+
+#: menu/configuration.php:305
+msgid "…get all tags of the original post."
+msgstr "...szerezd meg az eredeti bejegyzés összes címkéjét."
+
+#: menu/configuration.php:304 menu/modal.php:150 menu/tooltips.php:211
+msgid "Tags"
+msgstr "Címkék"
+
+#: menu/configuration.php:301
+msgid "…be Uncategorized, no categories will be copied."
+msgstr "...Beosztatlan legyen, semmilyen kategória nem lesz másolva."
+
+#: menu/configuration.php:300
+msgid "…get all categories from the original post."
+msgstr "...szerezd meg az eredeti bejegyzés összes kategóriáját."
+
+#: menu/configuration.php:299 menu/modal.php:144 menu/tooltips.php:205
+msgid "Categories"
+msgstr "Kategóriák"
+
+#: menu/configuration.php:296
+msgid "…get the menu order set to default (0)."
+msgstr "...állíttasd be a menü sorrendjét alapértelmezettre (0)."
+
+#: menu/configuration.php:295
+msgid "…get the <a href=\"https://wordpress.stackexchange.com/questions/25202/how-to-change-order-of-menu-items\" target=\"_blank\"><span class=\"cdp-green\">menu order</span></a> from the original."
+msgstr "…szerezd meg a <a href=\"https://wordpress.stackexchange.com/questions/25202/how-to-change-order-of-menu-items\" target=\"_blank\"><span class=\"cdp-green\">menü sorrendet</span></a> az eredetiből."
+
+#: menu/configuration.php:294 menu/modal.php:136 menu/tooltips.php:197
+msgid "Menu order"
+msgstr "Menü sorrend"
+
+#: menu/configuration.php:291
+msgid "…get no comments from the original."
+msgstr "...ne kapj semmilyen hozzászólást az eredetiből."
+
+#: menu/configuration.php:290
+msgid "…get all comments from the original."
+msgstr "...kapd meg az összes hozzászólást az eredetiből."
+
+#: menu/configuration.php:289 menu/modal.php:132 menu/tooltips.php:193
+msgid "Comments"
+msgstr "Hozzászólások"
+
+#: menu/configuration.php:286
+msgid "…not get their child pages copied along (if the page is a parent)."
+msgstr "...ne legyenek a gyerekoldalaik mellékesen másolva (ha az oldal egy szülő)."
+
+#: menu/configuration.php:285
+msgid "…get their <a href=\"https://phppot.com/wordpress/how-to-create-a-child-page-in-wordpress/\" target=\"_blank\"><span class=\"cdp-green\">child pages</span></a> copied as well, with all current settings applied to child-duplicates (if the page is a parent)."
+msgstr "...legyenek a <a href=\"https://phppot.com/wordpress/how-to-create-a-child-page-in-wordpress/\" target=\"_blank\"><span class=\"cdp-green\">gyerekoldalak</span></a> is másolva, az összes jelenlegi beállítással, amelyek a gyerek-másolatokra is érvényesek lesznek (ha az oldal egy szülő)."
+
+#: menu/configuration.php:284 menu/modal.php:126 menu/tooltips.php:187
+msgid "Children"
+msgstr "Gyerekek"
+
+#: menu/configuration.php:281
+msgid "…get existing attachments from the original."
+msgstr "...szerezz létező csatolmányokat az eredetitől."
+
+#: menu/configuration.php:280
+msgid "…create new <a href=\"https://wordpress.org/support/article/using-image-and-file-attachments/#attachment-to-a-post\" target=\"_blank\"><span class=\"cdp-green\">attachments</span></a> (duplicates in Media Library) as well. <i>Recommended only for Multisites.</i>"
+msgstr "...hozz létre új <a href=\"https://wordpress.org/support/article/using-image-and-file-attachments/#attachment-to-a-post\" target=\"_blank\"><span class=\"cdp-green\">csatolmányokat</span></a> (másolatok a Média Könyvtárban) is. <i>Csak MultiSite-okhoz ajánlott.</i>"
+
+#: menu/configuration.php:279 menu/modal.php:140 menu/tooltips.php:201
+msgid "Attachments"
+msgstr "Csatolmányok"
+
+#: menu/configuration.php:276
+msgid "…get no password."
+msgstr "...ne szerezz jelszavat."
+
+#: menu/configuration.php:275
+msgid "…get the same <a href=\"https://wordpress.org/support/article/using-password-protection/\" target=\"_blank\"><span class=\"cdp-green\">password</span></a> as original."
+msgstr "...szerezd meg ugyanazt a <a href=\"https://wordpress.org/support/article/using-password-protection/\" target=\"_blank\"><span class=\"cdp-green\">jelszavat</span></a>, mint az eredeti."
+
+#: menu/configuration.php:274 menu/modal.php:122 menu/tooltips.php:183
+msgid "Password"
+msgstr "Jelszó"
+
+#: menu/configuration.php:271
+msgid "…get the user that is duplicating as an author."
+msgstr "...kapd meg a felhasználót, amelyik íróként kétszerez."
+
+#: menu/configuration.php:270
+msgid "…get the same author as original."
+msgstr "...kapd meg ugyanazt az írót, mint az eredeti."
+
+#: menu/configuration.php:269 menu/modal.php:118 menu/tooltips.php:179
+msgid "Author"
+msgstr "Író"
+
+#: menu/configuration.php:266
+msgid "…get the standard post format."
+msgstr "...szerezd meg a standard bejegyzés formátumot."
+
+#: menu/configuration.php:265
+msgid "…get the same <a href=\"https://wordpress.org/support/article/post-formats/\" target=\"_blank\"><span class=\"cdp-green\">post format</span></a> as original."
+msgstr "...szerezd meg az ugyanolyan <a href=\"https://wordpress.org/support/article/post-formats/\" target=\"_blank\"><span class=\"cdp-green\">bejegyzés formátumot</span></a>, mint az eredeti."
+
+#: menu/configuration.php:264 menu/modal.php:114 menu/tooltips.php:175
+msgid "Format"
+msgstr "Formátum"
+
+#: menu/configuration.php:261
+msgid "…get the default page template."
+msgstr "...szerezd meg az alapértelmezett oldalsablont."
+
+#: menu/configuration.php:260
+msgid "…get the same page <a href=\"https://wpapprentice.com/blog/wordpress-theme-vs-template/\" target=\"_blank\"><span class=\"cdp-green\">template</span></a> as original."
+msgstr "...szerezd meg ugyanazt a <a href=\"https://wpapprentice.com/blog/wordpress-theme-vs-template/\" target=\"_blank\"><span class=\"cdp-green\">sablont</span></a>, mint az eredeti."
+
+#: menu/configuration.php:259 menu/modal.php:108 menu/tooltips.php:169
+msgid "Template"
+msgstr "Sablon"
+
+#: menu/configuration.php:256
+msgid "…get no featured image."
+msgstr "...ne szerezz semmilyen funkciós képet."
+
+#: menu/configuration.php:255
+msgid "…it will set the same <a href=\"https://firstsiteguide.com/wordpress-featured-image/\" target=\"_blank\"><span class=\"cdp-green\">featured image</span></a> as the original."
+msgstr "...ugyanazt a <a href=\"https://firstsiteguide.com/wordpress-featured-image/\" target=\"_blank\"><span class=\"cdp-green\">funkciós képet</span></a> fogja beállítani, mint az eredeti."
+
+#: menu/configuration.php:254
+msgid "Featured image"
+msgstr "Funkciós kép"
+
+#: menu/configuration.php:251
+msgid "…get no content (be completely blank)."
+msgstr "...ne szerezz tartalmat (legyen teljesen üres)."
+
+#: menu/configuration.php:250
+msgid "…get all the content (text, images, videos and other elements/blocks) from the original."
+msgstr "...szered meg az összes tartalmat (szöveg, képek, videók és egyéb elemek/blokkok) az eredetitől."
+
+#: menu/configuration.php:249 menu/modal.php:100 menu/tooltips.php:161
+msgid "Content"
+msgstr "Tartalom"
+
+#: menu/configuration.php:246
+msgid "…get an empty <i>custom</i> excerpt (and default to taking the first 55 words of the post)."
+msgstr "...szerezz egy üres <i>egyedi</i> excerpt-et (és alapértelmezetten vegye a bejegyzés első 55 szavát)."
+
+#: menu/configuration.php:245
+msgid "…get the custom <a href=\"https://wordpress.org/support/article/excerpt/\" target=\"_blank\"><span class=\"cdp-green\">excerpt</span></a> (post/page summary) of the original (if the original had any)."
+msgstr "...szerezd meg az egyedi <a href=\"https://wordpress.org/support/article/excerpt/\" target=\"_blank\"><span class=\"cdp-green\">excerpt-et</span></a> (bejegyzés/oldal tartalom) az eredetitől (ha az eredtinek volt bármennyi)."
+
+#: menu/configuration.php:244 menu/modal.php:96 menu/tooltips.php:157
+msgid "Excerpt"
+msgstr "Excerpt"
+
+#: menu/configuration.php:241
+msgid "…get a blank slug, unless the page is published, then it will generate it automatically."
+msgstr "...szerezz egy üres slug-ot, hacsak nincs az oldal publikálva, akkor automatikusan létrehoz egyet."
+
+#: menu/configuration.php:240
+msgid "…get the same <a href=\"https://kinsta.com/knowledgebase/wordpress-slug/\" target=\"_blank\"><span class=\"cdp-green\">slug</span></a> of the original. (However after publishing it will give it automatically a new slug because 2 pages cannot be on the same URL)."
+msgstr "...szerezd meg ugyanazt a <a href=\"https://kinsta.com/knowledgebase/wordpress-slug/\" target=\"_blank\"><span class=\"cdp-green\">slug-ot</span></a> az eredetitől. (Viszont, amiután publikálva lesz, automatikusan hozzá lesz adva egy új slug, mert 2 oldal nem lehet ugyanazon az URL-en)."
+
+#: menu/configuration.php:239 menu/modal.php:90 menu/tooltips.php:151
+msgid "Slug"
+msgstr "Slug"
+
+#: menu/configuration.php:236
+msgid "…get the status “Draft”."
+msgstr "...szerezd meg a \"Vázlat\" állapotot."
+
+#: menu/configuration.php:235
+msgid "…get status of original article (which can be “published” or “deleted” etc.)"
+msgstr "...szerezd meg az eredeti cikk állapotát (amely lehet \"publikálva\" vagy \"törölve\" stb.)"
+
+#: menu/configuration.php:234 menu/modal.php:86 menu/tooltips.php:147
+msgid "Status"
+msgstr "Állapot"
+
+#: menu/configuration.php:231
+msgid "…get the date & time at time of copying. "
+msgstr "...szerezd meg a másolás dátumát & idejét. "
+
+#: menu/configuration.php:230
+msgid "…get the same creation date & time as the original."
+msgstr "...szerezd meg ugyanazt a létrehozási dátumot & időt, mint az eredeti."
+
+#: menu/configuration.php:229 menu/modal.php:82 menu/tooltips.php:143
+msgid "Date"
+msgstr "Dátum"
+
+#: menu/configuration.php:226
+msgid "…be titled “Untitled”."
+msgstr "...legyen elnevezve \"Névtelennek\"."
+
+#: menu/configuration.php:225
+msgid "…get the title as defined in the <a href=\"#\" class=\"cdp-go-to-names-chapter\"><span class=\"cdp-green\">next section</span></a>."
+msgstr "...szerezd meg a címet, mint a <a href=\"#\" class=\"cdp-go-to-names-chapter\"><span class=\"cdp-green\">következő szakaszban</span></a> meghatározva."
+
+#: menu/configuration.php:224 menu/configuration.php:741
+#: menu/configuration.php:846 menu/modal.php:78 menu/tooltips.php:139
+msgid "Title"
+msgstr "Cím"
+
+#: menu/configuration.php:219
+msgid "<b>If <u class=\"cdp-f-w-bold\">un</u>checked</b> copies will..."
+msgstr "<b>Ha <u class=\"cdp-f-w-bold\">nem</u>ellenőrzött</b> a másolatok..."
+
+#: menu/configuration.php:218
+msgid "<b>If checked</b> copies will..."
+msgstr "<b>Ha ellenőrzött</b> a másolatok..."
+
+#: menu/configuration.php:208
+msgid "Which <b class=\"cdp-ff-b4\">elements</b> shall be copied?"
+msgstr "Melyik <b class=\"cdp-ff-b4\">elemek</b> legyenek másolva?"
+
+#: menu/configuration.php:196
+msgid "+ Add / manage / import / export settings"
+msgstr "+ Adj hozzá / kezelj / importálj / exportálj beállításokat"
+
+#: menu/configuration.php:189
+msgid "settings"
+msgstr "beállítások"
+
+#: menu/configuration.php:185
+msgid "Add new"
+msgstr "Adj hozzá újat"
+
+#: menu/configuration.php:184 menu/modal.php:67 menu/tooltips.php:85
+#: menu/tooltips.php:129
+msgid "Default"
+msgstr "Alapértelmezett"
+
+#: menu/configuration.php:166
+msgid "Below are your"
+msgstr "Lennebb vannak a"
+
+#: menu/configuration.php:155
+msgid "Don't show this intro – never again!"
+msgstr "Ne mutasd meg ezt az intrót – soha többé!"
+
+#: menu/configuration.php:151
+msgid "Got it, close intro!"
+msgstr "Értettem, közeli intró!"
+
+#: menu/configuration.php:149
+msgid "…and you can also <b>delete duplicate</b> posts easily, see below :)"
+msgstr "...és könnyen <b>tötölheted is a másolatot</b> , lásd alább :)"
+
+#: menu/configuration.php:143 menu/configuration.php:579
+msgid "Admin bar"
+msgstr "Rendszergazda sáv"
+
+#: menu/configuration.php:137
+msgid "Edit screen"
+msgstr "Szerkesztői képernyő"
+
+#: menu/configuration.php:131
+msgid "List of posts/pages"
+msgstr "Bejegyzések/oldalak listája"
+
+#: menu/configuration.php:128
+msgid "You can now easily copy posts & pages in various areas:"
+msgstr "Most könnyedén másolhatsz bejegyzéseket & oldalakat különböző területeken:"
+
+#: menu/configuration.php:122
+msgid "Show intro"
+msgstr "Mutasd az intrót"
+
+#: menu/configuration.php:111
+msgid "Loading..."
+msgstr "Betöltés..."
+
+#: copy-delete-posts.php:1059
+msgid "Settings"
+msgstr "Beállítások"
+
+#: copy-delete-posts.php:999
+msgid "post"
+msgstr "bejegyzés"
+
+#: copy-delete-posts.php:999
+msgid "this"
+msgstr "ez"
+
+#: copy-delete-posts.php:999
+msgid "Copy of"
+msgstr "Másolata"
+
+#: copy-delete-posts.php:828
+msgid "There was an error with this notification."
+msgstr "Hiba lépett fel ebben az értesítésben."
+
+#: copy-delete-posts.php:827
+msgid "It will hide this banner just for now."
+msgstr "El fogja rejteni ezt a szalagcímet csak mostanra."
+
+#: copy-delete-posts.php:826
+msgid "Premium"
+msgstr "Prémium"
+
+#: copy-delete-posts.php:824
+msgid "Plugin has been installed successfully, feel free to check those awesome features!"
+msgstr "A bővítmény sikeresen telepítve, nyugodtan nézd meg azokat a fantasztikus funkciókat!"
+
+#: copy-delete-posts.php:822 copy-delete-posts.php:823
+msgid "There was an error and we couldn't kill the task."
+msgstr "Hiba lépett fel, és nem tudtuk kivégezni a feladatot."
+
+#: copy-delete-posts.php:821
+msgid "The task has been killed"
+msgstr "A feladat ki lett végezve"
+
+#: copy-delete-posts.php:819 copy-delete-posts.php:820
+msgid "There was an error and we couldn't hide the task."
+msgstr "Hiba lépett fel és nem tudtuk elrejteni a feladatot."
+
+#: copy-delete-posts.php:818
+msgid "The task has been hidden"
+msgstr "A feladat el lett rejtve"
+
+#: copy-delete-posts.php:816 copy-delete-posts.php:817
+msgid "We couldn't update task list, please try again later or kill tasks individualy."
+msgstr "Nem tudtuk frissíteni a feladatlistát, kérlek, próbáld újra később vagy végezz ki feladatokat egyénileg."
+
+#: copy-delete-posts.php:815
+msgid "Tasks cleared!"
+msgstr "Feladat törölve!"
+
+#: copy-delete-posts.php:814
+msgid "This banner will not appear again, if any feature is missing you can ask for it on our support forum!"
+msgstr "Ez a szalagcím nem fog újra megjelenni, ha bármilyen funkció hiányzik, a támogatási fórumunkban kérheted!"
+
+#: copy-delete-posts.php:813
+msgid "Alright! We will ask you again in 14 days!"
+msgstr "Rendben! Újra fogjuk kérdezni 14 napon belül!"
+
+#: copy-delete-posts.php:811 copy-delete-posts.php:812
+msgid "Thank you very much for the review, this banner will not appear again!"
+msgstr "Nagyon szépen köszönjük a visszajelzést, többé nem fog megjelenni ez a szalagcím!"
+
+#: copy-delete-posts.php:810
+msgid "Cannot send dismiss request. Are you connected to the internet?"
+msgstr "Nem lehet elutasítani a kérést. Kapcsolódva vagy az internethez?"
+
+#: copy-delete-posts.php:809
+msgid "There was an issue while dismissing banner, please do it next time again."
+msgstr "Hiba lépett fel a szalagcím visszautasítása közben, kérlek, következőkor csináld újra."
+
+#: copy-delete-posts.php:744
+msgid "Manual Cleanup removed "
+msgstr "Manuális Tisztítás eltávolítva "
+
+#: copy-delete-posts.php:689
+msgid "Copy this post"
+msgstr "Másold ezt a bejegyzést"
+
+#: copy-delete-posts.php:387 copy-delete-posts.php:417
+msgid "test"
+msgstr "teszt"
+
+#: copy-delete-posts.php:357 copy-delete-posts.php:359
+msgid "<span id=\"cdp-menu\">Copy & Delete Posts</span>"
+msgstr "<span id=\"cdp-menu\">Bejegyzések Törlése & Másolása</span>"
+
+#: copy-delete-posts.php:329 copy-delete-posts.php:515
+msgid "Copy this"
+msgstr "Másold ezt"
+
+#: copy-delete-posts.php:260 copy-delete-posts.php:387
+#: copy-delete-posts.php:417 copy-delete-posts.php:441
+#: copy-delete-posts.php:463 menu/modal.php:207 menu/tooltips.php:268
+msgid "Copy"
+msgstr "Másolás"
+
+#: copy-delete-posts.php:905
+msgid "Please select basic settings for this copy."
+msgstr "Kérlek, válassz alapvető beállításokat ehhez a másolathoz."
+
+#: copy-delete-posts.php:904
+msgid "Please select at least one row to copy and try again."
+msgstr "Kérlek, válassz ki legalább egy sort a másoláshoz és próbáld újra."
+
+#: copy-delete-posts.php:903
+msgid "Please select at least one row to copy."
+msgstr "Kérlek, válassz ki legalább egy sort a másoláshoz."
+
+#: copy-delete-posts.php:896
+msgid "–––––––––––––- END OF THE DEBUG OUTPUT –––––––––––––- "
+msgstr "–––––––––––––- A HIBAKERESÉSI KIMENET VÉGE –––––––––––––- "
+
+#: copy-delete-posts.php:895
+msgid "You're crazy! – Here is the output:"
+msgstr "Őrült vagy! – Itt van a kimenet:"
+
+#: copy-delete-posts.php:894
+msgid "Are you REALLY sure?"
+msgstr "TÉNYLEG biztos vagy benne?"
+
+#: copy-delete-posts.php:893
+msgid "This post is a duplicate of"
+msgstr "Ez a bejegyzés másolata a"
+
+#: copy-delete-posts.php:892
+msgid "Change the type of this copy <span class=\"cdp-premium-icon cdp-big-icon\"></span>"
+msgstr "Cseréld ki ennek a másolatnak a típusát <span class=\"cdp-premium-icon cdp-big-icon\"></span>"
+
+#: copy-delete-posts.php:891
+msgid "If you’re on a multisite you can copy it to other sites."
+msgstr "Ha multisite-on vagy, tudod másolni más honlapokra is."
+
+#: copy-delete-posts.php:889 copy-delete-posts.php:890
+msgid "This is a Premium Feature.<br><a href=\"https://sellcodes.com/CylMIdJD\" target=\"_blank\">Check it out and upgrade today</a>,<br>we made it <b>really affordable!</b>"
+msgstr "Ez egy Prémium Funkció.<br><a href=\"https://sellcodes.com/CylMIdJD\" target=\"_blank\">Nézd meg, és frissíts még ma</a>,<br>nagyon megfizethetővé <b>tettük!</b>"
+
+#: copy-delete-posts.php:888
+msgid "If you’re on a multisite you can copy it to other sites with the Premium Plugin. <a href=\"https://sellcodes.com/CylMIdJD\" target=\"_blank\">Order it now!</a>"
+msgstr "Ha multisite-on vagy, tudod másolni más honlapokra is a Prémium Bővítménnyel. <a href=\"https://sellcodes.com/CylMIdJD\" target=\"_blank\">Rendeld meg most!</a>"
+
+#: copy-delete-posts.php:887
+msgid "here"
+msgstr "itt"
+
+#: copy-delete-posts.php:886
+msgid "Define your copy settings"
+msgstr "Határozd meg a másolási beállításaid"
+
+#: copy-delete-posts.php:885 menu/notifications.php:87
+msgid "Hide"
+msgstr "Elrejtés"
+
+#: copy-delete-posts.php:884 menu/notifications.php:86
+msgid "Auto Cleaned-up"
+msgstr "Automatikusan Tisztítva"
+
+#: copy-delete-posts.php:883 menu/notifications.php:86
+msgid "Deleted Posts"
+msgstr "Törölt Bejegyzések"
+
+#: copy-delete-posts.php:882 menu/notifications.php:56
+msgid "Kill"
+msgstr "Kivégzés"
+
+#: copy-delete-posts.php:881 menu/notifications.php:55
+msgid "Auto Cleaning-up"
+msgstr "Automatikus Tisztítás"
+
+#: copy-delete-posts.php:880 menu/notifications.php:55
+msgid "Deleting Posts"
+msgstr "Bejegyzések Törlése"
+
+#: copy-delete-posts.php:879
+msgid "Change it to blank"
+msgstr "Cseréld ki üresre"
+
+#: copy-delete-posts.php:878
+msgid "Change it to (Name of original)"
+msgstr "Cseréld ki az (Eredeti neve)-re"
+
+#: copy-delete-posts.php:877
+msgid "only if <u><b>not</b></u> empty"
+msgstr "csak akkor, ha <u><b>nem</b></u> üres"
+
+#: copy-delete-posts.php:876
+msgid "<b>including</b> empty"
+msgstr "az üreset <b>beleértve</b>"
+
+#: copy-delete-posts.php:875
+msgid "Something went wrong and we couldn't send request, are you connected to the internet?"
+msgstr "Valami hiba lépett fel, és nem tudtuk elküldeni a kérést, kapcsolódva vagy az internethez?"
+
+#: copy-delete-posts.php:874
+msgid "Something went wrong and we couldn't send request, please try refresh page and try again."
+msgstr "Valami hiba lépett fel, és nem tudtuk elküldeni a kérést, kérlek, próbáld meg újratölteni az oldalt és próbáld újra."
+
+#: copy-delete-posts.php:873
+msgid "Unknown response, please try refresh the page!"
+msgstr "Ismeretlen válasz, kérlek, próbáld meg az oldal újratöltését!"
+
+#: copy-delete-posts.php:872
+msgid "License is valid, press the button again to activate!"
+msgstr "Az engedély érvényes, nyomd meg újra a gombot, hogy aktiváld!"
+
+#: copy-delete-posts.php:871
+msgid "License is already active, let us reload the page!"
+msgstr "Az engedély már aktív, engedd meg, hogy újratöltsük az oldalt!"
+
+#: copy-delete-posts.php:870
+msgid "Please enter license key, currently it is empty."
+msgstr "Kérlek, add meg az engedély kulcsát, jelenleg ez üres."
+
+#: copy-delete-posts.php:869
+msgid "Something went wrong and we couldn't setup the deletion task. – Please check console for more info."
+msgstr "Valami nem sikerült, és nem tudtuk feltelepíteni a törlési feladatot. – Kérlek, nézd meg a konzolt több információért."
+
+#: copy-delete-posts.php:868
+msgid "– Please try without throttling."
+msgstr "– Kérlek, próbáld meg elfojtás nélkül."
+
+#: copy-delete-posts.php:867
+msgid "Something went wrong and we couldn't setup the deletion task."
+msgstr "Valami nem sikerült, és nem tudtuk feltelepíteni a törlési feladatot."
+
+#: copy-delete-posts.php:866
+msgid "Deletion process started, you can close this page now and wait till the process ends!"
+msgstr "A törlési folyamat elkezdődött, mostmár bezárhatod ezt az oldalt, és várj, amíg a folyamat befejeződik!"
+
+#: copy-delete-posts.php:865
+msgid "You have wrong count in throttling field, please fix."
+msgstr "Hibás számlálásod van a fojtási mezőben, kérlek, javítsd ki."
+
+#: copy-delete-posts.php:864
+msgid "Nothing to do here, please select at least one post to delete."
+msgstr "Semmi tennivaló nincs itt, kérlek, válassz ki legalább egy bejegyzést törlésre."
+
+#: copy-delete-posts.php:863
+msgid "Please check that you completed all steps, before this task!"
+msgstr "Kérlek, ellenőrizd, hogy befejezted az összes lépést, ezelőtt a feladat előtt!"
+
+#: copy-delete-posts.php:862
+msgid "No posts/pages meeting the current filter conditions."
+msgstr "Egyik bejegyzés/oldal sem éri el a jelenlegi szűrő feltételeket."
+
+#: copy-delete-posts.php:861
+msgid "You did not select any filter.<br>Click <a href=\"#\" class=\"cdp-show-the-copies\">here</a> to show all copies (of the selected post type) made by this plugin."
+msgstr "Nem választottál ki semmilyen szűrőt.<br>Kattints <a href=\"#\" class=\"cdp-show-the-copies\">ide</a> hogy megjelenítsd az összes másolatot (a kiválasztott bejegyzéstípusból), amelyet ez a bővítmény készített."
+
+#: copy-delete-posts.php:860
+msgid "Cannot connect to the server, premium filters will not be applied."
+msgstr "Nem lehet csatlakozni a szerverhez, a prémium szűrők nem lesznek alkalmazva."
+
+#: copy-delete-posts.php:859
+msgid "Please, check for: which duplicates you are looking for"
+msgstr "Kérlek, nézd meg: melyik másolatokat keresed"
+
+#: copy-delete-posts.php:858
+msgid "Something went wrong and we couldn't get post list. – Please check console for more info."
+msgstr "Valami nem sikerült, és nem tudtuk megszerezni a bejegzések listáját. – Kérlek, nézd meg a konzolt több információért."
+
+#: copy-delete-posts.php:857
+msgid "There was an error while getting data from server, please try again."
+msgstr "Hiba lépett fel az adatok megszerzése közben a szervertől, kérlek, próbáld újra."
+
+#: copy-delete-posts.php:856 copy-delete-posts.php:909
+msgid "Copy in progress..."
+msgstr "Másolás folyamatban..."
+
+#: copy-delete-posts.php:855
+msgid "Something went wrong and we couldn't get profile settings – please try again!"
+msgstr "Valami nem sikerült, és nem tudtuk megszerezni a profil beállításait – kérlek, próbáld újra!"
+
+#: copy-delete-posts.php:853
+msgid "Something went wrong and we couldn't get profile settings. – Check console for more details"
+msgstr "Valami nem sikerült, és nem tudtuk megszerezni a profil beállításait. – Nézd meg a konzolt több részletért"
+
+#: copy-delete-posts.php:852
+msgid "Unable to recognize selected profile, please try again."
+msgstr "Nem lehetett felismerni a kiválasztott profilt, kérlek, próbáld újra."
+
+#: copy-delete-posts.php:851 copy-delete-posts.php:908
+msgid "Couldn't recognize that button, please try again."
+msgstr "Nem lehetett felismerni azt a gombot, kérlek, próbáld újra."
+
+#: copy-delete-posts.php:850 copy-delete-posts.php:907
+msgid "Something went wrong and we couldn't copy this post. – See dev console for more info."
+msgstr "Valami nem sikerült, és nem tudtuk másolni ezt a bejegyzést – Lásd a dev konzolt több infóért."
+
+#: copy-delete-posts.php:849 copy-delete-posts.php:906
+msgid "Something went wrong and we couldn't copy this post – please try again!"
+msgstr "Valami nem sikerült, és nem tudtuk másolni ezt a bejegyzést – kérlek, próbáld újra!"
+
+#: copy-delete-posts.php:848
+msgid "You need to insert positive number for copies."
+msgstr "Pozitív számú másolatot kell beillesztened."
+
+#: copy-delete-posts.php:847 menu/configuration.php:443
+#: menu/configuration.php:454
+msgid "(Name of original)"
+msgstr "(Eredeti neve)"
+
+#: copy-delete-posts.php:846
+msgid "Something went wrong and we couldn't save your settings. – Please check console for more info."
+msgstr "Valami nem sikerült, és nem tudtuk elmenteni a beállításaid. – Kérlek, nézd meg a konzolt több infóért."
+
+#: copy-delete-posts.php:845
+msgid "Something went wrong and we couldn't save your settings."
+msgstr "Valami nem sikerült, és nem tudtuk elmenteni a beállításaid."
+
+#: copy-delete-posts.php:844
+msgid "All your settings were saved!"
+msgstr "Az összes beállításod el lett mentve!"
+
+#: copy-delete-posts.php:843
+msgid "Something went wrong and we couldn't update intro settings. – Please check console for more info."
+msgstr "Valami nem sikerült, és nem tudtuk frissíteni az intró beállításokat. – Kérlek, nézd meg a konzolt több infóért."
+
+#: copy-delete-posts.php:842
+msgid "Something went wrong and we couldn't update intro settings – try again!"
+msgstr "Valami nem sikerült, és nem tudtuk frissíteni az intró beállításokat – próbáld újra!"
+
+#: copy-delete-posts.php:841
+msgid "Something went wrong and we couldn't save intro settings."
+msgstr "Valami nem sikerült, és nem tudtuk elmenteni az intró beállításokat."
+
+#: copy-delete-posts.php:840
+msgid "Something went wrong and we couldn't save intro settings!"
+msgstr "Valami nem sikerült, és nem tudtuk elmenteni az intró beállításokat!"
+
+#: copy-delete-posts.php:839
+msgid "No items to show, try with other filters!"
+msgstr "Nincs megjelenítésre való tárgy, próbáld meg más szűrőkkel!"
+
+#: menu/configuration.php:990
+msgid "<b>Questions?</b> We're happy to help in the <a href=\"https://wordpress.org/support/plugin/copy-delete-posts/#new-topic-0\" target=\"_blank\" style=\"text-decoration: none;\">Support Forum</a>."
+msgstr "<b>Kérdések?</b> Örömmel segítünk a <a href=\"https://wordpress.org/support/plugin/copy-delete-posts/#new-topic-0\" target=\"_blank\" style=\"text-decoration: none;\">Támogatási Fórumban</a>."
+
+#: menu/configuration.php:886
+msgid "Make sure you created a backup with, e.g. with <a href=\"https://wordpress.org/plugins/backup-backup/\" target=\"_blank\">this plugin</a>."
+msgstr "Győződjünk meg róla, hogy létrehoztunk egy biztonsági másolatot, pl. <a href=\"https://wordpress.org/plugins/backup-backup/\" target=\"_blank\">ezzel a bővítménnyel</a>."
+
+#: menu/configuration.php:672
+msgid ""
+"Before you delete anything here (which cannot be undone!) we <b class=\"cdp-f-w-bold\">strongly suggest</b><br />\n"
+"                that you create a backup, for example with <a href=\"https://wordpress.org/plugins/backup-backup/\" target=\"_blank\">this plugin</a>"
+msgstr ""
+"Mielőtt itt bármit kitörölnénk (amit nem lehet visszacsinálni!) <b class=\"cdp-f-w-bold\">határozottan ajánlott</b><br />\n"
+"                biztonsági másolat létrehozása, például <a href=\"https://wordpress.org/plugins/backup-backup/\" target=\"_blank\">a bővítménnyel</a>"
+
+#: menu/modal.php:212 menu/tooltips.php:57 menu/tooltips.php:273
+msgid "time(s)"
+msgstr "x"
+
+#: menu/configuration.php:119
+msgid "Welcome to Copy & Delete Posts!"
+msgstr "Üdvözöl a Copy & Delete Posts!"
+
+#: copy-delete-posts.php:359
+msgid "Copy & Delete Posts Menu"
+msgstr "Copy & Delete Posts menü"
+
+#: copy-delete-posts.php:854
+msgid "Copy & Delete Post – Error"
+msgstr "Copy & Delete Posts – Hiba"
+
+#: menu/configuration.php:664
+msgid "Delete duplicate posts/pages"
+msgstr "Bejegyzések/oldalak másolatának törlése"
+
+#: menu/configuration.php:998
+msgid "This will establish connection to the chat servers"
+msgstr "Ez kapcsolatot hoz létre a chat szerverekhez"
+
+#: menu/configuration.php:996
+msgid "Connect with support (click to load)"
+msgstr "Vedd fel a kapcsolatot a támogatással (kattints a betöltéshez)"
+
+#. Author URI of the plugin
+msgid "https://copy-delete-posts.com/"
+msgstr "https://copy-delete-posts.com/"
+
+#. Plugin URI of the plugin
+msgid "https://copy-delete-posts.com"
+msgstr "https://copy-delete-posts.com"
+
+#. Description of the plugin
+msgid "The best solution to easily make duplicates of your posts & pages, and delete them in one go."
+msgstr "A legjobb megoldás, hogy könnyedén készíts másolatokat a bejegyzéseidről & oldalaidról, és ki is töröld őket egyúttal."
+
+#. Plugin Name of the plugin
+#: copy-delete-posts.php:357 copy-delete-posts.php:825
+#: copy-delete-posts.php:829
+msgid "Copy & Delete Posts"
+msgstr "Copy & Delete Posts - Bejegyzések Másolása és Törlése"
+
+#. Author of the plugin
+msgid "Copy Delete Posts"
+msgstr "Copy Delete Posts"
