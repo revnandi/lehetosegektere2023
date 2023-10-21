@@ -4,7 +4,7 @@
 
   <?php do_action('tailpress_content_start'); ?>
 
-  <div class="container mx-auto my-8">
+  <div class="container px-8 mx-auto my-8">
 
     <div class="text-center">
       <h2

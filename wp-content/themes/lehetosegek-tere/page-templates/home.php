@@ -103,7 +103,7 @@
   <?php do_action('tailpress_content_start'); ?>
 
 </div>
-<div class="container mx-auto my-8">
+<div class="container px-8 mx-auto my-8">
 
   <?php if (have_posts()): ?>
     <?php
