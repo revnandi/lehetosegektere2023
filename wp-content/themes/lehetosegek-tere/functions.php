@@ -284,11 +284,13 @@ add_filter( 'use_block_editor_for_post_type', 'my_disable_gutenberg', 10, 2 );
 
 // Register string for Polylang
 if(function_exists('pll_register_string')) {
+	pll_register_string( 'cpttitles', 'Partnereink' );
 	pll_register_string( 'cpttitles', 'Stáb' );
 	pll_register_string( 'cpttitles', 'Galéria' );
 	pll_register_string( 'cpttitles', 'Kiadványaink' );
 	pll_register_string( 'sectiontitles', 'Iratkozz fel a
 	programajánlónk' );
 	pll_register_string( 'sectiontitles', 'Rólunk mondták' );
+	pll_register_string( 'parners', 'A Lehetőségek Tere a tranzit.hu kezdeményezése. A tranzit.hu fő partnere az erste alapítvány.' );
 	pll_register_string( 'random', 'elérhető' );
 }

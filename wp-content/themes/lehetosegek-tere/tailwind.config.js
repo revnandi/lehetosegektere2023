@@ -55,6 +55,9 @@ module.exports = {
       aspectRatio: {
         'tv': '4 / 3',
         'popup-image': '9 / 5'
+      },
+      borderRadius: {
+        '4xl': '2rem'
       }
     },
     screens: {

@@ -4080,7 +4080,7 @@ var EventPopUp = /*#__PURE__*/function () {
         featured_image = _ref.featured_image,
         categories = _ref.categories;
       console.log(featured_image);
-      return "\n      <div class=\"absolute top-44 left-1/2 -translate-x-50 container mx-auto lg:max-w-prose\">\n        <button class=\"popup-button-close absolute top-0 right-0 w-6 h-6 bg-close bg-center bg-no-repeat bg-turquoise bg-[length:0.625rem_0.625rem]\"></button>\n        <div class=\"max-w-full aspect-popup-image\">\n        ".concat(featured_image ? "<img class=\"w-full h-full object-cover object-center\" width=\"".concat(featured_image['thumbnail'].width, "\" height=\"").concat(featured_image['thumbnail'].height, "\" src=\"").concat(featured_image['thumbnail'].url, "\" srcset=\"").concat(Object.entries(featured_image).map(function (_ref2) {
+      return "\n      <div class=\"absolute top-44 left-1/2 -translate-x-50 container mx-auto lg:max-w-prose\">\n        <button class=\"popup-button-close absolute top-0 right-0 w-6 h-6 bg-close bg-center bg-no-repeat bg-turquoise bg-[length:0.625rem_0.625rem]\"></button>\n        <div class=\"max-w-full aspect-popup-image\">\n        ".concat(featured_image.length > 0 ? "<img class=\"w-full h-full object-cover object-center\" width=\"".concat(featured_image['thumbnail'].width, "\" height=\"").concat(featured_image['thumbnail'].height, "\" src=\"").concat(featured_image['thumbnail'].url, "\" srcset=\"").concat(Object.entries(featured_image).map(function (_ref2) {
         var _ref3 = _slicedToArray(_ref2, 2),
           size = _ref3[0],
           details = _ref3[1];

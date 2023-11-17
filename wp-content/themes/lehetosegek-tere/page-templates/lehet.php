@@ -61,6 +61,8 @@
 
   <?php get_template_part('template-parts/bubbles-stars'); ?>
 
+  <?php get_template_part('template-parts/partners'); ?>
+
   <?php get_template_part('template-parts/staff'); ?>
 
   <?php get_template_part('template-parts/testimonials'); ?>

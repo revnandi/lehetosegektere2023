@@ -23,7 +23,7 @@ interface Event {
   date_end: string | null,
   location?: string,
   categories?: string[],
-  featured_image: FeaturedImages;
+  featured_image: any // FeaturedImages[];
 }
 
 export class EventPopUp {
@@ -112,7 +112,7 @@ export class EventPopUp {
       <div class="absolute top-44 left-1/2 -translate-x-50 container mx-auto lg:max-w-prose">
         <button class="popup-button-close absolute top-0 right-0 w-6 h-6 bg-close bg-center bg-no-repeat bg-turquoise bg-[length:0.625rem_0.625rem]"></button>
         <div class="max-w-full aspect-popup-image">
-        ${(featured_image) ? `<img class="w-full h-full object-cover object-center" width="${featured_image['thumbnail'].width}" height="${featured_image['thumbnail'].height}" src="${featured_image['thumbnail'].url}" srcset="${Object.entries(featured_image).map(([size, details]) => `${details.url} ${details.width}w`).join(', ')}" loading="lazy" alt="">` : ''}
+        ${(featured_image.length > 0) ? `<img class="w-full h-full object-cover object-center" width="${featured_image['thumbnail'].width}" height="${featured_image['thumbnail'].height}" src="${featured_image['thumbnail'].url}" srcset="${Object.entries(featured_image).map(([size, details]) => `${details.url} ${details.width}w`).join(', ')}" loading="lazy" alt="">` : ''}
       </div>
         <div class="bg-white">
           <div class="grid grid-cols-12">
