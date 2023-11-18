@@ -185,8 +185,8 @@ $columns = apply_filters('pmxe_manage_imports_columns', $columns);
 								<td style="min-width: 325px;">
 									<strong><?php echo wp_all_export_clear_xss(esc_html($item['friendly_name'])); ?></strong> <br>
 									<div class="row-actions">										
-										<span class="edit"><a class="edit" href="<?php echo esc_url(add_query_arg(array('id' => $item['id'], 'action' => 'template'), $this->baseUrl)) ?>"><?php esc_html_e('Edit Template', 'wp_all_export_plugin') ?></a></span> |
-										<span class="edit"><a class="edit" href="<?php echo esc_url(add_query_arg(array('id' => $item['id'], 'action' => 'options'), $this->baseUrl)) ?>"><?php esc_html_e('Settings', 'wp_all_export_plugin') ?></a></span> |
+										<span class="edit"><a class="edit" href="<?php echo esc_url(add_query_arg(array('id' => $item['id'], 'action' => 'template','_wpnonce_template' => wp_create_nonce('template')), $this->baseUrl)) ?>"><?php esc_html_e('Edit Template', 'wp_all_export_plugin') ?></a></span> |
+										<span class="edit"><a class="edit" href="<?php echo esc_url(add_query_arg(array('id' => $item['id'], 'action' => 'options','_wpnonce_options' => wp_create_nonce('options')), $this->baseUrl)) ?>"><?php esc_html_e('Settings', 'wp_all_export_plugin') ?></a></span> |
 										
 										<?php if ( ! $is_secure_import and $item['attch_id']): ?>
 										<span class="update"><a class="update" href="<?php echo esc_url(add_query_arg(array('id' => $item['id'], 'action' => 'get_file', '_wpnonce' => wp_create_nonce( '_wpnonce-download_feed' )), $this->baseUrl)) ?>"><?php echo esc_html(strtoupper(wp_all_export_get_export_format($item['options']))); ?></a></span> |
@@ -226,7 +226,7 @@ $columns = apply_filters('pmxe_manage_imports_columns', $columns);
                                                 ($item['options']['export_type'] == 'advanced' && $item['options']['wp_query_selector'] == 'wp_user_query' && !$addons->isUserAddonActive())
                                             ) {
                                                 ?>
-                                                href="<?php echo esc_url(add_query_arg(array('id' => $item['id'], 'action' => 'options'), $this->baseUrl)) ?>"
+                                                href="<?php echo esc_url(add_query_arg(array('id' => $item['id'], 'action' => 'options','_wpnonce_options' => wp_create_nonce('options')), $this->baseUrl)) ?>"
                                                 <?php
                                                 // Disable scheduling options for WooCo exports if WooCo Export Add-On isn't enabled
                                             } else if (
@@ -240,7 +240,7 @@ $columns = apply_filters('pmxe_manage_imports_columns', $columns);
                                                 ($item['options']['export_type'] == 'advanced' && in_array($item['options']['exportquery']->query['post_type'], array(array('product', 'product_variation'), 'shop_order', 'shop_coupon')) && !$addons->isWooCommerceAddonActive())
                                             ) {
                                                 ?>
-                                                href="<?php echo esc_url(add_query_arg(array('id' => $item['id'], 'action' => 'options'), $this->baseUrl)) ?>"
+                                                href="<?php echo esc_url(add_query_arg(array('id' => $item['id'], 'action' => 'options','_wpnonce_options' => wp_create_nonce('options')), $this->baseUrl)) ?>"
                                                 <?php
                                                 // Disable scheduling options for ACF exports if ACF Export Add-On isn't enabled
                                             } else if (
@@ -248,7 +248,7 @@ $columns = apply_filters('pmxe_manage_imports_columns', $columns);
                                                 ($item['options']['export_type'] == 'advanced' && $item['options']['wp_query_selector'] != 'wp_comment_query' && in_array('acf', $item['options']['cc_type']) && !$addons->isAcfAddonActive())
                                             ) {
                                                 ?>
-                                                href="<?php echo esc_url(add_query_arg(array('id' => $item['id'], 'action' => 'options'), $this->baseUrl)) ?>"
+                                                href="<?php echo esc_url(add_query_arg(array('id' => $item['id'], 'action' => 'options','_wpnonce_options' => wp_create_nonce('options')), $this->baseUrl)) ?>"
                                                 <?php
                                             } else {
 

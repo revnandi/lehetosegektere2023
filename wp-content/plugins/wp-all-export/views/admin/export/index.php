@@ -297,9 +297,9 @@ do_action('pmxe_addons_html');
 						<input type="hidden" name="is_submitted" value="1" />
 						<input type="hidden" name="auto_generate" value="0" />
 
-						<?php wp_nonce_field('choose-cpt', '_wpnonce_choose-cpt'); ?>											
+						<?php wp_nonce_field('choose-cpt', '_wpnonce_choose-cpt'); ?>
 
-						<span class="wp_all_export_continue_step_two"></span>						
+                        <span class="wp_all_export_continue_step_two"></span>
 
 					</p>
 					

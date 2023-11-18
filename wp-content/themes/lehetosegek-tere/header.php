@@ -78,6 +78,7 @@
 
 				</div>
 			</div>
+			<?php global $template; echo basename($template); ?>
 		</header>
 
 		<div class="flex justify-end my-3 space-x-3 mr-11">

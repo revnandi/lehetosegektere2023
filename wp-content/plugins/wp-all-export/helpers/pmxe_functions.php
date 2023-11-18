@@ -20,7 +20,10 @@
 	if ( ! function_exists('wp_all_export_get_absolute_path') ){
 		function wp_all_export_get_absolute_path($path){			
 			$uploads = wp_upload_dir();
-			return ( strpos($path, $uploads['basedir']) === false and ! preg_match('%^https?://%i', $path)) ? $uploads['basedir'] . $path : $path;			
+
+			// If the path isn't http(s) and doesn't start with the basedir, add the basedir.
+			return ( strncmp($path, $uploads['basedir'], strlen($uploads['basedir'])) !== 0  and ! preg_match( '%^https?://%i', $path ) ) ? $uploads['basedir'] . $path : $path;
+
 		}
 	}
 

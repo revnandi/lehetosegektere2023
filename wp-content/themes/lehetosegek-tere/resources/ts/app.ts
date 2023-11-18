@@ -8,8 +8,9 @@ import { Gallery } from './components/gallery';
 
 window.addEventListener('load', function () {
   lazyLoad();
-  const puzzle = new Puzzle({ wrapperId: 'lt_puzzle' });
-  // console.log(puzzle)
+  const puzzle = new Puzzle({ wrapperId: 'lt_puzzle', innerId: 'lt_puzzle_inner', notificationId: 'lt_puzzle_notification'});
+
+  console.log(puzzle)
 
   const eventPopUp = new EventPopUp('lt_events_popup');
 
@@ -49,6 +50,7 @@ window.addEventListener('load', function () {
       rewind: true,
       type: 'fade',
       pagination: false,
+      lazyLoad: true,
       classes: {
         pagination: 'z-10 absolute bottom-6 left-11 flex justify-center py-2 space-x-2 [&>li]:h-fit [&>li]:flex',
         page: 'w-4 h-4 bg-black rounded-full [&.is-active]:bg-turquoise'

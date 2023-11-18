@@ -46,7 +46,7 @@ module.exports = {
       colors: {
         'turquoise': '#66c79a',
         'purple': '#ff00fd',
-        'purple-light' : '#e63df3',
+        'purple-light': '#e63df3',
         'red': '#f9101e',
         'red-orange': '#e63225',
         'orange': '#eb6b2d',
@@ -58,6 +58,21 @@ module.exports = {
       },
       borderRadius: {
         '4xl': '2rem'
+      },
+      keyframes: {
+        puzzleAppear: {
+          '0%': {
+            opacity: '0',
+            top: '40%'
+          },
+          '100%': {
+            opacity: '100%',
+            top: '50%'
+          }
+        }
+      },
+      animation: {
+        puzzleAppear: 'puzzleAppear 1s',
       }
     },
     screens: {

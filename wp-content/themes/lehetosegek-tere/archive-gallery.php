@@ -21,18 +21,17 @@
 
     <?php if (have_posts()): ?>
       <div class="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-x-2 gap-y-6">
-        <?php while (have_posts()):
-          the_post();
+        <?php while (have_posts()): the_post();
           $date = get_field('date');
           ?>
           <div>
             <?php if (has_post_thumbnail()): ?>
               <div
-                class="relative col-span-1 overflow-hidden border group md:col-span-5 aspect-wide-header aspect-square border-turquoise">
+                class="relative col-span-1 overflow-hidden border group md:col-span-5 aspect-wide-header aspect-square">
                 <img class="object-cover w-full h-full" loading="lazy"
                   src="<?php echo get_the_post_thumbnail_url(null, 'lqip') ?>"
-                  data-srcset="<?php echo get_the_post_thumbnail_url(null, 'thumbnail') ?> 150w, <?php echo get_the_post_thumbnail_url(null, 'medium') ?> 300w, <?php echo get_the_post_thumbnail_url(null, 'medium_large') ?> 1024w"
-                  data-sizes="auto" />
+                  data-srcset="<?php echo get_the_post_thumbnail_url(null, 'thumbnail') ?> 300w, <?php echo get_the_post_thumbnail_url(null, 'medium') ?> 768w, <?php echo get_the_post_thumbnail_url(null, 'medium_large') ?> 1024w"
+                  sizes="(max-width: 300px) 300px, (max-width: 768px) 768px, 1024px" />
               </div>
             <?php endif; ?>
 

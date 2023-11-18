@@ -96,7 +96,7 @@ $l10n = array(
 						<?php wp_nonce_field('update-export', '_wpnonce_update-export') ?>
 						<input type="hidden" name="is_confirmed" value="1" />					
 						
-						<a href="<?php echo esc_url(apply_filters('pmxi_options_back_link', add_query_arg('id', $item->id, add_query_arg('action', 'template', $this->baseUrl)), $isWizard)); ?>" class="back rad3"><?php esc_html_e('Edit Template', 'wp_all_export_plugin') ?></a>
+						<a href="<?php echo esc_url(apply_filters('pmxi_options_back_link', add_query_arg('id', $item->id, add_query_arg(['action'=>'template','_wpnonce_template' => wp_create_nonce('template')], $this->baseUrl)), $isWizard)); ?>" class="back rad3"><?php esc_html_e('Edit Template', 'wp_all_export_plugin') ?></a>
 						<?php if (empty(PMXE_Plugin::$session->found_posts)):?>
 						<input type="submit" class="button button-primary button-hero wpallexport-large-button confirm_and_run_bottom" value="<?php esc_html_e('Save Export Configuration', 'wp_all_export_plugin') ?>" />
 						<?php else:?>

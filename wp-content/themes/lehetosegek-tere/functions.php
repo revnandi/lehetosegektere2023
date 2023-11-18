@@ -293,4 +293,7 @@ if(function_exists('pll_register_string')) {
 	pll_register_string( 'sectiontitles', 'Rólunk mondták' );
 	pll_register_string( 'parners', 'A Lehetőségek Tere a tranzit.hu kezdeményezése. A tranzit.hu fő partnere az erste alapítvány.' );
 	pll_register_string( 'random', 'elérhető' );
+	pll_register_string( 'footer', 'Kövessetek bennünket!' );
+	pll_register_string( 'footer', 'Partnerek' );
+	pll_register_string( 'footer', 'Kapcsolat' );
 }

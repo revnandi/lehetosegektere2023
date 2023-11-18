@@ -20,12 +20,20 @@ interface HTMLDivElementWithDataset extends HTMLDivElement {
 export class Puzzle {
   private wrapperId: string;
   private wrapper: HTMLElement;
+  private innerId: string;
+  private inner: HTMLElement;
+  private notificationId: string;
+  private notification: HTMLElement;
   private baseDistance: number;
   private tileMap: TileMap;
 
-  constructor(options: { wrapperId: string }) {
+  constructor(options: { wrapperId: string, innerId: string, notificationId: string }) {
     this.wrapperId = options.wrapperId;
     this.wrapper = document.getElementById(this.wrapperId)!;
+    this.innerId = options.innerId;
+    this.inner = document.getElementById(this.innerId)!;
+    this.notificationId = options.notificationId;
+    this.notification = document.getElementById(this.notificationId)!;
     this.baseDistance = 100;
     this.tileMap = {
       1: {
@@ -97,7 +105,6 @@ export class Puzzle {
     if(!this.wrapper) return;
     this.attachEventListeners();
 
-    
     let delay = -50;
     
     const tiles = this.wrapper.querySelectorAll(':scope > div:first-child > div');
@@ -109,11 +116,11 @@ export class Puzzle {
     
     setTimeout(() => {
       this.wrapper.classList.add('opacity-100');
+      this.notification.classList.add('show-puzzle-notification')
     }, 800);
 
-    // setTimeout(() => {
-    //   this.showNotification = true;
-    // }, 3000);
+    setTimeout(() => {
+    }, 1000);
   }
 
   private setTile(tile: HTMLDivElementWithDataset):void {
@@ -126,6 +133,14 @@ export class Puzzle {
 
   private attachEventListeners(): void {
     const puzzleItems = Array.from(document.querySelectorAll(`#${this.wrapperId} > div:first-child > div`)) as HTMLElement[];
+
+    this.inner.addEventListener('mouseenter', () => {
+      this.notification.classList.remove('show-puzzle-notification')
+    })
+
+    this.inner.addEventListener('mouseleave', () => {
+      this.notification.classList.add('show-puzzle-notification')
+    })
 
     puzzleItems.forEach((item) => {
       item.addEventListener('click', (event) => {

@@ -49,11 +49,12 @@
               <li class="splide__slide">
                 <?php if ($image): ?>
                   <div
-                    class="relative w-full col-span-1 overflow-hidden border group md:col-span-5 aspect-video border-turquoise">
-                    <img class="object-cover w-full h-full" loading="lazy"
-                      src="<?php echo wp_get_attachment_image_url($image['ID'], 'lqip') ?>"
-                      data-srcset="<?php echo wp_get_attachment_image_url($image['ID'], 'thumbnail') ?> 150w, <?php echo wp_get_attachment_image_url($image['ID'], 'medium') ?> 300w, <?php echo wp_get_attachment_image_url($image['ID'], 'medium_large') ?> 768w, <?php echo wp_get_attachment_image_url($image['ID'], 'large') ?> 1024w, <?php echo wp_get_attachment_image_url($image['ID'], '1536x1536') ?> 1536w, <?php echo wp_get_attachment_image_url($image['ID'], '2048x2048') ?> 2048w"
-                      sizes="(max-width: 149px) 150px, (min-width: 150px) 300px, (min-width: 300px) 768px, (min-width: 768px) 1024px, (min-width: 1024px) 1536px, (min-width: 1440px) 2048px" />
+                    class="relative w-full col-span-1 overflow-hidden border group md:col-span-5 aspect-video">
+                    <img class="object-cover w-full h-full" class="object-contain w-auto h-full"
+                      alt="<?php echo esc_attr($image['alt']); ?>"
+                      data-splide-lazy="<?php echo esc_url($image['sizes']['2048x2048']); ?>"
+                      data-splide-lazy-srcset="<?php echo esc_url($image['sizes']['thumbnail']); ?> 150w, <?php echo esc_url($image['sizes']['medium']); ?> 300w, <?php echo esc_url($image['sizes']['medium_large']); ?> 768w, <?php echo esc_url($image['sizes']['large']); ?> 1024w, <?php echo esc_url($image['sizes']['1536x1536']); ?> 1536w, <?php echo esc_url($image['sizes']['2048x2048']); ?> 2048w"
+                      sizes="(max-width: 150px) 150px, (max-width: 300px) 300px, (max-width: 768px) 768px, (max-width: 1024px) 1024px, (max-width: 1536px) 1536px, 2048px" />
                   </div>
                 <?php endif; ?>
               </li>

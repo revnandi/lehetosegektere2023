@@ -1,5 +1,5 @@
 @charset "UTF-8";/*
-! tailwindcss v3.3.2 | MIT License | https://tailwindcss.com
+! tailwindcss v3.3.5 | MIT License | https://tailwindcss.com
 *//*
 1. Prevent padding and border from affecting element width. (https://github.com/mozdevs/cssremedy/issues/4)
 2. Allow adding a border to an element by just adding a border-width. (https://github.com/tailwindcss/tailwindcss/pull/116)
@@ -111,6 +111,8 @@ optgroup,
 select,
 textarea {
   font-family: inherit; /* 1 */
+  font-feature-settings: inherit; /* 1 */
+  font-variation-settings: inherit; /* 1 */
   font-size: 100%; /* 1 */
   font-weight: inherit; /* 1 */
   line-height: inherit; /* 1 */
@@ -195,6 +197,10 @@ ul,
 menu {
   list-style: none;
   margin: 0;
+  padding: 0;
+}/*
+Reset default styling for dialogs.
+*/dialog {
   padding: 0;
 }/*
 Prevent resizing textareas horizontally by default.
@@ -361,7 +367,8 @@ video {
   right: 0px}.top-0{
   top: 0px}.top-3{
   top: 0.75rem}.top-44{
-  top: 11rem}.z-10{
+  top: 11rem}.top-\[15\%\]{
+  top: 15%}.z-10{
   z-index: 10}.z-50{
   z-index: 50}.col-span-1{
   grid-column: span 1 / span 1}.col-span-12{
@@ -391,14 +398,11 @@ video {
   margin-bottom: 2rem}.mr-11{
   margin-right: 2.75rem}.mt-16{
   margin-top: 4rem}.mt-2{
-  margin-top: 0.5rem}.mt-3{
+  margin-top: 0.5rem}.mt-24{
+  margin-top: 6rem}.mt-3{
   margin-top: 0.75rem}.mt-4{
   margin-top: 1rem}.mt-6{
-  margin-top: 1.5rem}.mt-8{
-  margin-top: 2rem}.mt-10{
-  margin-top: 2.5rem}.mt-28{
-  margin-top: 7rem}.mt-24{
-  margin-top: 6rem}.block{
+  margin-top: 1.5rem}.block{
   display: block}.inline-block{
   display: inline-block}.flex{
   display: flex}.grid{
@@ -413,7 +417,8 @@ video {
   height: 3rem}.h-16{
   height: 4rem}.h-2{
   height: 0.5rem}.h-2\.5{
-  height: 0.625rem}.h-4{
+  height: 0.625rem}.h-20{
+  height: 5rem}.h-4{
   height: 1rem}.h-5{
   height: 1.25rem}.h-52{
   height: 13rem}.h-6{
@@ -422,8 +427,7 @@ video {
   height: auto}.h-fit{
   height: -moz-fit-content;
   height: fit-content}.h-full{
-  height: 100%}.h-20{
-  height: 5rem}.min-h-screen{
+  height: 100%}.min-h-screen{
   min-height: 100vh}.w-1\/3{
   width: 33.333333%}.w-10{
   width: 2.5rem}.w-12{
@@ -433,25 +437,25 @@ video {
   width: 0.625rem}.w-3\/4{
   width: 75%}.w-32{
   width: 8rem}.w-4{
-  width: 1rem}.w-5{
+  width: 1rem}.w-40{
+  width: 10rem}.w-5{
   width: 1.25rem}.w-52{
   width: 13rem}.w-6{
   width: 1.5rem}.w-8{
-  width: 2rem}.w-fit{
+  width: 2rem}.w-auto{
+  width: auto}.w-fit{
   width: -moz-fit-content;
   width: fit-content}.w-full{
-  width: 100%}.w-auto{
-  width: auto}.min-w-\[6rem\]{
-  min-width: 6rem}.min-w-\[20rem\]{
+  width: 100%}.min-w-\[14rem\]{
+  min-width: 14rem}.min-w-\[20rem\]{
   min-width: 20rem}.max-w-\[1440px\]{
   max-width: 1440px}.max-w-\[20ch\]{
-  max-width: 20ch}.max-w-\[8ch\]{
+  max-width: 20ch}.max-w-\[38ch\]{
+  max-width: 38ch}.max-w-\[8ch\]{
   max-width: 8ch}.max-w-full{
   max-width: 100%}.max-w-md{
   max-width: 28rem}.max-w-sm{
-  max-width: 24rem}.max-w-\[40ch\]{
-  max-width: 40ch}.max-w-\[38ch\]{
-  max-width: 38ch}.flex-grow{
+  max-width: 24rem}.flex-grow{
   flex-grow: 1}.grow{
   flex-grow: 1}.rotate-180{
   --tw-rotate: 180deg;
@@ -490,7 +494,10 @@ video {
   margin-left: calc(0.125rem * calc(1 - var(--tw-space-x-reverse)))}.space-x-1 > :not([hidden]) ~ :not([hidden]){
   --tw-space-x-reverse: 0;
   margin-right: calc(0.25rem * var(--tw-space-x-reverse));
-  margin-left: calc(0.25rem * calc(1 - var(--tw-space-x-reverse)))}.space-x-2 > :not([hidden]) ~ :not([hidden]){
+  margin-left: calc(0.25rem * calc(1 - var(--tw-space-x-reverse)))}.space-x-10 > :not([hidden]) ~ :not([hidden]){
+  --tw-space-x-reverse: 0;
+  margin-right: calc(2.5rem * var(--tw-space-x-reverse));
+  margin-left: calc(2.5rem * calc(1 - var(--tw-space-x-reverse)))}.space-x-2 > :not([hidden]) ~ :not([hidden]){
   --tw-space-x-reverse: 0;
   margin-right: calc(0.5rem * var(--tw-space-x-reverse));
   margin-left: calc(0.5rem * calc(1 - var(--tw-space-x-reverse)))}.space-x-3 > :not([hidden]) ~ :not([hidden]){
@@ -499,7 +506,10 @@ video {
   margin-left: calc(0.75rem * calc(1 - var(--tw-space-x-reverse)))}.space-x-4 > :not([hidden]) ~ :not([hidden]){
   --tw-space-x-reverse: 0;
   margin-right: calc(1rem * var(--tw-space-x-reverse));
-  margin-left: calc(1rem * calc(1 - var(--tw-space-x-reverse)))}.space-x-6 > :not([hidden]) ~ :not([hidden]){
+  margin-left: calc(1rem * calc(1 - var(--tw-space-x-reverse)))}.space-x-48 > :not([hidden]) ~ :not([hidden]){
+  --tw-space-x-reverse: 0;
+  margin-right: calc(12rem * var(--tw-space-x-reverse));
+  margin-left: calc(12rem * calc(1 - var(--tw-space-x-reverse)))}.space-x-6 > :not([hidden]) ~ :not([hidden]){
   --tw-space-x-reverse: 0;
   margin-right: calc(1.5rem * var(--tw-space-x-reverse));
   margin-left: calc(1.5rem * calc(1 - var(--tw-space-x-reverse)))}.space-y-1 > :not([hidden]) ~ :not([hidden]){
@@ -511,19 +521,16 @@ video {
   margin-bottom: calc(0.5rem * var(--tw-space-y-reverse))}.space-y-4 > :not([hidden]) ~ :not([hidden]){
   --tw-space-y-reverse: 0;
   margin-top: calc(1rem * calc(1 - var(--tw-space-y-reverse)));
-  margin-bottom: calc(1rem * var(--tw-space-y-reverse))}.space-x-10 > :not([hidden]) ~ :not([hidden]){
-  --tw-space-x-reverse: 0;
-  margin-right: calc(2.5rem * var(--tw-space-x-reverse));
-  margin-left: calc(2.5rem * calc(1 - var(--tw-space-x-reverse)))}.overflow-hidden{
+  margin-bottom: calc(1rem * var(--tw-space-y-reverse))}.overflow-hidden{
   overflow: hidden}.overflow-x-hidden{
   overflow-x: hidden}.overflow-y-scroll{
   overflow-y: scroll}.rounded{
   border-radius: 0.25rem}.rounded-2xl{
   border-radius: 1rem}.rounded-3xl{
-  border-radius: 1.5rem}.rounded-\[1em\]{
+  border-radius: 1.5rem}.rounded-4xl{
+  border-radius: 2rem}.rounded-\[1em\]{
   border-radius: 1em}.rounded-full{
-  border-radius: 9999px}.rounded-4xl{
-  border-radius: 2rem}.border{
+  border-radius: 9999px}.border{
   border-width: 1px}.border-b{
   border-bottom-width: 1px}.border-turquoise{
   --tw-border-opacity: 1;
@@ -535,9 +542,7 @@ video {
   --tw-bg-opacity: 1;
   background-color: rgb(243 244 246 / var(--tw-bg-opacity))}.bg-gray-200{
   --tw-bg-opacity: 1;
-  background-color: rgb(229 231 235 / var(--tw-bg-opacity))}.bg-gray-50{
-  --tw-bg-opacity: 1;
-  background-color: rgb(249 250 251 / var(--tw-bg-opacity))}.bg-purple-light{
+  background-color: rgb(229 231 235 / var(--tw-bg-opacity))}.bg-purple-light{
   --tw-bg-opacity: 1;
   background-color: rgb(230 61 243 / var(--tw-bg-opacity))}.bg-transparent{
   background-color: transparent}.bg-turquoise{
@@ -561,7 +566,9 @@ video {
   --tw-gradient-to: #e63df3 var(--tw-gradient-to-position)}.bg-\[length\:0\.625rem_0\.625rem\]{
   background-size: 0.625rem 0.625rem}.bg-center{
   background-position: center}.bg-no-repeat{
-  background-repeat: no-repeat}.object-cover{
+  background-repeat: no-repeat}.object-contain{
+  -o-object-fit: contain;
+     object-fit: contain}.object-cover{
   -o-object-fit: cover;
      object-fit: cover}.object-center{
   -o-object-position: center;
@@ -572,9 +579,7 @@ video {
   padding-left: 0.25rem;
   padding-right: 0.25rem}.px-12{
   padding-left: 3rem;
-  padding-right: 3rem}.px-14{
-  padding-left: 3.5rem;
-  padding-right: 3.5rem}.px-16{
+  padding-right: 3rem}.px-16{
   padding-left: 4rem;
   padding-right: 4rem}.px-2{
   padding-left: 0.5rem;
@@ -641,9 +646,7 @@ video {
   --tw-text-opacity: 1;
   color: rgb(0 0 0 / var(--tw-text-opacity))}.text-blue-500{
   --tw-text-opacity: 1;
-  color: rgb(59 130 246 / var(--tw-text-opacity))}.text-gray-500{
-  --tw-text-opacity: 1;
-  color: rgb(107 114 128 / var(--tw-text-opacity))}.text-gray-700{
+  color: rgb(59 130 246 / var(--tw-text-opacity))}.text-gray-700{
   --tw-text-opacity: 1;
   color: rgb(55 65 81 / var(--tw-text-opacity))}.text-gray-800{
   --tw-text-opacity: 1;
@@ -918,7 +921,15 @@ http://nicolasgallagher.com/micro-clearfix-hack/
 }.pika-row .is-selected .pika-button {
   background-color: #000!important;
   color: #fff!important;
-}/* Main column width */.wp-block { max-width: 100%; }/* Width of "wide" blocks */.wp-block[data-align="wide"] { max-width: 100%; }/* Width of "full-width" blocks */.wp-block[data-align="full"] { max-width: none; }* {
+}/* Main column width */.wp-block { max-width: 100%; }/* Width of "wide" blocks */.wp-block[data-align="wide"] { max-width: 100%; }/* Width of "full-width" blocks */.wp-block[data-align="full"] { max-width: none; }.v-center {
+  transform: translateX(-50%);
+  left: 50%;
+}@keyframes puzzleAppear{0%{
+    opacity: 0;
+    top: 40%}100%{
+    opacity: 100%;
+    top: 50%}}.show-puzzle-notification{
+  animation: puzzleAppear 1s}* {
   font-family: 'Krona One', sans-serif;
   letter-spacing: -0.075em;
 }.has-cross {
@@ -986,7 +997,9 @@ http://nicolasgallagher.com/micro-clearfix-hack/
   background-size: contain}.before\:content-\[\'\'\]::before{
   --tw-content: '';
   content: var(--tw-content)}.group:hover .group-hover\:block{
-  display: block}@media (min-width: 600px){.sm\:grid-cols-2{
+  display: block}.group:hover .group-hover\:hidden{
+  display: none}.group:hover .group-hover\:opacity-0{
+  opacity: 0}@media (min-width: 600px){.sm\:grid-cols-2{
     grid-template-columns: repeat(2, minmax(0, 1fr))}.sm\:grid-cols-4{
     grid-template-columns: repeat(4, minmax(0, 1fr))}.sm\:text-3xl{
     font-size: 1.875rem;

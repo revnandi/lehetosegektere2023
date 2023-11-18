@@ -7,14 +7,59 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: GlotPress/4.0.0-alpha.4\n"
+"X-Generator: GlotPress/4.0.0-alpha.11\n"
 "Language: hu\n"
 "Project-Id-Version: Themes - Twenty Twenty-Two\n"
+
+#. Description of the theme
+#, gp-priority: high
+msgid "Built on a solidly designed foundation, Twenty Twenty-Two embraces the idea that everyone deserves a truly unique website. The theme’s subtle styles are inspired by the diversity and versatility of birds: its typography is lightweight yet strong, its color palette is drawn from nature, and its layout elements sit gently on the page. The true richness of Twenty Twenty-Two lies in its opportunity for customization. The theme is built to take advantage of the Site Editor features introduced in WordPress 5.9, which means that colors, typography, and the layout of every single page on your site can be customized to suit your vision. It also includes dozens of block patterns, opening the door to a wide range of professionally designed layouts in just a few clicks. Whether you’re building a single-page website, a blog, a business website, or a portfolio, Twenty Twenty-Two will help you create a site that is uniquely yours."
+msgstr ""
 
 #. Theme Name of the theme
 #, gp-priority: high
 msgid "Twenty Twenty-Two"
 msgstr "Twenty Twenty-Two"
+
+#: styles/swiss.json
+msgctxt "Duotone name"
+msgid "Default filter"
+msgstr ""
+
+#: styles/swiss.json
+msgctxt "Font family name"
+msgid "Inter"
+msgstr ""
+
+#: styles/swiss.json
+msgctxt "Style variation name"
+msgid "Swiss"
+msgstr ""
+
+#: styles/pink.json
+msgctxt "Font family name"
+msgid "IBM Plex Mono"
+msgstr ""
+
+#: styles/pink.json
+msgctxt "Font family name"
+msgid "IBM Plex Sans"
+msgstr ""
+
+#: styles/pink.json
+msgctxt "Style variation name"
+msgid "Pink"
+msgstr ""
+
+#: styles/blue.json
+msgctxt "Font family name"
+msgid "DM Sans"
+msgstr ""
+
+#: styles/blue.json
+msgctxt "Style variation name"
+msgid "Blue"
+msgstr ""
 
 #: inc/patterns/hidden-404.php:14
 msgid "Search"
@@ -198,6 +243,10 @@ msgstr "Bejegyzésrács"
 msgid "Default posts"
 msgstr "Alapértelmezett bejegyzések"
 
+#: inc/patterns/page-sidebar-poster.php:56
+msgid "The Grand Theater<br>154 Eastern Avenue<br>Maryland NY, 12345"
+msgstr "Nagy Színház<br>154 Eastern Avenue<br>Maryland NY, 12345"
+
 #: inc/patterns/page-sidebar-poster.php:52
 msgid "Location"
 msgstr "Hely"
@@ -319,10 +368,6 @@ msgstr "Emery<br>Driscoll"
 #: inc/patterns/page-about-media-right.php:9
 msgid "An image of a bird flying"
 msgstr "Egy repülő madár képe"
-
-#: inc/patterns/page-sidebar-poster.php:56
-msgid "The Grand Theater<br>154 Eastern Avenue<br>Maryland NY, 12345"
-msgstr "Nagy Színház<br>154 Eastern Avenue<br>Maryland NY, 12345"
 
 #: inc/patterns/page-about-media-right.php:6
 msgid "About page with media on the right"
@@ -456,6 +501,15 @@ msgstr "Cím, navigáció és közösségi linkek a fejlécben"
 msgid "Title and button header"
 msgstr "Cím és gomb a fejlécben"
 
+#: inc/patterns/header-text-only-with-tagline-black-background.php:6
+msgid "Text-only header with tagline and background"
+msgstr ""
+
+#: inc/patterns/header-text-only-green-background.php:6
+#: inc/patterns/header-text-only-salmon-background.php:6
+msgid "Text-only header with background"
+msgstr ""
+
 #: inc/patterns/header-stacked.php:6
 msgid "Logo and navigation header"
 msgstr "Logó és navigációs fejléc"
@@ -464,9 +518,17 @@ msgstr "Logó és navigációs fejléc"
 msgid "Small header with dark background"
 msgstr "Kis fejléc sötét háttérrel"
 
+#: inc/patterns/header-logo-navigation-social-black-background.php:6
+msgid "Logo, navigation, and social links header with background"
+msgstr ""
+
 #: inc/patterns/header-logo-navigation-offset-tagline.php:6
 msgid "Logo, navigation, and offset tagline Header"
 msgstr "Logó, navigáció és eltolt szlogen a fejlécben"
+
+#: inc/patterns/header-logo-navigation-gray-background.php:6
+msgid "Logo and navigation header with background"
+msgstr ""
 
 #: inc/patterns/header-large-dark.php:24
 #: inc/patterns/hidden-heading-and-bird.php:14
@@ -493,9 +555,17 @@ msgstr "Fejléc képháttérrel és fedőréteggel"
 msgid "Default header"
 msgstr "Alapértelmezett fejléc"
 
+#: inc/patterns/header-centered-title-navigation-social.php:6
+msgid "Centered header with navigation, social links, and background"
+msgstr ""
+
 #: inc/patterns/header-centered-logo.php:6
 msgid "Header with centered logo"
 msgstr "Fejléc középen logóval"
+
+#: inc/patterns/header-centered-logo-black-background.php:6
+msgid "Header with centered logo and background"
+msgstr ""
 
 #: inc/patterns/general-wide-image-intro-buttons.php:31
 msgid "Learn More"
@@ -534,6 +604,11 @@ msgstr "Jesús Rodriguez<br>Doug Stilton<br>Emery Driscoll<br>Megan Perry<br>Row
 #: inc/patterns/general-video-header-details.php:29
 msgid "Featuring"
 msgstr "Közreműködik"
+
+#: inc/patterns/general-video-header-details.php:11
+#: inc/patterns/page-layout-image-text-and-video.php:11
+msgid "<em>Warble</em>, a film about <br>hobbyist bird watchers."
+msgstr "<em>Csicsergés</em>, egy film <br>hobbimadarászokról."
 
 #: inc/patterns/general-video-header-details.php:6
 msgid "Video with header and details"
@@ -677,6 +752,10 @@ msgstr "Jesús Rodriguez"
 #: inc/patterns/general-list-events.php:25
 msgid "May 14th, 2022, 6 PM"
 msgstr "2022. május 14., 18 óra"
+
+#: inc/patterns/general-list-events.php:11
+msgid "Speaker Series"
+msgstr "Előadás-sorozat"
 
 #: inc/patterns/general-list-events.php:6
 msgid "List of events"
@@ -844,26 +923,17 @@ msgstr "Láblécek"
 msgid "Featured"
 msgstr "Kiemelt"
 
-#: inc/patterns/general-video-header-details.php:11
-#: inc/patterns/page-layout-image-text-and-video.php:11
-msgid "<em>Warble</em>, a film about <br>hobbyist bird watchers."
-msgstr "<em>Csicsergés</em>, egy film <br>hobbimadarászokról."
-
-#: inc/patterns/general-list-events.php:11
-msgid "Speaker Series"
-msgstr "Előadás-sorozat"
-
 #. Theme URI of the theme
 #, gp-priority: low
 msgid "https://wordpress.org/themes/twentytwentytwo/"
 msgstr "https://wordpress.org/themes/twentytwentytwo/"
 
-#. Author of the theme
-#, gp-priority: low
-msgid "the WordPress team"
-msgstr "a WordPress csapata"
-
 #. Author URI of the theme
 #, gp-priority: low
 msgid "https://wordpress.org/"
 msgstr "https://wordpress.org/"
+
+#. Author of the theme
+#, gp-priority: low
+msgid "the WordPress team"
+msgstr "a WordPress csapata"

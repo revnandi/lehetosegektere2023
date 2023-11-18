@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import { formatDatetimeToShortMonthAndDay, formatDatetimeToTimeRange } from './../utils';
 
 interface FeaturedImageDetails {

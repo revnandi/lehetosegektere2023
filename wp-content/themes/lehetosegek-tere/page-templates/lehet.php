@@ -1,4 +1,9 @@
-<?php /* Template Name: Lehet */?>
+<?php
+/*
+Template Name: Lehet
+Template Post Type: page
+*/
+?>
 
 <?php get_header(); ?>
 

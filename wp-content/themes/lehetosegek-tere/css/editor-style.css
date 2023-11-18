@@ -76,6 +76,9 @@
 .top-44 {
     top: 11rem
 }
+.top-\[15\%\] {
+    top: 15%
+}
 .z-10 {
     z-index: 10
 }
@@ -158,6 +161,9 @@
 .mt-2 {
     margin-top: 0.5rem
 }
+.mt-24 {
+    margin-top: 6rem
+}
 .mt-3 {
     margin-top: 0.75rem
 }
@@ -166,18 +172,6 @@
 }
 .mt-6 {
     margin-top: 1.5rem
-}
-.mt-8 {
-    margin-top: 2rem
-}
-.mt-10 {
-    margin-top: 2.5rem
-}
-.mt-28 {
-    margin-top: 7rem
-}
-.mt-24 {
-    margin-top: 6rem
 }
 .block {
     display: block
@@ -224,6 +218,9 @@
 .h-2\.5 {
     height: 0.625rem
 }
+.h-20 {
+    height: 5rem
+}
 .h-4 {
     height: 1rem
 }
@@ -248,9 +245,6 @@
 }
 .h-full {
     height: 100%
-}
-.h-20 {
-    height: 5rem
 }
 .min-h-screen {
     min-height: 100vh
@@ -282,6 +276,9 @@
 .w-4 {
     width: 1rem
 }
+.w-40 {
+    width: 10rem
+}
 .w-5 {
     width: 1.25rem
 }
@@ -294,6 +291,9 @@
 .w-8 {
     width: 2rem
 }
+.w-auto {
+    width: auto
+}
 .w-fit {
     width: -moz-fit-content;
     width: fit-content
@@ -301,11 +301,8 @@
 .w-full {
     width: 100%
 }
-.w-auto {
-    width: auto
-}
-.min-w-\[6rem\] {
-    min-width: 6rem
+.min-w-\[14rem\] {
+    min-width: 14rem
 }
 .min-w-\[20rem\] {
     min-width: 20rem
@@ -315,6 +312,9 @@
 }
 .max-w-\[20ch\] {
     max-width: 20ch
+}
+.max-w-\[38ch\] {
+    max-width: 38ch
 }
 .max-w-\[8ch\] {
     max-width: 8ch
@@ -328,12 +328,6 @@
 .max-w-sm {
     max-width: 24rem
 }
-.max-w-\[40ch\] {
-    max-width: 40ch
-}
-.max-w-\[38ch\] {
-    max-width: 38ch
-}
 .flex-grow {
     flex-grow: 1
 }
@@ -346,6 +340,19 @@
 }
 .transform {
     transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))
+}
+@keyframes puzzleAppear {
+    0% {
+        opacity: 0;
+        top: 40%
+    }
+    100% {
+        opacity: 100%;
+        top: 50%
+    }
+}
+.animate-puzzleAppear {
+    animation: puzzleAppear 1s
 }
 .cursor-pointer {
     cursor: pointer
@@ -433,6 +440,11 @@
     margin-right: calc(0.25rem * var(--tw-space-x-reverse));
     margin-left: calc(0.25rem * calc(1 - var(--tw-space-x-reverse)))
 }
+.space-x-10 > :not([hidden]) ~ :not([hidden]) {
+    --tw-space-x-reverse: 0;
+    margin-right: calc(2.5rem * var(--tw-space-x-reverse));
+    margin-left: calc(2.5rem * calc(1 - var(--tw-space-x-reverse)))
+}
 .space-x-2 > :not([hidden]) ~ :not([hidden]) {
     --tw-space-x-reverse: 0;
     margin-right: calc(0.5rem * var(--tw-space-x-reverse));
@@ -447,6 +459,11 @@
     --tw-space-x-reverse: 0;
     margin-right: calc(1rem * var(--tw-space-x-reverse));
     margin-left: calc(1rem * calc(1 - var(--tw-space-x-reverse)))
+}
+.space-x-48 > :not([hidden]) ~ :not([hidden]) {
+    --tw-space-x-reverse: 0;
+    margin-right: calc(12rem * var(--tw-space-x-reverse));
+    margin-left: calc(12rem * calc(1 - var(--tw-space-x-reverse)))
 }
 .space-x-6 > :not([hidden]) ~ :not([hidden]) {
     --tw-space-x-reverse: 0;
@@ -468,11 +485,6 @@
     margin-top: calc(1rem * calc(1 - var(--tw-space-y-reverse)));
     margin-bottom: calc(1rem * var(--tw-space-y-reverse))
 }
-.space-x-10 > :not([hidden]) ~ :not([hidden]) {
-    --tw-space-x-reverse: 0;
-    margin-right: calc(2.5rem * var(--tw-space-x-reverse));
-    margin-left: calc(2.5rem * calc(1 - var(--tw-space-x-reverse)))
-}
 .overflow-hidden {
     overflow: hidden
 }
@@ -491,14 +503,14 @@
 .rounded-3xl {
     border-radius: 1.5rem
 }
+.rounded-4xl {
+    border-radius: 2rem
+}
 .rounded-\[1em\] {
     border-radius: 1em
 }
 .rounded-full {
     border-radius: 9999px
-}
-.rounded-4xl {
-    border-radius: 2rem
 }
 .border {
     border-width: 1px
@@ -525,10 +537,6 @@
 .bg-gray-200 {
     --tw-bg-opacity: 1;
     background-color: rgb(229 231 235 / var(--tw-bg-opacity))
-}
-.bg-gray-50 {
-    --tw-bg-opacity: 1;
-    background-color: rgb(249 250 251 / var(--tw-bg-opacity))
 }
 .bg-purple-light {
     --tw-bg-opacity: 1;
@@ -588,6 +596,10 @@
 .bg-no-repeat {
     background-repeat: no-repeat
 }
+.object-contain {
+    -o-object-fit: contain;
+       object-fit: contain
+}
 .object-cover {
     -o-object-fit: cover;
        object-fit: cover
@@ -612,10 +624,6 @@
 .px-12 {
     padding-left: 3rem;
     padding-right: 3rem
-}
-.px-14 {
-    padding-left: 3.5rem;
-    padding-right: 3.5rem
 }
 .px-16 {
     padding-left: 4rem;
@@ -767,10 +775,6 @@
 .text-blue-500 {
     --tw-text-opacity: 1;
     color: rgb(59 130 246 / var(--tw-text-opacity))
-}
-.text-gray-500 {
-    --tw-text-opacity: 1;
-    color: rgb(107 114 128 / var(--tw-text-opacity))
 }
 .text-gray-700 {
     --tw-text-opacity: 1;
@@ -972,6 +976,12 @@ body {
 }
 .group:hover .group-hover\:block {
     display: block
+}
+.group:hover .group-hover\:hidden {
+    display: none
+}
+.group:hover .group-hover\:opacity-0 {
+    opacity: 0
 }
 @media (min-width: 600px) {
     .sm\:grid-cols-2 {
