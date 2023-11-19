@@ -18,7 +18,7 @@ $button = get_sub_field('button');
 ?>
 
 <?php if (have_rows('slides')): ?>
-  <div id="lt_big_carousel" class="splide relative h-[100dvh] w-full" aria-label="Splide Basic HTML Example">
+  <section class="lt_splide splide relative h-[100dvh] w-full" aria-label="Splide Basic HTML Example">
     <div class="h-full splide__track">
       <ul class="splide__list">
         <?php while (have_rows('slides')):
@@ -74,5 +74,5 @@ $button = get_sub_field('button');
         <?php endwhile; ?>
       </ul>
     </div>
-  </div>
+  </section>
 <?php endif; ?>

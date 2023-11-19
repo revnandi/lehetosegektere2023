@@ -297,10 +297,6 @@
 .w-auto {
     width: auto
 }
-.w-fit {
-    width: -moz-fit-content;
-    width: fit-content
-}
 .w-full {
     width: 100%
 }
@@ -602,6 +598,9 @@
 .p-8 {
     padding: 2rem
 }
+.p-0 {
+    padding: 0px
+}
 .px-1 {
     padding-left: 0.25rem;
     padding-right: 0.25rem
@@ -657,6 +656,10 @@
 .py-8 {
     padding-top: 2rem;
     padding-bottom: 2rem
+}
+.py-0 {
+    padding-top: 0px;
+    padding-bottom: 0px
 }
 .pb-16 {
     padding-bottom: 4rem
@@ -756,6 +759,10 @@
 .tracking-widest {
     letter-spacing: 0.1em
 }
+.\!text-white {
+    --tw-text-opacity: 1 !important;
+    color: rgb(255 255 255 / var(--tw-text-opacity)) !important
+}
 .text-black {
     --tw-text-opacity: 1;
     color: rgb(0 0 0 / var(--tw-text-opacity))
@@ -780,15 +787,8 @@
     --tw-text-opacity: 1;
     color: rgb(255 255 255 / var(--tw-text-opacity))
 }
-.\!text-white {
-    --tw-text-opacity: 1 !important;
-    color: rgb(255 255 255 / var(--tw-text-opacity)) !important
-}
 .underline {
     text-decoration-line: underline
-}
-.no-underline {
-    text-decoration-line: none
 }
 .\!no-underline {
     text-decoration-line: none !important

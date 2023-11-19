@@ -2,10 +2,10 @@
 
 <div id="content" class="flex-grow site-content">
 
-<section class="inline-block w-full px-4 mx-auto my-8 md:px-11 bg-turquoise">
+<!-- <section class="inline-block w-full px-4 mx-auto my-8 md:px-11 bg-turquoise">
 
 
-</section>
+</section> -->
 
 <?php do_action('tailpress_content_start'); ?>
 

@@ -32,7 +32,7 @@
           <div class="text-turquoise">
             <?php if (has_post_thumbnail()): ?>
               <div
-                class="relative col-span-1 mb-8 overflow-hidden border rounded-full group md:col-span-5 aspect-wide-header aspect-square border-turquoise">
+                class="relative col-span-1 mb-8 overflow-hidden rounded-full group md:col-span-5 aspect-wide-header aspect-square">
                 <img class="object-cover w-full h-full" loading="lazy"
                   src="<?php echo get_the_post_thumbnail_url(null, 'lqip') ?>"
                   data-srcset="<?php echo get_the_post_thumbnail_url(null, 'thumbnail') ?> 150w, <?php echo get_the_post_thumbnail_url(null, 'medium') ?> 300w, <?php echo get_the_post_thumbnail_url(null, 'large') ?> 1024w"

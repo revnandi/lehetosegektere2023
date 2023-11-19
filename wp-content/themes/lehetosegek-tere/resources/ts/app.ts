@@ -25,30 +25,39 @@ window.addEventListener("load", function () {
     () => eventPopUp.initEventListeners()
   );
 
-  const smallCarousel = new Carousel("lt_small_carousel", {
-    rewind: true,
-    type: "fade",
-    arrows: false,
-    classes: {
-      pagination:
-        "z-10 absolute bottom-0 left-0 w-full flex justify-center py-2 space-x-0.5 bg-white [&>li]:h-fit [&>li]:flex",
-      page: "w-2.5 h-2.5 bg-black rounded-full [&.is-active]:bg-turquoise",
-    },
-    // dots: '#lt_small_carousel_dots'
-  });
+  // const smallCarousel = new Carousel("lt_small_carousel", {
+  //   rewind: true,
+  //   type: "fade",
+  //   arrows: false,
+  //   classes: {
+  //     pagination:
+  //       "z-10 absolute bottom-0 left-0 w-full flex justify-center py-2 space-x-0.5 bg-white [&>li]:h-fit [&>li]:flex",
+  //     page: "w-2.5 h-2.5 bg-black rounded-full [&.is-active]:bg-turquoise",
+  //   },
+  //   // dots: '#lt_small_carousel_dots'
+  // });
 
-  const bigCarousel = new Carousel("lt_big_carousel", {
-    rewind: true,
-    type: "fade",
-    arrows: false,
-    lazyLoad: true,
-    classes: {
-      pagination:
-        "z-10 absolute bottom-6 left-11 flex justify-center py-2 space-x-2 [&>li]:h-fit [&>li]:flex",
-      page: "w-4 h-4 bg-black rounded-full [&.is-active]:bg-turquoise",
-    },
-    // dots: '#lt_small_carousel_dots'
-  });
+  const bigCarousels: Carousel[] = [];
+  const bigCarouselWrappers = document.querySelectorAll('.lt_splide');
+
+  if(bigCarouselWrappers && bigCarouselWrappers.length > 0) {
+    bigCarouselWrappers.forEach(wrapper => {
+      const newCarusel = new Carousel(wrapper as HTMLElement, {
+        rewind: true,
+        type: "fade",
+        arrows: false,
+        lazyLoad: true,
+        classes: {
+          pagination:
+            "z-10 absolute bottom-6 left-11 flex justify-center py-2 space-x-2 [&>li]:h-fit [&>li]:flex",
+          page: "w-4 h-4 bg-black rounded-full [&.is-active]:bg-turquoise",
+        },
+        // dots: '#lt_small_carousel_dots'
+      });
+
+      bigCarousels.push(newCarusel)
+    })
+  }
 
   const gallery = new Gallery("lt_gallery", {
     rewind: true,
@@ -64,10 +73,14 @@ window.addEventListener("load", function () {
   });
 
   puzzle.init();
-  smallCarousel.init();
-  bigCarousel.init();
+  // smallCarousel.init();
+  // bigCarousel.init();
   eventPopUp.init();
   gallery.init();
+
+  console.log(bigCarousels)
+
+  bigCarousels.forEach(carousel =>  carousel.init())
 
   console.log(picker);
   console.log(eventPopUp);

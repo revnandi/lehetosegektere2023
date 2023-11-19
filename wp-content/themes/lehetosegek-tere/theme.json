@@ -8,24 +8,14 @@
     "color": {
       "palette": [
         {
-          "name": "Primary",
-          "slug": "primary",
-          "color": "#0EA5E9"
+          "name": "LT 1",
+          "slug": "lta",
+          "color": "#66c79a"
         },
         {
-          "name": "Secondary",
-          "slug": "secondary",
-          "color": "#14B8A6"
-        },
-        {
-          "name": "Dark",
-          "slug": "dark",
-          "color": "#1F2937"
-        },
-        {
-          "name": "Light",
-          "slug": "light",
-          "color": "#F9FAFB"
+          "name": "LT2",
+          "slug": "ltb",
+          "color": "#ff00fd"
         }
       ]
     },

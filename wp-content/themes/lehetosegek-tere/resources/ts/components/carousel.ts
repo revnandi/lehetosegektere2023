@@ -5,11 +5,11 @@ import '@splidejs/splide/css/core';
 export class Carousel {
   private carousel: Splide | null = null;
 
-  constructor(private wrapperId: string, private options: Options = {}) {}
+  constructor(private wrapper: HTMLElement, private options: Options = {}) {}
 
   
   init(): void {
-    const element = document.getElementById(this.wrapperId) as HTMLDivElement;
+    const element = this.wrapper;
     if(!element) return;
 
     this.carousel = new Splide( element, this.options ).mount();

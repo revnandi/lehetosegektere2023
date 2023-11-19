@@ -3801,29 +3801,36 @@ window.addEventListener("load", function () {
   var picker = new _components_weekpicker__WEBPACK_IMPORTED_MODULE_2__.WeekPicker("lt_events_datepicker", "lt_events_datepicker_next", "lt_events_datepicker_prev", "lt_events_datepicker_daybuttons_container", function () {
     return eventPopUp.initEventListeners();
   });
-  var smallCarousel = new _components_carousel__WEBPACK_IMPORTED_MODULE_1__.Carousel("lt_small_carousel", {
-    rewind: true,
-    type: "fade",
-    arrows: false,
-    classes: {
-      pagination: "z-10 absolute bottom-0 left-0 w-full flex justify-center py-2 space-x-0.5 bg-white [&>li]:h-fit [&>li]:flex",
-      page: "w-2.5 h-2.5 bg-black rounded-full [&.is-active]:bg-turquoise"
-    }
-    // dots: '#lt_small_carousel_dots'
-  });
+  // const smallCarousel = new Carousel("lt_small_carousel", {
+  //   rewind: true,
+  //   type: "fade",
+  //   arrows: false,
+  //   classes: {
+  //     pagination:
+  //       "z-10 absolute bottom-0 left-0 w-full flex justify-center py-2 space-x-0.5 bg-white [&>li]:h-fit [&>li]:flex",
+  //     page: "w-2.5 h-2.5 bg-black rounded-full [&.is-active]:bg-turquoise",
+  //   },
+  //   // dots: '#lt_small_carousel_dots'
+  // });
+  var bigCarousels = [];
+  var bigCarouselWrappers = document.querySelectorAll('.lt_splide');
+  if (bigCarouselWrappers && bigCarouselWrappers.length > 0) {
+    bigCarouselWrappers.forEach(function (wrapper) {
+      var newCarusel = new _components_carousel__WEBPACK_IMPORTED_MODULE_1__.Carousel(wrapper, {
+        rewind: true,
+        type: "fade",
+        arrows: false,
+        lazyLoad: true,
+        classes: {
+          pagination: "z-10 absolute bottom-6 left-11 flex justify-center py-2 space-x-2 [&>li]:h-fit [&>li]:flex",
+          page: "w-4 h-4 bg-black rounded-full [&.is-active]:bg-turquoise"
+        }
+        // dots: '#lt_small_carousel_dots'
+      });
 
-  var bigCarousel = new _components_carousel__WEBPACK_IMPORTED_MODULE_1__.Carousel("lt_big_carousel", {
-    rewind: true,
-    type: "fade",
-    arrows: false,
-    lazyLoad: true,
-    classes: {
-      pagination: "z-10 absolute bottom-6 left-11 flex justify-center py-2 space-x-2 [&>li]:h-fit [&>li]:flex",
-      page: "w-4 h-4 bg-black rounded-full [&.is-active]:bg-turquoise"
-    }
-    // dots: '#lt_small_carousel_dots'
-  });
-
+      bigCarousels.push(newCarusel);
+    });
+  }
   var gallery = new _components_gallery__WEBPACK_IMPORTED_MODULE_4__.Gallery("lt_gallery", {
     rewind: true,
     type: "fade",
@@ -3837,10 +3844,14 @@ window.addEventListener("load", function () {
   });
 
   puzzle.init();
-  smallCarousel.init();
-  bigCarousel.init();
+  // smallCarousel.init();
+  // bigCarousel.init();
   eventPopUp.init();
   gallery.init();
+  console.log(bigCarousels);
+  bigCarousels.forEach(function (carousel) {
+    return carousel.init();
+  });
   console.log(picker);
   console.log(eventPopUp);
   // Event handling
@@ -3968,19 +3979,19 @@ function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input ==
 
 
 var Carousel = /*#__PURE__*/function () {
-  function Carousel(wrapperId) {
+  function Carousel(wrapper) {
     var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
     _classCallCheck(this, Carousel);
-    _defineProperty(this, "wrapperId", void 0);
+    _defineProperty(this, "wrapper", void 0);
     _defineProperty(this, "options", void 0);
     _defineProperty(this, "carousel", null);
-    this.wrapperId = wrapperId;
+    this.wrapper = wrapper;
     this.options = options;
   }
   _createClass(Carousel, [{
     key: "init",
     value: function init() {
-      var element = document.getElementById(this.wrapperId);
+      var element = this.wrapper;
       if (!element) return;
       this.carousel = new _splidejs_splide__WEBPACK_IMPORTED_MODULE_0__["default"](element, this.options).mount();
     }

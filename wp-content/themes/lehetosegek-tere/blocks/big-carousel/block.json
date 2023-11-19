@@ -1,10 +1,10 @@
 {
   "name": "acf/big-carousel",
-  "title": "Big Carousel",
-  "description": "Big Carousel block that uses ACF fields.",
+  "title": "Nagy Slider A",
+  "description": "Nagy képes slider szöveggel és gombbal",
   "style": [ "file:./big-carousel.css" ],
   "category": "formatting",
-  "icon": "admin-comments",
+  "icon": "images-alt",
   "keywords": ["big-carousel", "quote"],
   "acf": {
       "mode": "preview",
