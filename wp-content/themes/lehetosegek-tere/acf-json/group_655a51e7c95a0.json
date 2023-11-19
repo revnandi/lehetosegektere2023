@@ -1,0 +1,155 @@
+[
+    {
+        "qef_simple_location_rules": 0,
+        "key": "group_655a51e7c95a0",
+        "title": "Big Carousel Block Fields",
+        "fields": [
+            {
+                "allow_backendsearch": false,
+                "show_column_filter": false,
+                "allow_bulkedit": false,
+                "allow_quickedit": false,
+                "show_column": false,
+                "show_column_weight": 1000,
+                "show_column_sortable": false,
+                "key": "field_655a5267d038e",
+                "label": "Oldalak",
+                "name": "slides",
+                "aria-label": "",
+                "type": "repeater",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "acfe_repeater_stylised_button": 1,
+                "layout": "table",
+                "pagination": 0,
+                "min": 0,
+                "max": 0,
+                "collapsed": "",
+                "button_label": "Sor hozzáadása",
+                "rows_per_page": 20,
+                "sub_fields": [
+                    {
+                        "allow_backendsearch": false,
+                        "show_column_filter": false,
+                        "allow_bulkedit": 0,
+                        "allow_quickedit": 0,
+                        "show_column": 0,
+                        "show_column_weight": 1000,
+                        "show_column_sortable": false,
+                        "key": "field_655a52d0d0391",
+                        "label": "Kép",
+                        "name": "image",
+                        "aria-label": "",
+                        "type": "image",
+                        "instructions": "",
+                        "required": 1,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "uploader": "",
+                        "return_format": "array",
+                        "translations": "copy_once",
+                        "acfe_thumbnail": 0,
+                        "min_width": "",
+                        "min_height": "",
+                        "min_size": "",
+                        "max_width": "",
+                        "max_height": "",
+                        "max_size": "",
+                        "mime_types": "",
+                        "preview_size": "medium",
+                        "library": "all",
+                        "parent_repeater": "field_655a5267d038e"
+                    },
+                    {
+                        "allow_backendsearch": 0,
+                        "show_column_filter": false,
+                        "allow_bulkedit": false,
+                        "allow_quickedit": false,
+                        "show_column": false,
+                        "show_column_weight": 1000,
+                        "show_column_sortable": false,
+                        "key": "field_655a528ad038f",
+                        "label": "Cím",
+                        "name": "title",
+                        "aria-label": "",
+                        "type": "wysiwyg",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": "",
+                        "translations": "translate",
+                        "tabs": "all",
+                        "toolbar": "full",
+                        "media_upload": 0,
+                        "delay": 0,
+                        "parent_repeater": "field_655a5267d038e"
+                    },
+                    {
+                        "allow_backendsearch": false,
+                        "show_column_filter": false,
+                        "allow_bulkedit": false,
+                        "allow_quickedit": false,
+                        "show_column": false,
+                        "show_column_weight": 1000,
+                        "show_column_sortable": false,
+                        "key": "field_655a52bcd0390",
+                        "label": "Gomb",
+                        "name": "button",
+                        "aria-label": "",
+                        "type": "acfe_advanced_link",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "post_type": "",
+                        "taxonomy": "",
+                        "translations": "copy_once",
+                        "parent_repeater": "field_655a5267d038e"
+                    }
+                ]
+            }
+        ],
+        "location": [
+            [
+                {
+                    "param": "block",
+                    "operator": "==",
+                    "value": "acf\/big-carousel"
+                }
+            ]
+        ],
+        "menu_order": 0,
+        "position": "normal",
+        "style": "seamless",
+        "label_placement": "left",
+        "instruction_placement": "label",
+        "hide_on_screen": "",
+        "active": true,
+        "description": "",
+        "show_in_rest": 0,
+        "acfe_display_title": "",
+        "acfe_autosync": "",
+        "acfe_form": 0,
+        "acfe_meta": "",
+        "acfe_note": ""
+    }
+]

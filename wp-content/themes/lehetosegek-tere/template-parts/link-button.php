@@ -1,6 +1,4 @@
-<a
-  href="<?php echo $args['url']; ?>"
-  class="w-fit px-16 py-4 mt-6 text-sm uppercase rounded-3xl text-white bg-gradient-to-t from-red to-purple"
->
+<a href="<?php echo $args['url']; ?>"
+  class="inline-block py-4 !text-white !no-underline uppercase px-8 min-w-[20rem] text-center bg-gradient-to-t to-purple from-red rounded-4xl">
   <?php echo $args['text']; ?>
 </a>

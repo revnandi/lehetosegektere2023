@@ -342,19 +342,19 @@ function cdp_insert_new_post($areWePro = false) {
      * @param  int    $site     ID of the destination subsite
      * @return array [ids of categories in subsite]
      */
-    function cdp_duplicate_categories($origin, $site, $areWePro = false) {
+    function cdp_duplicate_categories($origin, $taxonomyName, $site, $areWePro = false) {
 
       if ($areWePro && $site != -1) {
 
         $origin_ids = [];
         $origin_names = [];
         $newIds = [];
-
+        
         foreach ($origin as $i => $cat_id) {
-          $name = get_cat_name($cat_id);
-          if ($name && strlen($name) > 0) {
+          $term = get_term($cat_id, $taxonomyName);
+          if (isset($term->name) && strlen($term->name) > 0) {
             $origin_ids[] = $cat_id;
-            $origin_names[] = $name;
+            $origin_names[] = $term->name;
           }
         }
 
@@ -365,16 +365,17 @@ function cdp_insert_new_post($areWePro = false) {
         foreach ($origin_names as $i => $cat_name) {
           $cat_id = get_terms([
             'fields' => 'ids',
-            'taxonomy' => 'category',
-            'name' => $cat_name
+            'taxonomy' => $taxonomyName,
+            'name' => $cat_name,
+            'hide_empty' => false
           ]);
 
           if (sizeof($cat_id) > 0) {
             $newIds[] = $cat_id[0];
           } else {
-            $createdId = wp_create_category($cat_name);
-            if (is_numeric($createdId)) {
-              $newIds[] = $createdId;
+            $createdId = wp_insert_term($cat_name, $taxonomyName);
+            if (isset($createdId['term_id']) && is_numeric($createdId['term_id'])) {
+              $newIds[] = $createdId['term_id'];
             }
           }
         }
@@ -396,7 +397,7 @@ function cdp_insert_new_post($areWePro = false) {
      * @return array with insert ready values for wordpress post || false on wrong $post
      */
     function cdp_filter_post($post, $swap, $opt, $settings, $site, $taxonomies = false, $areWePro = false) {
-
+      
         // If $post has wrong format return false
         if (!(is_array($post) || is_object($post)))
             return false;
@@ -438,10 +439,11 @@ function cdp_insert_new_post($areWePro = false) {
             }
         }
 
-        if (isset($ft['category']) && $settings['category']) {
-          $fixed_categories = cdp_duplicate_categories($ft['category'], $site, $areWePro);
-          $ft['category'] = $fixed_categories;
+        foreach ($ft as $taxonomyName => $ids) {
+          $fixed_categories = cdp_duplicate_categories($ids, $taxonomyName, $site, $areWePro);
+          $ft[$taxonomyName] = $fixed_categories;
         }
+        
 
         // Create array with required values and contant values
         $new = array(
@@ -449,9 +451,10 @@ function cdp_insert_new_post($areWePro = false) {
             'post_date' => ($settings['date'] ? $post['post_date'] : current_time('mysql')),
             'post_status' => ($settings['status'] ? $post['post_status'] : 'draft'),
             'post_author' => ($settings['author'] ? $post['post_author'] : wp_get_current_user()->ID),
-            'post_content' => ($settings['content']) ? addslashes($post['post_content']) : ' ',
+            'post_content' => ($settings['content']) ? addslashes($post['post_content']) : '',
             'comment_status' => $post['comment_status'], // that's additional element which cannot be edited by user
-            'post_parent' => $post['post_parent'] // that's additional element which cannot be edited by user
+            'post_parent' => $post['post_parent'], // that's additional element which cannot be edited by user
+            'multisite_taxonomy' => $ft
         );
 
         // For WooCommerce
@@ -478,7 +481,7 @@ function cdp_insert_new_post($areWePro = false) {
         if ($settings['menu_order'])
             $new['menu_order'] = $post['menu_order'];
         if ($settings['category']) {
-          $fixed_categories = cdp_duplicate_categories($post['post_category'], $site, $areWePro);
+          $fixed_categories = cdp_duplicate_categories($post['post_category'], 'post_category', $site, $areWePro);
           $new['post_category'] = $fixed_categories;
         }
         if ($settings['post_tag'])
@@ -488,10 +491,15 @@ function cdp_insert_new_post($areWePro = false) {
 
         // For ACF Fields
         if ($post['post_type'] == 'acf-field') {
-          $new['post_name'] = 'group_' . md5(uniqid($post['post_name'], true));
+          // $new['post_name'] = 'group_' . md5(uniqid($post['post_name'], true));
+          $new['post_name'] = $post['post_name'];
+          $new['post_excerpt'] = $post['post_excerpt'];
+          $new['post_title'] = $post['post_title'];
         }
         if ($post['post_type'] == 'acf-field-group') {
-          $new['post_name'] = 'field_' . md5(uniqid($post['post_name'], true));
+          // $new['post_name'] = 'field_' . md5(uniqid($post['post_name'], true));
+          $new['post_name'] = $post['post_name'];
+          $new['post_excerpt'] = $post['post_excerpt'];
         }
 
         // Return filtered data of current post
@@ -592,6 +600,38 @@ function cdp_insert_new_post($areWePro = false) {
         // Return formatted title
         return $new_title;
     }
+    
+    function cdp_replace_url_in_content($content, $oldURL, $newURL) {
+      
+      $wasSerialized = false;
+      
+      if (is_serialized($content)) {
+        $wasSerialized = true;
+        $content = unserialize(stripslashes($content));
+        $content = json_encode($content);
+      }
+      
+      $content = str_replace('http://' . $oldURL, $newURL, $content);
+      $content = str_replace('https://' . $oldURL, $newURL, $content);
+      $content = str_replace('http:\/\/' . $oldURL, $newURL, $content);
+      $content = str_replace('https:\/\/' . $oldURL, $newURL, $content);
+      $content = str_replace('http://www.' . $oldURL, $newURL, $content);
+      $content = str_replace('https://www.' . $oldURL, $newURL, $content);
+      $content = str_replace('http:\/\/www.' . $oldURL, $newURL, $content);
+      $content = str_replace('https:\/\/www.' . $oldURL, $newURL, $content);
+      $content = str_replace('http:&#47;&#47;' . $oldURL, $newURL, $content);
+      $content = str_replace('https:&#47;&#47;' . $oldURL, $newURL, $content);
+      $content = str_replace('http:&#47;&#47;www.' . $oldURL, $newURL, $content);
+      $content = str_replace('https:&#47;&#47;www.' . $oldURL, $newURL, $content);
+      
+      if ($wasSerialized) {
+        $content = json_decode($content, true);
+        $content = serialize((array) $content);
+      }
+      
+      return $content;
+      
+    }
 
     /**
      * This local function inserts whole post into database
@@ -601,9 +641,13 @@ function cdp_insert_new_post($areWePro = false) {
      * Structure of return array: { ids: [$ids], error: (count of errors) }
      */
     function cdp_insert_post($id, $data, $times, $areWePro, $isChild = false, $p_ids = null, $site = -1) {
-
+      
         // Get Wordpress database
         global $wpdb;
+        
+        $multisite_taxonomy = $data['multisite_taxonomy'];
+        unset($data['multisite_taxonomy']);
+        
 
         // Global Settings
         $gos = cdp_default_global_options();
@@ -658,6 +702,7 @@ function cdp_insert_new_post($areWePro = false) {
             cdpp_handle_multisite($site);
 
         $uploadsDirNew = wp_upload_dir()['basedir'];
+        $alreadyReplaced = false;
 
         // Loop for each post iteration
         for ($i = 0; $i < $times; ++$i) {
@@ -670,19 +715,12 @@ function cdp_insert_new_post($areWePro = false) {
             $data['post_title'] = str_replace('[Counter]', ($counter + $i), $base_title);
 
             // Adjust URLs for new subsite
-            if ($areWePro && isset($gosCurrent['cdp-premium-replace-domain']) && $gosCurrent['cdp-premium-replace-domain'] == 'true') {
+            if ($alreadyReplaced == false && $areWePro && isset($gosCurrent['cdp-premium-replace-domain']) && $gosCurrent['cdp-premium-replace-domain'] == 'true') {
               if (isset($data['post_content']) && !empty($data['post_content']) && strlen($data['post_content']) > strlen($buildUrl)) {
 
                 $adjustedUrl = get_home_url();
-
-                $data['post_content'] = str_replace('http://www.' . $buildUrl, $adjustedUrl, $data['post_content']);
-                $data['post_content'] = str_replace('http://' . $buildUrl, $adjustedUrl, $data['post_content']);
-                $data['post_content'] = str_replace('https://www.' . $buildUrl, $adjustedUrl, $data['post_content']);
-                $data['post_content'] = str_replace('https://' . $buildUrl, $adjustedUrl, $data['post_content']);
-                $data['post_content'] = str_replace('http:&#47;&#47;www.' . $buildUrl, $adjustedUrl, $data['post_content']);
-                $data['post_content'] = str_replace('http:&#47;&#47;' . $buildUrl, $adjustedUrl, $data['post_content']);
-                $data['post_content'] = str_replace('https:&#47;&#47;www.' . $buildUrl, $adjustedUrl, $data['post_content']);
-                $data['post_content'] = str_replace('https:&#47;&#47;' . $buildUrl, $adjustedUrl, $data['post_content']);
+                $data['post_content'] = cdp_replace_url_in_content($data['post_content'], $buildUrl, $adjustedUrl);
+                $alreadyReplaced = true;
 
               }
             }
@@ -709,6 +747,9 @@ function cdp_insert_new_post($areWePro = false) {
               if (file_exists($oldCssFile) && is_file($oldCssFile)) {
                 $customCssContent = file_get_contents($oldCssFile);
                 $customCssContent = str_replace('-' . $id, '-' . $new, $customCssContent);
+                if (!file_exists(dirname($newCssFile))) {
+                  mkdir(dirname($newCssFile), 0755, true);
+                }
                 file_put_contents($newCssFile, $customCssContent);
                 unset($customCssContent);
               }
@@ -719,6 +760,12 @@ function cdp_insert_new_post($areWePro = false) {
 
             }
 
+        }
+
+        foreach ($results['ids'] as $post_id_index => $inserted_post_id) {
+          foreach ($multisite_taxonomy as $taxonomyName => $ids) {
+            wp_set_post_terms($inserted_post_id, $ids, $taxonomyName, true);
+          }
         }
 
         // Handle multisite for premium fix
@@ -810,6 +857,7 @@ function cdp_insert_new_post($areWePro = false) {
 
         foreach ($childrens as $i => $child) {
           if ($child->post_type == 'acf-field' && !$areWePro) continue;
+          if ($child->post_type == 'attachment') continue;
           array_push($childs, $child->ID);
         }
 
@@ -821,7 +869,7 @@ function cdp_insert_new_post($areWePro = false) {
      * @param $path string (path to original file)
      * @return string path to new file
      */
-    function cdp_copy_attachment($path = '', $destination = '') {
+    function cdp_copy_attachment($path = '', $destination = '') {      
         if ($path == '' || $destination == '')
             return false;
 
@@ -831,6 +879,10 @@ function cdp_insert_new_post($areWePro = false) {
         $original_name = $actual_name;
         $extension = pathinfo($name, PATHINFO_EXTENSION);
 
+        if (file_exists($dirname . '/' . $actual_name . "." . $extension)) {
+          return $dirname . '/' . $actual_name . "." . $extension;
+        }
+        
         $i = 1;
         while (file_exists($dirname . '/' . $actual_name . "." . $extension)) {
             $actual_name = (string) $original_name . '-' . $i;
@@ -851,7 +903,7 @@ function cdp_insert_new_post($areWePro = false) {
         $inserts = array();
         $media = get_attached_media('', $id);
 
-        if ($featuredImageOnly != false && is_array($featuredImageOnly)) {
+        if ($featuredImageOnly != false && (is_object($featuredImageOnly) || is_array($featuredImageOnly))) {
           $media = $featuredImageOnly;
         }
 
@@ -871,6 +923,11 @@ function cdp_insert_new_post($areWePro = false) {
         foreach ($media as $i => $m) {
             if (get_attached_file($m->ID) == '')
                 continue;
+              
+            if (!file_exists($wp_upload_dir['path']) && !is_dir($wp_upload_dir['path'])) {
+              mkdir($wp_upload_dir['path'], 0755, true);  
+            }
+            
             $path = cdp_copy_attachment(get_attached_file($m->ID), $wp_upload_dir['path']);
 
             $filename = $path;
@@ -1079,7 +1136,7 @@ function cdp_insert_new_post($areWePro = false) {
                 $thumbnail_file = get_attached_file($thumbnail_id);
                 if (!is_bool($thumbnail_file) && is_string($thumbnail_file)) {
 
-                  if (!$settings['attachments'] && $site != -1 && $areWePro) {
+                  if ($site != -1 && $areWePro) {
 
                     $thumbObj = [(object) ['ID' => $thumbnail_id]];
                     $thumbNewId = cdp_insert_attachments($id, $inserted_posts, $areWePro, $site, $thumbObj);

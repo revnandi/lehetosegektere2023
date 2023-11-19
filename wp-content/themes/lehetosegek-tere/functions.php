@@ -270,7 +270,7 @@ add_action('acf/init', 'my_acf_init');
 function my_disable_gutenberg( $current_status, $post_type ) {
 
 	// Disabled post types
-	$disabled_post_types = array( 'staff', 'gallery', 'publication' );
+	$disabled_post_types = array( 'staff', 'gallery', 'publication', 'founder' );
 
 	// Change $can_edit to false for any post types in the disabled post types array
 	if ( in_array( $post_type, $disabled_post_types, true ) ) {
@@ -288,6 +288,7 @@ if(function_exists('pll_register_string')) {
 	pll_register_string( 'cpttitles', 'Stáb' );
 	pll_register_string( 'cpttitles', 'Galéria' );
 	pll_register_string( 'cpttitles', 'Kiadványaink' );
+	pll_register_string( 'cpttitles', 'Alapító Tagok' );
 	pll_register_string( 'sectiontitles', 'Iratkozz fel a
 	programajánlónk' );
 	pll_register_string( 'sectiontitles', 'Rólunk mondták' );
@@ -297,3 +298,24 @@ if(function_exists('pll_register_string')) {
 	pll_register_string( 'footer', 'Partnerek' );
 	pll_register_string( 'footer', 'Kapcsolat' );
 }
+
+/**
+ * We use WordPress's init hook to make sure
+ * our blocks are registered early in the loading
+ * process.
+ *
+ * @link https://developer.wordpress.org/reference/hooks/init/
+ */
+
+function fz_register_acf_blocks() {
+	/**
+	 * We register our block's with WordPress's handy
+	 * register_block_type();
+	 *
+	 * @link https://developer.wordpress.org/reference/functions/register_block_type/
+	 */
+	register_block_type( __DIR__ . '/blocks/testimonial' );
+	register_block_type( __DIR__ . '/blocks/big-carousel' );
+}
+// Here we call our fz_register_acf_block() function on init.
+add_action( 'init', 'fz_register_acf_blocks' );

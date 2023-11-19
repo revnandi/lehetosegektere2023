@@ -1,5 +1,4 @@
 import * as pikaday from 'pikaday';
-import invariant from 'tiny-invariant';
 
 export class WeekPicker {
   picker: pikaday;
@@ -84,8 +83,6 @@ export class WeekPicker {
   private initButtonListeners(nextButtonId: string, prevButtonId: string, dayButtonContainerId: string): void {
     const prevButtonElement = document.getElementById(prevButtonId);
     const nextButtonElement = document.getElementById(nextButtonId);
-    // invariant(prevButtonElement, `Cannot initialize previous button. Element with id:${prevButtonId} not found.`);
-    // invariant(nextButtonElement, `Cannot initialize next button. Element with id:${nextButtonId} not found.`);
 
     if(nextButtonElement) nextButtonElement.addEventListener('click', () => {
       this.nextWeek();
@@ -98,7 +95,6 @@ export class WeekPicker {
 
     const dayButtonContainer = document.getElementById(dayButtonContainerId);
     if(!dayButtonContainer) return;
-    // invariant(dayButtonContainer, `Cannot initialize day buttons. Element with id:${dayButtonContainerId} not found.`);
 
     const dayButtons = [...dayButtonContainer.children];
 
@@ -123,7 +119,6 @@ export class WeekPicker {
 
   private updateDayButtonClasses(selectedIndex: number): void {
     const dayButtonContainer = document.getElementById(this.dayButtonContainerId);
-    // invariant(dayButtonContainer, `Cannot initiate day buttons. Element with id:${this.dayButtonContainerId} not found.`);
 
     if(!dayButtonContainer) return;
     const dayButtons = [...dayButtonContainer.children];

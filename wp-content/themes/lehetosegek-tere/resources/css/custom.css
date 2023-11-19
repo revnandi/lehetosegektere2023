@@ -1,6 +1,6 @@
 article > *:not(.entry-content),
 .entry-content > * {
-  @apply mx-auto max-w-[1440px];
+  /* @apply mx-auto max-w-[1440px]; */
 }
 
 .entry-content,

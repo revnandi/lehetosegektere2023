@@ -1,5 +1,4 @@
 import Splide, { Options } from '@splidejs/splide';
-import invariant from 'tiny-invariant';
 
 import '@splidejs/splide/css/core';
 
@@ -14,7 +13,6 @@ export class Carousel {
     if(!element) return;
 
     this.carousel = new Splide( element, this.options ).mount();
-    // this.carousel = element ? new Glider(element, this.options) : null;
   }
 
   next(): void {

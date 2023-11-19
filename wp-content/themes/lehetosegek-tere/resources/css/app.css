@@ -6,6 +6,10 @@
 
 @import "custom.css";
 
+html {
+  scroll-behavior: smooth;
+}
+
 * {
   font-family: 'Krona One', sans-serif;
   letter-spacing: -0.075em;

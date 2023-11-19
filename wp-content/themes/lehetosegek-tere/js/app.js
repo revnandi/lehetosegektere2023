@@ -3787,48 +3787,51 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-window.addEventListener('load', function () {
+window.addEventListener("load", function () {
+  var _this = this,
+    _document$getElementB;
   (0,unlazy__WEBPACK_IMPORTED_MODULE_5__.lazyLoad)();
   var puzzle = new _components_puzzle__WEBPACK_IMPORTED_MODULE_0__.Puzzle({
-    wrapperId: 'lt_puzzle',
-    innerId: 'lt_puzzle_inner',
-    notificationId: 'lt_puzzle_notification'
+    wrapperId: "lt_puzzle",
+    innerId: "lt_puzzle_inner",
+    notificationId: "lt_puzzle_notification"
   });
   console.log(puzzle);
-  var eventPopUp = new _components_event_popup__WEBPACK_IMPORTED_MODULE_3__.EventPopUp('lt_events_popup');
-  var picker = new _components_weekpicker__WEBPACK_IMPORTED_MODULE_2__.WeekPicker('lt_events_datepicker', 'lt_events_datepicker_next', 'lt_events_datepicker_prev', 'lt_events_datepicker_daybuttons_container', function () {
+  var eventPopUp = new _components_event_popup__WEBPACK_IMPORTED_MODULE_3__.EventPopUp("lt_events_popup");
+  var picker = new _components_weekpicker__WEBPACK_IMPORTED_MODULE_2__.WeekPicker("lt_events_datepicker", "lt_events_datepicker_next", "lt_events_datepicker_prev", "lt_events_datepicker_daybuttons_container", function () {
     return eventPopUp.initEventListeners();
   });
-  var smallCarousel = new _components_carousel__WEBPACK_IMPORTED_MODULE_1__.Carousel('lt_small_carousel', {
+  var smallCarousel = new _components_carousel__WEBPACK_IMPORTED_MODULE_1__.Carousel("lt_small_carousel", {
     rewind: true,
-    type: 'fade',
+    type: "fade",
     arrows: false,
     classes: {
-      pagination: 'z-10 absolute bottom-0 left-0 w-full flex justify-center py-2 space-x-0.5 bg-white [&>li]:h-fit [&>li]:flex',
-      page: 'w-2.5 h-2.5 bg-black rounded-full [&.is-active]:bg-turquoise'
+      pagination: "z-10 absolute bottom-0 left-0 w-full flex justify-center py-2 space-x-0.5 bg-white [&>li]:h-fit [&>li]:flex",
+      page: "w-2.5 h-2.5 bg-black rounded-full [&.is-active]:bg-turquoise"
     }
     // dots: '#lt_small_carousel_dots'
   });
 
-  var bigCarousel = new _components_carousel__WEBPACK_IMPORTED_MODULE_1__.Carousel('lt_big_carousel', {
+  var bigCarousel = new _components_carousel__WEBPACK_IMPORTED_MODULE_1__.Carousel("lt_big_carousel", {
     rewind: true,
-    type: 'fade',
+    type: "fade",
     arrows: false,
+    lazyLoad: true,
     classes: {
-      pagination: 'z-10 absolute bottom-6 left-11 flex justify-center py-2 space-x-2 [&>li]:h-fit [&>li]:flex',
-      page: 'w-4 h-4 bg-black rounded-full [&.is-active]:bg-turquoise'
+      pagination: "z-10 absolute bottom-6 left-11 flex justify-center py-2 space-x-2 [&>li]:h-fit [&>li]:flex",
+      page: "w-4 h-4 bg-black rounded-full [&.is-active]:bg-turquoise"
     }
     // dots: '#lt_small_carousel_dots'
   });
 
-  var gallery = new _components_gallery__WEBPACK_IMPORTED_MODULE_4__.Gallery('lt_gallery', {
+  var gallery = new _components_gallery__WEBPACK_IMPORTED_MODULE_4__.Gallery("lt_gallery", {
     rewind: true,
-    type: 'fade',
+    type: "fade",
     pagination: false,
     lazyLoad: true,
     classes: {
-      pagination: 'z-10 absolute bottom-6 left-11 flex justify-center py-2 space-x-2 [&>li]:h-fit [&>li]:flex',
-      page: 'w-4 h-4 bg-black rounded-full [&.is-active]:bg-turquoise'
+      pagination: "z-10 absolute bottom-6 left-11 flex justify-center py-2 space-x-2 [&>li]:h-fit [&>li]:flex",
+      page: "w-4 h-4 bg-black rounded-full [&.is-active]:bg-turquoise"
     }
     // dots: '#lt_small_carousel_dots'
   });
@@ -3843,28 +3846,28 @@ window.addEventListener('load', function () {
   // Event handling
   function handleEvent(keyword, anchor) {
     var _target, _target2, _target3;
-    var target = this instanceof Element ? this : document.querySelector('.cat-list_item.active');
+    var target = this instanceof Element ? this : document.querySelector(".cat-list_item.active");
     if (target == null) {
       console.error("No active category!");
-      target = document.querySelector('.cat-list_item'); // Select any category if none is active
+      target = document.querySelector(".cat-list_item"); // Select any category if none is active
     }
 
-    if (anchor == undefined) anchor = (_target = target) === null || _target === void 0 ? void 0 : _target.querySelector('a');
-    document.querySelectorAll('.cat-list_item').forEach(function (innerElem) {
-      innerElem.classList.remove('text-turquoise', 'bg-white');
-      innerElem.classList.add('text-white');
+    if (anchor == undefined) anchor = (_target = target) === null || _target === void 0 ? void 0 : _target.querySelector("a");
+    document.querySelectorAll(".cat-list_item").forEach(function (innerElem) {
+      innerElem.classList.remove("text-turquoise", "bg-white");
+      innerElem.classList.add("text-white");
     });
-    (_target2 = target) === null || _target2 === void 0 || _target2.classList.remove('text-white');
-    (_target3 = target) === null || _target3 === void 0 || _target3.classList.add('text-turquoise', 'bg-white');
-    fetch('/wp-admin/admin-ajax.php', {
-      method: 'POST',
+    (_target2 = target) === null || _target2 === void 0 || _target2.classList.remove("text-white");
+    (_target3 = target) === null || _target3 === void 0 || _target3.classList.add("text-turquoise", "bg-white");
+    fetch("/wp-admin/admin-ajax.php", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/x-www-form-urlencoded'
+        "Content-Type": "application/x-www-form-urlencoded"
       },
       body: new URLSearchParams({
-        action: 'filter_events',
-        category: anchor && anchor.dataset.slug ? anchor.dataset.slug : '',
-        type: anchor && anchor.dataset.type ? anchor.dataset.type : 'event',
+        action: "filter_events",
+        category: anchor && anchor.dataset.slug ? anchor.dataset.slug : "",
+        type: anchor && anchor.dataset.type ? anchor.dataset.type : "event",
         keyword: keyword,
         after: picker.getWeekRange().start,
         before: picker.getWeekRange().end
@@ -3872,40 +3875,72 @@ window.addEventListener('load', function () {
     }).then(function (response) {
       return response.text();
     }).then(function (text) {
-      document.querySelector('.project-tiles').innerHTML = text;
+      document.querySelector(".project-tiles").innerHTML = text;
       eventPopUp.initEventListeners();
     })["catch"](function (error) {
-      console.error('Error:', error);
+      console.error("Error:", error);
     });
   }
   // Init date filter stuff
-  if (document.getElementById('lt_search_keyword_input')) {
+  if (document.getElementById("lt_search_keyword_input")) {
     // Category click event listeners
-    document.querySelectorAll('.cat-list_item').forEach(function (elem) {
-      elem.addEventListener('click', function (event) {
-        var anchor = this.querySelector('a');
-        var keyword = document.getElementById('lt_search_keyword_input').value;
+    document.querySelectorAll(".cat-list_item").forEach(function (elem) {
+      elem.addEventListener("click", function (event) {
+        var anchor = this.querySelector("a");
+        var keyword = document.getElementById("lt_search_keyword_input").value;
         handleEvent.call(this, keyword, anchor);
       });
     });
     // Search keyword input event listeners
-    document.getElementById('lt_search_keyword_input').addEventListener('input', function () {
+    document.getElementById("lt_search_keyword_input").addEventListener("input", function () {
       var keyword = this.value;
       handleEvent.call(this, keyword);
     });
   }
-  if (document.getElementById('lt_events_datepicker_next')) {
-    document.getElementById('lt_events_datepicker_next').addEventListener('click', function () {
-      var keyword = '';
+  if (document.getElementById("lt_events_datepicker_next")) {
+    document.getElementById("lt_events_datepicker_next").addEventListener("click", function () {
+      var keyword = "";
       handleEvent.call(this, keyword);
     });
   }
-  if (document.getElementById('lt_events_datepicker_prev')) {
-    document.getElementById('lt_events_datepicker_prev').addEventListener('click', function () {
-      var keyword = '';
+  if (document.getElementById("lt_events_datepicker_prev")) {
+    document.getElementById("lt_events_datepicker_prev").addEventListener("click", function () {
+      var keyword = "";
       handleEvent.call(this, keyword);
     });
   }
+  // Handle anchor scrolling
+  var extractHash = function extractHash(url) {
+    var lastHashtagIndex = url.lastIndexOf('#');
+    var lastHashtag = url.substring(lastHashtagIndex);
+    return lastHashtag;
+  };
+  var isUrlOnCurrentPage = function isUrlOnCurrentPage(url) {
+    var parts = url.split('#');
+    var textName = parts[0];
+    var path = _this.location.pathname;
+    return path.replace(/\//g, '') === textName.replace(/\//g, '');
+  };
+  var anchors = (_document$getElementB = document.getElementById('primary-menu')) === null || _document$getElementB === void 0 ? void 0 : _document$getElementB.querySelectorAll('a');
+  var anchorArray = anchors ? Array.from(anchors) : [];
+  anchorArray.filter(function (anchor) {
+    var href = anchor.getAttribute('href');
+    return href && href.includes('#');
+  }).forEach(function (anchor) {
+    var href = anchor.getAttribute('href');
+    if (href) {
+      var targetHash = extractHash(href);
+      if (isUrlOnCurrentPage(href)) {
+        anchor.addEventListener('click', function (event) {
+          event.preventDefault();
+          var targetElement = document.querySelector(targetHash);
+          if (targetElement) targetElement.scrollIntoView({
+            behavior: 'smooth'
+          });
+        });
+      }
+    }
+  });
 });
 
 /***/ }),
@@ -3948,7 +3983,6 @@ var Carousel = /*#__PURE__*/function () {
       var element = document.getElementById(this.wrapperId);
       if (!element) return;
       this.carousel = new _splidejs_splide__WEBPACK_IMPORTED_MODULE_0__["default"](element, this.options).mount();
-      // this.carousel = element ? new Glider(element, this.options) : null;
     }
   }, {
     key: "next",
@@ -4541,8 +4575,6 @@ var WeekPicker = /*#__PURE__*/function () {
       var _this2 = this;
       var prevButtonElement = document.getElementById(prevButtonId);
       var nextButtonElement = document.getElementById(nextButtonId);
-      // invariant(prevButtonElement, `Cannot initialize previous button. Element with id:${prevButtonId} not found.`);
-      // invariant(nextButtonElement, `Cannot initialize next button. Element with id:${nextButtonId} not found.`);
       if (nextButtonElement) nextButtonElement.addEventListener('click', function () {
         _this2.nextWeek();
       });
@@ -4551,7 +4583,6 @@ var WeekPicker = /*#__PURE__*/function () {
       });
       var dayButtonContainer = document.getElementById(dayButtonContainerId);
       if (!dayButtonContainer) return;
-      // invariant(dayButtonContainer, `Cannot initialize day buttons. Element with id:${dayButtonContainerId} not found.`);
       var dayButtons = _toConsumableArray(dayButtonContainer.children);
       var _loop = function _loop(i) {
         dayButtons[i].addEventListener('click', function () {
@@ -4579,7 +4610,6 @@ var WeekPicker = /*#__PURE__*/function () {
     key: "updateDayButtonClasses",
     value: function updateDayButtonClasses(selectedIndex) {
       var dayButtonContainer = document.getElementById(this.dayButtonContainerId);
-      // invariant(dayButtonContainer, `Cannot initiate day buttons. Element with id:${this.dayButtonContainerId} not found.`);
       if (!dayButtonContainer) return;
       var dayButtons = _toConsumableArray(dayButtonContainer.children);
       dayButtons.forEach(function (button, index) {

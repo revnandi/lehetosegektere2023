@@ -1,4 +1,4 @@
-<section class="bg-white">
+<section id="rolunk" class="pt-24 bg-white">
   <div class="container pb-48 mx-auto">
     <div class="text-center">
       <h2
@@ -13,7 +13,7 @@
       </h2>
     </div>
     <?php if (have_rows('testimonials')): ?>
-      <div class="grid grid-cols-1 gap-16 md:grid-cols-2 xl:grid-cols-3">
+      <div class="grid grid-cols-1 gap-12 md:grid-cols-2 xl:grid-cols-3">
         <?php while (have_rows('testimonials')):
           the_row();
 
@@ -23,7 +23,7 @@
           $link = get_sub_field('link');
           ?>
           <div class="">
-            <div class="text-xl text-turquoise">
+            <div class="text-2xl text-turquoise">
               <?php echo '“' . $quote . '”' ?>
             </div>
             <div class="mt-6 text-base uppercase text-turquoise">
@@ -36,9 +36,9 @@
             <?php endif; ?>
             <?php if ($link):
               $link_target = $link['target'] ? $link['target'] : '_self'; ?>
-              <div class="mt-16 text-base text-white uppercase">
+              <div class="mt-12 text-base text-white uppercase">
                 <a href="<?php echo esc_url($link['url']); ?>" target="<?php echo esc_attr($link_target); ?>"
-                  class="px-16 py-4 bg-turquoise rounded-3xl">
+                  class="inline-block px-16 py-4 bg-turquoise rounded-3xl">
                   <?php echo $link['title'] ?>
                 </a>
               </div>

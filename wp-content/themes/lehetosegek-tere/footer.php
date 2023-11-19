@@ -12,7 +12,7 @@
 
 	<div class="flex justify-center">
 		<div class="text-center">
-			<div class="mb-4 text-xs uppercase">
+			<div class="mb-4 text-base uppercase md:text-xs">
 				<?php
 				if (function_exists('pll__')):
 					echo pll__('Kövessetek bennünket!');
@@ -21,7 +21,7 @@
 				endif;
 				?>
 			</div>
-			<div class="flex items-center space-x-48">
+			<div class="flex flex-col items-center justify-center space-y-4 lg:space-y-0 lg:space-x-36 xl:space-x-48 lg:flex-row">
 				<a href="/partnerek" target="_blank"
 					class="inline-block py-4 text-white uppercase px-8 min-w-[14rem] text-center bg-gradient-to-t to-purple from-red rounded-4xl">
 					<?php

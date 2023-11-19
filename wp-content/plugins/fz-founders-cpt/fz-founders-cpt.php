@@ -1,27 +1,27 @@
 <?php
 
 /**
- * Plugin Name: FZ Staff CPT
- * Description: Adds custom Staff post type
+ * Plugin Name: FZ Founder CPT
+ * Description: Adds custom Founder post type
  * Version: 1.0
  * Author: Studio Freizeit
  * Author URI: freizeit.hu
  */
 
 // Register Custom Post Type
-function staff_custom_post_type() {
+function founder_custom_post_type() {
 
 	$labels = array(
-		'name'                  => _x( 'Stáb', 'Post Type General Name', 'text_domain' ),
-		'singular_name'         => _x( 'Stábtag', 'Post Type Singular Name', 'text_domain' ),
-		'menu_name'             => __( 'Stáb', 'text_domain' ),
-		'name_admin_bar'        => __( 'Stábtag', 'text_domain' ),
+		'name'                  => _x( 'Alapító tagok', 'Post Type General Name', 'text_domain' ),
+		'singular_name'         => _x( 'Alapító tag', 'Post Type Singular Name', 'text_domain' ),
+		'menu_name'             => __( 'Alapító tagok', 'text_domain' ),
+		'name_admin_bar'        => __( 'Alapító tag', 'text_domain' ),
 		'archives'              => __( 'Item Archives', 'text_domain' ),
 		'attributes'            => __( 'Item Attributes', 'text_domain' ),
 		'parent_item_colon'     => __( 'Parent Item:', 'text_domain' ),
-		'all_items'             => __( 'Összes Stábtag', 'text_domain' ),
-		'add_new_item'          => __( 'Új Stábtag hozzáadása', 'text_domain' ),
-		'add_new'               => __( 'Új Stábtag', 'text_domain' ),
+		'all_items'             => __( 'Összes Alapító tag', 'text_domain' ),
+		'add_new_item'          => __( 'Új Alapító tag hozzáadása', 'text_domain' ),
+		'add_new'               => __( 'Új Alapító tag', 'text_domain' ),
 		'new_item'              => __( 'New Item', 'text_domain' ),
 		'edit_item'             => __( 'Edit Item', 'text_domain' ),
 		'update_item'           => __( 'Update Item', 'text_domain' ),
@@ -41,7 +41,7 @@ function staff_custom_post_type() {
 		'filter_items_list'     => __( 'Filter items list', 'text_domain' ),
 	);
 	$args = array(
-		'label'                 => __( 'Stábtag', 'text_domain' ),
+		'label'                 => __( 'Alapító tag', 'text_domain' ),
 		'description'           => __( 'Post Type Description', 'text_domain' ),
 		'labels'                => $labels,
 		'supports'              => array( 'title', 'editor', 'thumbnail', 'custom-fields' ),
@@ -50,8 +50,8 @@ function staff_custom_post_type() {
 		'public'                => true,
 		'show_ui'               => true,
 		'show_in_menu'          => true,
-		'menu_position'         => 15,
-		'menu_icon'             => 'dashicons-universal-access',
+		'menu_position'         => 10,
+		'menu_icon'             => 'dashicons-groups',
 		'show_in_admin_bar'     => true,
 		'show_in_nav_menus'     => true,
 		'can_export'            => true,
@@ -61,7 +61,7 @@ function staff_custom_post_type() {
 		'capability_type'       => 'page',
 		'show_in_rest'          => true,
 	);
-	register_post_type( 'staff', $args );
+	register_post_type( 'founder', $args );
 
 }
-add_action( 'init', 'staff_custom_post_type', 0 );
+add_action( 'init', 'founder_custom_post_type', 0 );

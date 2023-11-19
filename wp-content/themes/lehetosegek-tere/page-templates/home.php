@@ -9,7 +9,7 @@
     <?php if (is_front_page()): ?>
       <!-- Start introduction -->
 
-      <div class="grid grid-cols-2 gap-6">
+      <div class="grid grid-cols-1 gap-y-6 md:gap-6 md:grid-cols-2">
         <div class="">
           <?php get_template_part('/template-parts/puzzle') ?>
         </div>

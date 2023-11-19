@@ -396,8 +396,8 @@ video {
   margin-bottom: 6rem}.mb-4{
   margin-bottom: 1rem}.mb-8{
   margin-bottom: 2rem}.mr-11{
-  margin-right: 2.75rem}.mt-16{
-  margin-top: 4rem}.mt-2{
+  margin-right: 2.75rem}.mt-12{
+  margin-top: 3rem}.mt-2{
   margin-top: 0.5rem}.mt-24{
   margin-top: 6rem}.mt-3{
   margin-top: 0.75rem}.mt-4{
@@ -423,7 +423,8 @@ video {
   height: 1.25rem}.h-52{
   height: 13rem}.h-6{
   height: 1.5rem}.h-8{
-  height: 2rem}.h-auto{
+  height: 2rem}.h-\[100dvh\]{
+  height: 100dvh}.h-auto{
   height: auto}.h-fit{
   height: -moz-fit-content;
   height: fit-content}.h-full{
@@ -474,12 +475,11 @@ video {
   align-items: center}.justify-end{
   justify-content: flex-end}.justify-center{
   justify-content: center}.justify-between{
-  justify-content: space-between}.gap-16{
-  gap: 4rem}.gap-2{
+  justify-content: space-between}.gap-12{
+  gap: 3rem}.gap-2{
   gap: 0.5rem}.gap-3{
   gap: 0.75rem}.gap-4{
-  gap: 1rem}.gap-6{
-  gap: 1.5rem}.gap-x-2{
+  gap: 1rem}.gap-x-2{
   -moz-column-gap: 0.5rem;
        column-gap: 0.5rem}.gap-x-8{
   -moz-column-gap: 2rem;
@@ -506,10 +506,7 @@ video {
   margin-left: calc(0.75rem * calc(1 - var(--tw-space-x-reverse)))}.space-x-4 > :not([hidden]) ~ :not([hidden]){
   --tw-space-x-reverse: 0;
   margin-right: calc(1rem * var(--tw-space-x-reverse));
-  margin-left: calc(1rem * calc(1 - var(--tw-space-x-reverse)))}.space-x-48 > :not([hidden]) ~ :not([hidden]){
-  --tw-space-x-reverse: 0;
-  margin-right: calc(12rem * var(--tw-space-x-reverse));
-  margin-left: calc(12rem * calc(1 - var(--tw-space-x-reverse)))}.space-x-6 > :not([hidden]) ~ :not([hidden]){
+  margin-left: calc(1rem * calc(1 - var(--tw-space-x-reverse)))}.space-x-6 > :not([hidden]) ~ :not([hidden]){
   --tw-space-x-reverse: 0;
   margin-right: calc(1.5rem * var(--tw-space-x-reverse));
   margin-left: calc(1.5rem * calc(1 - var(--tw-space-x-reverse)))}.space-y-1 > :not([hidden]) ~ :not([hidden]){
@@ -575,7 +572,8 @@ video {
      object-position: center}.p-2{
   padding: 0.5rem}.p-2\.5{
   padding: 0.625rem}.p-4{
-  padding: 1rem}.px-1{
+  padding: 1rem}.p-8{
+  padding: 2rem}.px-1{
   padding-left: 0.25rem;
   padding-right: 0.25rem}.px-12{
   padding-left: 3rem;
@@ -609,7 +607,8 @@ video {
   padding-bottom: 12rem}.pl-3{
   padding-left: 0.75rem}.pr-10{
   padding-right: 2.5rem}.pt-16{
-  padding-top: 4rem}.pt-8{
+  padding-top: 4rem}.pt-24{
+  padding-top: 6rem}.pt-8{
   padding-top: 2rem}.text-center{
   text-align: center}.text-right{
   text-align: right}.text-2xl{
@@ -654,8 +653,12 @@ video {
   --tw-text-opacity: 1;
   color: rgb(102 199 154 / var(--tw-text-opacity))}.text-white{
   --tw-text-opacity: 1;
-  color: rgb(255 255 255 / var(--tw-text-opacity))}.underline{
-  text-decoration-line: underline}.antialiased{
+  color: rgb(255 255 255 / var(--tw-text-opacity))}.\!text-white{
+  --tw-text-opacity: 1 !important;
+  color: rgb(255 255 255 / var(--tw-text-opacity)) !important}.underline{
+  text-decoration-line: underline}.no-underline{
+  text-decoration-line: none}.\!no-underline{
+  text-decoration-line: none !important}.antialiased{
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale}.placeholder-turquoise::-moz-placeholder{
   --tw-placeholder-opacity: 1;
@@ -864,10 +867,9 @@ http://nicolasgallagher.com/micro-clearfix-hack/
     border-bottom: none;
     cursor: help;
 }article > *:not(.entry-content),
-.entry-content > *{
-  margin-left: auto;
-  margin-right: auto;
-  max-width: 1440px}.entry-content h1, .block-editor-block-list__layout h1{
+.entry-content > * {
+  /* @apply mx-auto max-w-[1440px]; */
+}.entry-content h1, .block-editor-block-list__layout h1{
   font-size: 1.5rem;
   line-height: 2rem}.entry-content h2, .block-editor-block-list__layout h2{
   font-size: 1.25rem;
@@ -929,7 +931,9 @@ http://nicolasgallagher.com/micro-clearfix-hack/
     top: 40%}100%{
     opacity: 100%;
     top: 50%}}.show-puzzle-notification{
-  animation: puzzleAppear 1s}* {
+  animation: puzzleAppear 1s}html {
+  scroll-behavior: smooth;
+}* {
   font-family: 'Krona One', sans-serif;
   letter-spacing: -0.075em;
 }.has-cross {
@@ -1013,15 +1017,15 @@ http://nicolasgallagher.com/micro-clearfix-hack/
     margin-left: 0.5rem}.md\:mr-2{
     margin-right: 0.5rem}.md\:inline-block{
     display: inline-block}.md\:flex{
-    display: flex}.md\:h-\[100dvh\]{
-    height: 100dvh}.md\:w-1\/2{
+    display: flex}.md\:w-1\/2{
     width: 50%}.md\:w-32{
     width: 8rem}.md\:grow-0{
     flex-grow: 0}.md\:grid-cols-2{
     grid-template-columns: repeat(2, minmax(0, 1fr))}.md\:grid-cols-3{
     grid-template-columns: repeat(3, minmax(0, 1fr))}.md\:flex-row{
     flex-direction: row}.md\:flex-nowrap{
-    flex-wrap: nowrap}.md\:gap-x-8{
+    flex-wrap: nowrap}.md\:gap-6{
+    gap: 1.5rem}.md\:gap-x-8{
     -moz-column-gap: 2rem;
          column-gap: 2rem}.md\:gap-y-16{
     row-gap: 4rem}.md\:space-y-0 > :not([hidden]) ~ :not([hidden]){
@@ -1038,7 +1042,9 @@ http://nicolasgallagher.com/micro-clearfix-hack/
     font-size: 2.25rem;
     line-height: 2.5rem}.md\:text-5xl{
     font-size: 3rem;
-    line-height: 1}}@media (min-width: 960px){.lg\:-mx-4{
+    line-height: 1}.md\:text-xs{
+    font-size: 0.75rem;
+    line-height: 1rem}}@media (min-width: 960px){.lg\:-mx-4{
     margin-left: -1rem;
     margin-right: -1rem}.lg\:mx-4{
     margin-left: 1rem;
@@ -1051,9 +1057,16 @@ http://nicolasgallagher.com/micro-clearfix-hack/
     width: 15rem}.lg\:max-w-prose{
     max-width: 65ch}.lg\:grid-cols-2{
     grid-template-columns: repeat(2, minmax(0, 1fr))}.lg\:grid-cols-3{
-    grid-template-columns: repeat(3, minmax(0, 1fr))}.lg\:items-center{
+    grid-template-columns: repeat(3, minmax(0, 1fr))}.lg\:flex-row{
+    flex-direction: row}.lg\:items-center{
     align-items: center}.lg\:justify-between{
-    justify-content: space-between}.lg\:bg-transparent{
+    justify-content: space-between}.lg\:space-x-36 > :not([hidden]) ~ :not([hidden]){
+    --tw-space-x-reverse: 0;
+    margin-right: calc(9rem * var(--tw-space-x-reverse));
+    margin-left: calc(9rem * calc(1 - var(--tw-space-x-reverse)))}.lg\:space-y-0 > :not([hidden]) ~ :not([hidden]){
+    --tw-space-y-reverse: 0;
+    margin-top: calc(0px * calc(1 - var(--tw-space-y-reverse)));
+    margin-bottom: calc(0px * var(--tw-space-y-reverse))}.lg\:bg-transparent{
     background-color: transparent}.lg\:p-0{
     padding: 0px}.lg\:text-5xl{
     font-size: 3rem;
@@ -1064,7 +1077,10 @@ http://nicolasgallagher.com/micro-clearfix-hack/
     grid-template-columns: repeat(3, minmax(0, 1fr))}.xl\:grid-cols-4{
     grid-template-columns: repeat(4, minmax(0, 1fr))}.xl\:grid-cols-5{
     grid-template-columns: repeat(5, minmax(0, 1fr))}.xl\:gap-6{
-    gap: 1.5rem}.xl\:text-sm{
+    gap: 1.5rem}.xl\:space-x-48 > :not([hidden]) ~ :not([hidden]){
+    --tw-space-x-reverse: 0;
+    margin-right: calc(12rem * var(--tw-space-x-reverse));
+    margin-left: calc(12rem * calc(1 - var(--tw-space-x-reverse)))}.xl\:text-sm{
     font-size: 0.875rem;
     line-height: 1.25rem}}@media (min-width: 1440px){.\32xl\:grid-cols-4{
     grid-template-columns: repeat(4, minmax(0, 1fr))}.\32xl\:grid-cols-5{

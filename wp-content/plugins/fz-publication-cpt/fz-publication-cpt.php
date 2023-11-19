@@ -50,7 +50,7 @@ function publication() {
 		'public'                => true,
 		'show_ui'               => true,
 		'show_in_menu'          => true,
-		'menu_position'         => 5,
+		'menu_position'         => 25,
 		'menu_icon'             => 'dashicons-book',
 		'show_in_admin_bar'     => true,
 		'show_in_nav_menus'     => true,
@@ -60,7 +60,7 @@ function publication() {
 		'publicly_queryable'    => true,
 		'capability_type'       => 'page',
 		'show_in_rest'          => true,
-		'rewrite'       				=> array( 'slug' => 'kiadvanyok' ),
+		'rewrite'       				=> array( 'slug' => 'kiadvanyaik' ),
 	);
 	register_post_type( 'publication', $args );
 

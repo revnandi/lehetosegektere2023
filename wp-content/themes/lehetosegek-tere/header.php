@@ -78,9 +78,9 @@
 
 				</div>
 			</div>
-			<?php global $template; echo basename($template); ?>
+			<!-- <?php global $template; echo basename($template); ?> -->
 		</header>
-
+<!-- 
 		<div class="flex justify-end my-3 space-x-3 mr-11">
 			<a href="https://www.erstestiftung.org/de/">
 				<svg width="55" height="21" viewBox="0 0 55 21" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -218,7 +218,7 @@
 				</svg>
 
 			</a>
-		</div>
+		</div> -->
 
 
 		<main>

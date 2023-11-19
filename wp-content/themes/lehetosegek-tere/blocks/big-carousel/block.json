@@ -1,0 +1,16 @@
+{
+  "name": "acf/big-carousel",
+  "title": "Big Carousel",
+  "description": "Big Carousel block that uses ACF fields.",
+  "style": [ "file:./big-carousel.css" ],
+  "category": "formatting",
+  "icon": "admin-comments",
+  "keywords": ["big-carousel", "quote"],
+  "acf": {
+      "mode": "preview",
+      "renderTemplate": "big-carousel.php"
+  },
+  "supports": {
+      "anchor": true
+  }
+}

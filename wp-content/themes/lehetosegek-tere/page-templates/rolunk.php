@@ -1,9 +1,4 @@
-<?php
-/*
-Template Name: Lehet
-Template Post Type: page
-*/
-?>
+<?php /* Template Name: Rólunk */?>
 
 <?php get_header(); ?>
 
@@ -71,6 +66,8 @@ Template Post Type: page
   <?php get_template_part('template-parts/big-carousel'); ?>
 
   <?php get_template_part('template-parts/staff'); ?>
+
+  <?php get_template_part('template-parts/founders'); ?>
 
   <?php get_template_part('template-parts/testimonials'); ?>
 
