@@ -11,27 +11,12 @@ defined( 'ABSPATH' ) || exit;
  * @since 3.2
  */
 class PLL_FSE_REST_Template extends PLL_REST_Post {
-
-	/**
-	 * Value to indicate the template add link can be used.
-	 *
-	 * @var string
-	 */
-	const CAN_CREATE_TEMPLATE = 'CAN_CREATE_TEMPLATE';
-
-	/**
-	 * Value to indicate the template delete link can be used.
-	 *
-	 * @var string
-	 */
-	const CAN_DELETE_TEMPLATE = 'CAN_DELETE_TEMPLATE';
-
 	/**
 	 * The post type of the template.
 	 *
 	 * @var string
 	 */
-	private $post_type = '';
+	protected $post_type = '';
 
 	/**
 	 * Constructor
@@ -58,21 +43,7 @@ class PLL_FSE_REST_Template extends PLL_REST_Post {
 	 */
 	public function init() {
 		add_filter( 'rest_dispatch_request', array( $this, 'get_current_post_type_from_route' ), 10, 2 );
-		add_filter( 'get_edit_post_link', array( $this, 'override_edit_post_link' ), 10, 3 );
 		return $this;
-	}
-
-	/**
-	 * Returns the post id of the post that we come from to create a translation.
-	 *
-	 * Override the parent method because template translation is done with a REST API call instead of post-new.php like for the other post types.
-	 *
-	 * @since 3.2
-	 *
-	 * @return int The post id of the original post.
-	 */
-	public function get_from_post_id() {
-		return (int) $this->request->get_param( 'from_post' );
 	}
 
 	/**
@@ -81,84 +52,24 @@ class PLL_FSE_REST_Template extends PLL_REST_Post {
 	 *
 	 * @since 3.2
 	 *
-	 * @param int          $id               The id of the existing post to get datas for the translations table element.
-	 * @param int          $tr_id            The id of the translated post for the given language if exists.
-	 * @param PLL_Language $language         The given language object.
+	 * @param int          $id       The id of the existing post to get datas for the translations table element.
+	 * @param int          $tr_id    The id of the translated post for the given language if exists.
+	 * @param PLL_Language $language The given language object.
 	 * @return array The translation data of the given language.
 	 */
 	public function get_translation_table_data( $id, $tr_id, $language ) {
 		$translation_data = parent::get_translation_table_data( $id, $tr_id, $language );
 
-		// When no template part exist in DB, we need to return a non-empty value in the add_link item.
-		if ( ! empty( $this->post_type ) ) {
-			$template_post_type = get_post_type_object( $this->post_type );
-			if ( ! empty( $template_post_type ) ) {
-				if ( current_user_can( $template_post_type->cap->create_posts ) ) {
-					$translation_data['links']['add_link'] = self::CAN_CREATE_TEMPLATE;
-				}
-				// Verify the post is translated in the given language and the user can delete posts to add the delete link.
-				if ( current_user_can( $template_post_type->cap->delete_posts ) ) {
-					$translation_data['links']['delete_link'] = self::CAN_DELETE_TEMPLATE;
-				}
-			}
-			// Gets the template id in the `theme // post name` format to be able to delete it from the UI.
-			if ( ! empty( $tr_id ) ) {
-				$templates = get_block_templates( array( 'wp_id' => $tr_id ), $this->post_type );
-				if ( ! empty( $templates ) ) {
-					$template = reset( $templates );
-					$translation_data['template']['id'] = $template->id;
-				}
+		// Gets the template id in the `theme // post name` format to be able to delete it from the UI.
+		if ( ! empty( $this->post_type ) && ! empty( $tr_id ) ) {
+			$templates = get_block_templates( array( 'wp_id' => $tr_id ), $this->post_type );
+			if ( ! empty( $templates ) ) {
+				$template = reset( $templates );
+				$translation_data['template']['id'] = $template->id;
 			}
 		}
-
-		$translation_data['is_default_lang'] = $language->is_default;
 
 		return $translation_data;
-	}
-	/**
-	 * Overrides the edit link from WordPress for template parts.
-	 * By default it is "https://example.com/wp-admin/post.php?post=X&action=edit", which is not pointing to the Site Editor.
-	 * Returns "https://example.com/wp-admin/site-editor.php?postId=theme-slug//template-slug&postType=wp_template_part" instead.
-	 *
-	 * @since 3.2
-	 *
-	 * @param string $link    The edit link.
-	 * @param int    $post_id Post ID.
-	 * @param string $context The link context. If set to 'display' then ampersands
-	 *                        are encoded.
-	 * @return string The overriden edit link.
-	 */
-	public function override_edit_post_link( $link, $post_id, $context ) {
-		// We do not use the 'display' to generate the edit link in translation table: see PLL_REST_Post::get_translations_table().
-		if ( 'display' === $context ) {
-			return $link;
-		}
-
-		if ( ! PLL_FSE_Tools::is_template_post_type( get_post_type( $post_id ) ) ) {
-			// Not a template post type.
-			return $link;
-		}
-
-		$templates = get_block_templates( array( 'wp_id' => $post_id ), 'wp_template_part' );
-
-		if ( empty( $templates ) ) {
-			return $link;
-		}
-
-		$template = reset( $templates );
-
-		if ( $template->wp_id !== $post_id ) {
-			return $link;
-		}
-
-		return add_query_arg(
-			array(
-				'postId'   => rawurlencode( $template->id ), // postId refers to the WP_Block_Template id (i.e. "theme-slug//template-slug").
-				'postType' => $template->type,
-				'path'     => rawurlencode( '/template-parts/single' ),
-			),
-			admin_url( 'site-editor.php' )
-		);
 	}
 
 	/**
@@ -379,5 +290,45 @@ class PLL_FSE_REST_Template extends PLL_REST_Post {
 		}
 
 		return $untranslated_template_parts;
+	}
+
+	/**
+	 * Returns edit post link for site editor.
+	 *
+	 * @since 3.4.5
+	 *
+	 * @param int $post_id ID of the post to get edit link from.
+	 * @return string|null The edit post link for the given post. Null if none found.
+	 */
+	protected function get_site_editor_edit_post_link( $post_id ) {
+		$post_type = (string) get_post_type( $post_id );
+		if ( empty( $post_type ) ) {
+			return (string) get_edit_post_link( $post_id, 'keep ampersand' );
+		}
+
+		if ( version_compare( $GLOBALS['wp_version'], '6.3', '>=' ) ) {
+			return (string) get_edit_post_link( $post_id, 'keep ampersand' );
+		}
+
+		// Backward compatibility with WP **<** 6.3.
+		$templates = get_block_templates( array( 'wp_id' => $post_id ), 'wp_template_part' );
+		if ( empty( $templates ) ) {
+			return (string) get_edit_post_link( $post_id, 'keep ampersand' );
+		}
+
+		$template = reset( $templates );
+		if ( $template->wp_id !== $post_id ) {
+			return (string) get_edit_post_link( $post_id, 'keep ampersand' );
+		}
+
+		return add_query_arg(
+			array(
+				'postId'   => rawurlencode( $template->id ), // postId refers to the WP_Block_Template id (i.e. "theme-slug//template-slug").
+				'postType' => $template->type,
+				'path'     => rawurlencode( '/template-parts/single' ),
+				'canvas'   => 'edit',
+			),
+			admin_url( 'site-editor.php' )
+		);
 	}
 }

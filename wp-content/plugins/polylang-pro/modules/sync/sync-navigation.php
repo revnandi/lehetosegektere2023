@@ -45,7 +45,7 @@ class PLL_Sync_Navigation {
 	 * @since 3.2
 	 *
 	 * @param string[] $post_types  List of post types.
-	 * @param bool     $is_settings True when displaying the list of custom post types in Polylang settings
+	 * @param bool     $is_settings True when displaying the list of custom post types in Polylang settings.
 	 * @return string[]
 	 */
 	public function add_post_type( $post_types, $is_settings = false ) {
@@ -59,11 +59,11 @@ class PLL_Sync_Navigation {
 	}
 
 	/**
-	 * Recursively translate blocks
+	 * Recursively translate navigation blocks.
 	 *
 	 * @since 3.2
 	 *
-	 * @param array[] $blocks        An array of blocks arrays
+	 * @param array[] $blocks        An array of block arrays.
 	 * @param string  $language      Slug language of the target post.
 	 * @param string  $from_language Slug language of the source post.
 	 * @return array Array of translated blocks.

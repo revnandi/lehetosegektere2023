@@ -51,7 +51,7 @@ class PLL_FSE_REST_Duplicate_Template extends PLL_FSE_Abstract_Module implements
 	 * @return self
 	 */
 	public function init() {
-		foreach ( PLL_FSE_Tools::get_post_types() as $post_type ) {
+		foreach ( PLL_FSE_Tools::get_template_post_types() as $post_type ) {
 			add_action( "rest_after_insert_{$post_type}", array( $this, 'translate_content' ), 10, 3 );
 		}
 
@@ -123,9 +123,11 @@ class PLL_FSE_REST_Duplicate_Template extends PLL_FSE_Abstract_Module implements
 	 *
 	 * @since 3.2
 	 *
-	 * @param string[] $attrs    {
-	 *     string $slug  Template part slug.
-	 *     string $theme Template part theme slug.
+	 * @param string[] $attrs {
+	 *  The template part slug and theme.
+	 *
+	 *  @type string $slug  Template part slug.
+	 *  @type string $theme Template part theme slug.
 	 * }
 	 * @param string   $language Slug language of the target post.
 	 * @return string Slug of the translated template part.

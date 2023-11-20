@@ -42,12 +42,12 @@ abstract class PLL_REST_Translated_Object extends PLL_REST_Filtered_Object {
 	 * @since 2.2.1 $content_types is an array of arrays
 	 * @since 2.6   The first parameter is an instance of PLL_REST_API instead of PLL_Model
 	 *
-	 * @param object $rest_api      Instance of PLL_REST_API
-	 * @param array  $content_types Array of arrays with post types or taxonomies as keys and options as values
+	 * @param object $rest_api      Instance of PLL_REST_API.
+	 * @param array  $content_types Array of arrays with post types or taxonomies as keys and options as values.
 	 *                              The possible options are:
-	 *                              filters:      whether to filter queries, defaults to true
-	 *                              lang:         whether to return the language in the response, defaults to true
-	 *                              translations: whether to return the translations in the response, defaults to true
+	 *                              filters:      whether to filter queries, defaults to true.
+	 *                              lang:         whether to return the language in the response, defaults to true.
+	 *                              translations: whether to return the translations in the response, defaults to true.
 	 */
 	public function __construct( &$rest_api, $content_types ) {
 		parent::__construct( $rest_api, $content_types );
@@ -81,7 +81,7 @@ abstract class PLL_REST_Translated_Object extends PLL_REST_Filtered_Object {
 						'update_callback' => array( $this, 'save_translations' ),
 						'schema'          => array(
 							'translations' => __( 'Translations', 'polylang-pro' ),
-							'type' => 'object',
+							'type'         => 'object',
 						),
 					)
 				);
@@ -103,12 +103,12 @@ abstract class PLL_REST_Translated_Object extends PLL_REST_Filtered_Object {
 	}
 
 	/**
-	 * Sets the object language
+	 * Sets the object language.
 	 *
 	 * @since 2.2
 	 *
-	 * @param string $lang   Language code
-	 * @param object $object Instance of WP_Post or WP_Term
+	 * @param string $lang   Language code.
+	 * @param object $object Instance of WP_Post or WP_Term.
 	 * @return bool
 	 */
 	public function set_language( $lang, $object ) {
@@ -119,11 +119,11 @@ abstract class PLL_REST_Translated_Object extends PLL_REST_Filtered_Object {
 	}
 
 	/**
-	 * Returns the object translations
+	 * Returns the object translations.
 	 *
 	 * @since 2.2
 	 *
-	 * @param array $object Post or Term array
+	 * @param array $object Post or Term array.
 	 * @return array
 	 */
 	public function get_translations( $object ) {
@@ -131,16 +131,16 @@ abstract class PLL_REST_Translated_Object extends PLL_REST_Filtered_Object {
 	}
 
 	/**
-	 * Save translations
+	 * Save translations.
 	 *
 	 * @since 2.2
 	 *
-	 * @param array  $translations Array of translations with language codes as keys and object ids as values
-	 * @param object $object       Instance of WP_Post or WP_Term
+	 * @param array  $translations Array of translations with language codes as keys and object ids as values.
+	 * @param object $object       Instance of WP_Post or WP_Term.
 	 * @return bool
 	 */
 	public function save_translations( $translations, $object ) {
-		if ( isset( $object->{$this->setter_id_name} ) ) { // Test to avoid a warning with WooCommerce
+		if ( isset( $object->{$this->setter_id_name} ) ) { // Test to avoid a warning with WooCommerce.
 			$this->model->{$this->type}->save_translations( $object->{$this->setter_id_name}, $translations );
 		}
 		return true;

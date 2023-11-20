@@ -161,7 +161,7 @@ class PLL_Sync_Content {
 	 *
 	 * @since 2.3
 	 *
-	 * @param int    $id   Thumbnail id.
+	 * @param int    $id   Thumbnail ID.
 	 * @param string $key  Meta key.
 	 * @param string $lang Language code.
 	 * @return int
@@ -224,13 +224,13 @@ class PLL_Sync_Content {
 						$this->model->term->save_translations( $term->term_id, $translations );
 
 						/**
-						 * Fires after a term translation is automatically created when duplicating a post
+						 * Fires after a term translation is automatically created when duplicating a post.
 						 *
 						 * @since 2.3.8
 						 *
-						 * @param int    $from Term id of the source term
-						 * @param int    $to   Term id of the new term translation
-						 * @param string $lang Language code of the new translation
+						 * @param int    $from Term ID of the source term.
+						 * @param int    $to   Term ID of the new term translation.
+						 * @param string $lang Language code of the new translation.
 						 */
 						do_action( 'pll_duplicate_term', $term->term_id, $tr_term_id, $lang );
 					}
@@ -247,8 +247,8 @@ class PLL_Sync_Content {
 	 *
 	 * @since 1.9
 	 *
-	 * @param int $id Media id
-	 * @return int Translated media id
+	 * @param int $id Media ID.
+	 * @return int Translated media ID.
 	 */
 	protected function translate_media( $id ) {
 		global $wpdb;
@@ -306,10 +306,10 @@ class PLL_Sync_Content {
 	 *
 	 * @since 1.9
 	 *
-	 * @param array  $attr    Shortcode attrbute
-	 * @param string $content Shortcode content
-	 * @param string $tag     Shortcode tag (either 'caption' or 'wp-caption')
-	 * @return string Translated shortcode
+	 * @param array  $attr    Shortcode attrbute.
+	 * @param string $content Shortcode content.
+	 * @param string $tag     Shortcode tag (either 'caption' or 'wp-caption').
+	 * @return string Translated shortcode.
 	 */
 	public function caption_shortcode( $attr, $content, $tag ) {
 		// Translate the caption id
@@ -342,7 +342,7 @@ class PLL_Sync_Content {
 	 *
 	 * Since 2.5
 	 *
-	 * @param string $content HTML string
+	 * @param string $content HTML string.
 	 * @return string
 	 */
 	protected function translate_html( $content ) {
@@ -386,13 +386,13 @@ class PLL_Sync_Content {
 	}
 
 	/**
-	 * Translates <img> 'class' and 'alt' attributes
+	 * Translates <img> 'class' and 'alt' attributes.
 	 *
 	 * @since 1.9
-	 * @since 2.5 The html is passed by reference and the return value is the image id
+	 * @since 2.5 The html is passed by reference and the return value is the image ID.
 	 *
-	 * @param string $text Reference to <img> html with attributes
-	 * @return null|int Translated image id if exist
+	 * @param string $text Reference to <img> html with attributes.
+	 * @return null|int Translated image id if exist.
 	 */
 	protected function translate_img( &$text ) {
 		$attributes = wp_kses_attr_parse( $text ); // since WP 4.2.3
@@ -438,11 +438,9 @@ class PLL_Sync_Content {
 	}
 
 	/**
-	 * Recursively translate blocks
+	 * Recursively translate blocks.
 	 *
-	 * @since 2.5
-	 *
-	 * @param array[] $blocks An array of blocks arrays
+	 * @param array[] $blocks An array of arrays representing a block.
 	 * @return array
 	 */
 	protected function translate_blocks( $blocks ) {
@@ -512,13 +510,13 @@ class PLL_Sync_Content {
 		}
 
 		/**
-		 * Filters parsed blocks after core blocks have been translated
+		 * Filters parsed blocks after core blocks have been translated.
 		 *
 		 * @since 2.5.3
 		 *
-		 * @param array[] $blocks    List of blocks
-		 * @param string  $lang      Language of target
-		 * @param string  $from_lang Language of the source
+		 * @param array[] $blocks    List of blocks.
+		 * @param string  $lang      Language of target.
+		 * @param string  $from_lang Language of the source.
 		 */
 		return apply_filters( 'pll_translate_blocks', $blocks, $this->target_language->slug, $this->from_language->slug );
 	}

@@ -119,10 +119,9 @@ var external_this_wp_url_ = __webpack_require__(470);
  *
  * @package Polylang-Pro
  */
-
 const settings_MODULE_KEY = 'pll/metabox';
 const settings_MODULE_CORE_EDITOR_KEY = 'core/editor';
-const MODULE_SITE_EDITOR_KEY = 'core/edit-site';
+const settings_MODULE_SITE_EDITOR_KEY = 'core/edit-site';
 const MODULE_POST_EDITOR_KEY = 'core/edit-post';
 const MODULE_CORE_KEY = 'core';
 const DEFAULT_STATE = {
@@ -132,7 +131,8 @@ const DEFAULT_STATE = {
 	fromPost: null,
 	currentTemplatePart: {}
 };
-const UNTRANSLATABLE_POST_TYPE = (/* unused pure expression or super */ null && (['wp_template']));
+const UNTRANSLATABLE_POST_TYPE = (/* unused pure expression or super */ null && (['wp_template', 'wp_global_styles']));
+const POST_TYPE_WITH_TRASH = (/* unused pure expression or super */ null && (['page']));
 const settings_TEMPLATE_PART_SLUG_SEPARATOR = '___'; // Its value must be synchronized with its equivalent in PHP @see PLL_FSE_Template_Slug::SEPARATOR
 const settings_TEMPLATE_PART_SLUG_CHECK_LANGUAGE_PATTERN = '[a-z_-]+'; // Its value must be synchronized with it equivalent in PHP @see PLL_FSE_Template_Slug::SEPARATOR
 
@@ -143,7 +143,6 @@ const settings_TEMPLATE_PART_SLUG_CHECK_LANGUAGE_PATTERN = '[a-z_-]+'; // Its va
  *
  * @package Polylang-Pro
  */
-
 
 
 
@@ -273,7 +272,7 @@ function getSelectedLanguage( lang ) {
  */
 function getDefaultLanguage() {
 	const languages = (0,external_this_wp_data_.select)( settings_MODULE_KEY ).getLanguages();
-	return Array.from( languages.values() ).find( lang => lang.is_default_lang );
+	return Array.from( languages.values() ).find( lang => lang.is_default );
 }
 
 /**
@@ -332,10 +331,9 @@ function getSynchronizedPosts( pll_sync_post ){
  * Gets translations table.
  *
  * @param {Object.<string, Object>} translationsTableDatas The translations table data object with language codes as keys and data object as values.
- * @param {string} lang The language code.
  * @returns {Map}
  */
-function getTranslationsTable( translationsTableDatas, lang ){
+function getTranslationsTable( translationsTableDatas ){
 	let translationsTable = new Map( Object.entries( [] ) );
 	// get translations table datas from post
 	if ( ! isUndefined( translationsTableDatas ) ) {
@@ -361,20 +359,6 @@ function isSaveRequest( options ){
 	} else {
 		return false;
 	}
-}
-
-/**
- * Adds `is_block_editor` parameter to the request in a block editor context.
- *
- * @param {Object} options The initial request.
- */
-function addIsBlockEditorToRequest( options ){
-	options.path = (0,external_this_wp_url_.addQueryArgs)(
-		options.path,
-		{
-			is_block_editor: true
-		}
-	);
 }
 
 /**
@@ -510,28 +494,10 @@ function isTemplatePart( post ) {
  */
 function getCurrentPostType() {
 	if ( isSiteBlockEditor() ) {
-		return (0,external_this_wp_data_.select)( MODULE_SITE_EDITOR_KEY ).getEditedPostType();
+		return (0,external_this_wp_data_.select)( settings_MODULE_SITE_EDITOR_KEY ).getEditedPostType();
 	}
 
 	return (0,external_this_wp_data_.select)( settings_MODULE_CORE_EDITOR_KEY ).getCurrentPostType();
-}
-
-/**
- * Gets the default language from a translations table.
- *
- * @param {Object} translationsTable The translations table data with language codes as keys and data object as values.
- * @returns {Object} The default language.
- */
-function getDefaultLangFromTable( translationsTable ) {
-	let defaultLang = {}
-	translationsTable.forEach( ( translation ) => {
-		if ( translation.is_default_lang ) {
-				defaultLang = translation.lang;
-			}
-		}
-	);
-
-	return defaultLang;
 }
 
 /**
@@ -556,7 +522,6 @@ function getLangSlugRegex() {
  *
  * @package Polylang-Pro
  */
-
 
 
 
@@ -623,14 +588,14 @@ const isSiteEditorContextInitialized = () => {
 
 	/**
 	 * Set a promise to wait for the current template to be fully loaded before making other processes.
-	 * It allows to see if both Site Editor and Core stores are available (@see getCurrentTemplateFromDataStore()).
+	 * It allows to see if both Site Editor and Core stores are available (@see getCurrentPostFromDataStore()).
 	 */
 	const isTemplatePartLoaded = new Promise(
 		function( resolve ) {
 			let unsubscribe = subscribe(
 				function() {
-					const currentTemplatePart = getCurrentTemplateFromDataStore();
-					if ( ! isNil( currentTemplatePart ) && ! isEmpty( currentTemplatePart ) ) {
+					const store = select( MODULE_SITE_EDITOR_KEY );
+					if ( store ) {
 						unsubscribe();
 						resolve();
 					}
@@ -643,7 +608,7 @@ const isSiteEditorContextInitialized = () => {
 }
 
 /**
- * Set a promise for waiting for the languages list is correctly initialized before making other processes.
+ * Returns a promise fulfilled when the languages list is correctly initialized before making other processes.
  */
 const isLanguagesinitialized = () => new Promise(
 	function( resolve ) {
@@ -667,7 +632,7 @@ function saveURLParams(){
 	// Variable window.location.search isn't use directly
 	// Function getSearchParams return an URLSearchParams object for manipulating each parameter
 	// Each of them are sanitized below
-	const searchParams = getSearchParams( window.location.search ); // phpcs:ignore WordPressVIPMinimum.JS.Window.location
+	const searchParams = getSearchParams();
 	if ( null !== searchParams ) {
 		dispatch( MODULE_KEY ).setFromPost(
 			{
@@ -679,20 +644,75 @@ function saveURLParams(){
 	}
 }
 
+const getEditedPostContextWithLegacy = () => {
+	const siteEditorSelector = (0,external_this_wp_data_.select)( settings_MODULE_SITE_EDITOR_KEY );
+
+	/**
+	 * Return null when called from our apiFetch middleware without a properly loaded store.
+	 */
+	if ( ! siteEditorSelector ) {
+		return null;
+	}
+
+	const _context = {
+		postId: siteEditorSelector.getEditedPostId(),
+		postType: siteEditorSelector.getEditedPostType()
+	}
+
+	if ( siteEditorSelector.hasOwnProperty( 'getEditedPostContext' ) ) {
+		const context = siteEditorSelector.getEditedPostContext();
+
+		return null != context && null !== context.postType && null !== context.postId
+			? context
+			: _context;
+	}
+
+	/**
+	 * Backward compatibility with WordPress < 6.3 where `getEditedPostContext()` doesn't exist yet.
+	 */
+	return _context;
+}
+
 /**
- * Gets the current template using the Site Editor store and the Core store.
+ * Gets the current post using the Site Editor store and the Core store.
  *
- * @returns {object} The current template object.
+ * @returns {object|null} The current post object, `null` if none found.
  */
-function getCurrentTemplateFromDataStore() {
-	const currentTemplateId = (0,external_this_wp_data_.select)( MODULE_SITE_EDITOR_KEY )?.getEditedPostId();
-	const currentTemplateType = (0,external_this_wp_data_.select)( MODULE_SITE_EDITOR_KEY )?.getEditedPostType();
-	return (0,external_this_wp_data_.select)( MODULE_CORE_KEY ).getEntityRecord(
+const getCurrentPostFromDataStore = () => {
+	const editedContext = getEditedPostContextWithLegacy();
+
+	return null === editedContext
+	? null
+	: (0,external_this_wp_data_.select)( MODULE_CORE_KEY ).getEntityRecord(
 		'postType',
-		currentTemplateType,
-		currentTemplateId
+		editedContext.postType,
+		editedContext.postId
 	);
 }
+
+;// CONCATENATED MODULE: ./modules/block-editor/js/middleware/filter-path-middleware.js
+/**
+ * @package Polylang Pro
+ */
+
+/**
+ * Filters requests for translatable entities.
+ * This logic is shared accross all Polylang plugins.
+ *
+ * @since 3.5
+ *
+ * @param {APIFetchOptions} options
+ * @param {Array} filteredRoutes
+ * @param {CallableFunction} filter
+ * @returns {APIFetchOptions}
+ */
+const filterPathMiddleware = ( options, filteredRoutes, filter ) => {
+	const cleanPath = options.path.split( '?' )[0].replace(/^\/+|\/+$/g, ''); // Get path without query parameters and trim '/'.
+
+	return Object.values( filteredRoutes ).find( ( path ) => cleanPath === path ) ? filter( options ) : options;
+}
+
+/* harmony default export */ const filter_path_middleware = (filterPathMiddleware);
 
 ;// CONCATENATED MODULE: ./modules/block-editor/js/block-editor-plugin.js
 /**
@@ -716,60 +736,73 @@ function getCurrentTemplateFromDataStore() {
 
 
 
+
 /*
  * Initializes a block editor apiFetch middleware to be able to filter REST API requests.
  */
 external_this_wp_apiFetch_default().use(
 	( options, next ) => {
-		// If options.url is defined, this is not a REST request but a direct call to post.php for legacy metaboxes, for example.
-		if ( ! (0,external_lodash_.isUndefined)( options.url ) ) {
+		/*
+		 * If options.url is defined, this is not a REST request but a direct call to post.php for legacy metaboxes.
+		 * If `filteredRoutes` is not defined, return early.
+		 */
+		if ( 'undefined' !== typeof options.url || 'undefined' === typeof pllFilteredRoutes ) {
 			return next( options );
 		}
 
-		const currentLangSlug = getCurrentLanguageSlug();
+		return next( filter_path_middleware( options, pllFilteredRoutes, addParametersToRequest ) );
+	}
+);
 
-		// `POST` or `PUT` request.
-		if ( isSaveRequest( options ) ) {
-			addIsBlockEditorToRequest( options );
+/**
+ * Adds parameters according to the context of the request.
+ *
+ * @since 3.5
+ *
+ * @param {APIFetchOptions} options
+ * @returns {APIFetchOptions}
+ */
+const addParametersToRequest = ( options ) => {
+	const currentLangSlug = getCurrentLanguageSlug();
 
-			/**
-			 * Use default language for new template part that doesn't exist in any language,
-			 * otherwise use the current language.
-			 */
-			if ( isNewTemplatePartCreationRequest( options ) ) {
-				addLanguageToRequest( options, getDefaultLanguage()?.slug );
-			}
-
-			if ( ! isCurrentPostRequest( options ) && ! isTemplatePartTranslationCreationRequest( options ) ) {
-				addLanguageToRequest( options, currentLangSlug );
-			}
-
-			maybeAddLangSuffixToTemplatePart( options, currentLangSlug );
-
-			return next( options );
-		}
-
-		const currentPostType = getCurrentPostType();
-
-		// Current language is set to default when editing templates.
-		if ( 'wp_template' === currentPostType ) {
+	// `POST` or `PUT` request.
+	if ( isSaveRequest( options ) ) {
+		/**
+		 * Use default language for new template part that doesn't exist in any language,
+		 * otherwise use the current language.
+		 */
+		if ( isNewTemplatePartCreationRequest( options ) ) {
 			addLanguageToRequest( options, getDefaultLanguage()?.slug );
 		}
 
-		const templatePartListRegex = new RegExp( /^\/wp\/v2\/template-parts\/?(?:\?.*)?$/ );
-
-		// Template part list request.
-		if ( templatePartListRegex.test( options.path ) ) {
-			maybeRequireIncludeUntranslatedTemplate( options );
+		if ( ! isCurrentPostRequest( options ) && ! isTemplatePartTranslationCreationRequest( options ) ) {
+			addLanguageToRequest( options, currentLangSlug );
 		}
 
-		// All kinds of requests.
-		addLanguageToRequest( options, currentLangSlug );
-		addIsBlockEditorToRequest( options );
+		maybeAddLangSuffixToTemplatePart( options, currentLangSlug );
 
-		return next( options );
+		return options;
 	}
-);
+
+	const currentPostType = getCurrentPostType();
+
+	// Current language is set to default when editing templates.
+	if ( 'wp_template' === currentPostType ) {
+		addLanguageToRequest( options, getDefaultLanguage()?.slug );
+	}
+
+	const templatePartListRegex = new RegExp( /^\/wp\/v2\/template-parts\/?(?:\?.*)?$/ );
+
+	// Template part list request.
+	if ( templatePartListRegex.test( options.path ) ) {
+		maybeRequireIncludeUntranslatedTemplate( options );
+	}
+
+	// All kinds of requests.
+	addLanguageToRequest( options, currentLangSlug );
+
+	return options;
+}
 
 /**
  * Gets language from store or a fallback javascript global variable.
@@ -795,7 +828,7 @@ function getCurrentLanguageSlug(){
 	}
 
 	// FSE template editor case.
-	const template = getCurrentTemplateFromDataStore();
+	const template = getCurrentPostFromDataStore();
 	const templateLanguage = template?.lang;
 	if ( ! (0,external_lodash_.isUndefined)( templateLanguage ) && templateLanguage ) {
 		return templateLanguage;
@@ -824,7 +857,7 @@ function maybeAddLangSuffixToTemplatePart( options, langSlug ){
 		const languages = (0,external_this_wp_data_.select)( settings_MODULE_KEY ).getLanguages();
 		const language = languages.get( langSlug );
 
-		if ( ! language.is_default_lang ) {
+		if ( ! language.is_default ) {
 			// No suffix for default language.
 			const langSuffix = settings_TEMPLATE_PART_SLUG_SEPARATOR + langSlug;
 			options.data.slug += langSuffix;
@@ -888,7 +921,6 @@ if ( typeof jQuery != 'undefined' ) {
 		}
 	);
 }
-
 
 })();
 

@@ -264,11 +264,11 @@ class PLL_TEC {
 	}
 
 	/**
-	 * Populates default values for venues and organizers for a newly created event translation
+	 * Populates default values for venues and organizers for a newly created event translation.
 	 *
 	 * @since 2.2
 	 *
-	 * @param array $posts Array of linked posts
+	 * @param array $posts Array of linked posts.
 	 * @return array
 	 */
 	public function translate_linked_post( $posts ) {
@@ -345,11 +345,11 @@ class PLL_TEC {
 	}
 
 	/**
-	 * Synchronize event metas
+	 * Synchronize event metas.
 	 *
 	 * @since 2.2
 	 *
-	 * @param array $metas Custom fields to copy or synchronize
+	 * @param array $metas Custom fields to copy or synchronize.
 	 * @return array
 	 */
 	public function copy_post_metas( $metas ) {
@@ -357,13 +357,13 @@ class PLL_TEC {
 	}
 
 	/**
-	 * Translate venues and organizers before they are copied or synchronized
+	 * Translate venues and organizers before they are copied or synchronized.
 	 *
 	 * @since 2.3
 	 *
-	 * @param mixed  $value Meta value
-	 * @param string $key   Meta key
-	 * @param string $lang  Language of target
+	 * @param mixed  $value Meta value.
+	 * @param string $key   Meta key.
+	 * @param string $lang  Language of target.
 	 * @return mixed
 	 */
 	public function translate_meta( $value, $key, $lang ) {
@@ -1086,16 +1086,16 @@ class PLL_TEC {
 	 */
 	protected function get_slugs_to_reset() {
 		return array(
-			'category_slug'  => 'category',
-			'tag_slug'       => 'tag',
-			'monthSlug'      => 'month',
-			'listSlug'       => 'list',
-			'upcomingSlug'   => 'upcoming',
-			'pastSlug'       => 'past',
-			'daySlug'        => 'day',
-			'todaySlug'      => 'today',
-			'featured_slug'  => 'featured',
-			'all_slug'       => 'all',
+			'category_slug' => 'category',
+			'tag_slug'      => 'tag',
+			'monthSlug'     => 'month',
+			'listSlug'      => 'list',
+			'upcomingSlug'  => 'upcoming',
+			'pastSlug'      => 'past',
+			'daySlug'       => 'day',
+			'todaySlug'     => 'today',
+			'featured_slug' => 'featured',
+			'all_slug'      => 'all',
 		);
 	}
 

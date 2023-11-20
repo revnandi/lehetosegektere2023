@@ -29,13 +29,11 @@ abstract class PLL_Abstract_Language_Switcher_Block {
 	protected $admin_current_lang;
 
 	/**
-	 * Is the context block editor?
-	 *
-	 * @since 2.8
+	 * Is it the edit context?
 	 *
 	 * @var bool
 	 */
-	protected $is_block_editor = false;
+	protected $is_edit_context = false;
 
 	/**
 	 * Constructor
@@ -127,6 +125,7 @@ abstract class PLL_Abstract_Language_Switcher_Block {
 				'wp-element',
 				'wp-i18n',
 				'wp-server-side-render',
+				'lodash',
 			),
 			POLYLANG_VERSION,
 			true
@@ -135,7 +134,7 @@ abstract class PLL_Abstract_Language_Switcher_Block {
 		wp_localize_script( $script_handle, 'pll_block_editor_blocks_settings', PLL_Switcher::get_switcher_options( 'block', 'string' ) );
 
 		$attributes = array(
-			'className'   => array(
+			'className' => array(
 				'type' => 'string',
 			),
 		);
@@ -161,8 +160,9 @@ abstract class PLL_Abstract_Language_Switcher_Block {
 	}
 
 	/**
-	 * Returns REST parameters for language switcher block.
-	 * Used to be in the PLL_Block_Editor_Switcher_Block class.
+	 * Returns the REST parameters for language switcher block.
+	 * Used to store the request's language and context locally.
+	 * Previously was in the `PLL_Block_Editor_Switcher_Block` class.
 	 *
 	 * @see WP_REST_Server::dispatch()
 	 *
@@ -175,31 +175,30 @@ abstract class PLL_Abstract_Language_Switcher_Block {
 	 * @return mixed
 	 */
 	public function get_rest_query_params( $result, $server, $request ) {
-		if ( ! empty( $request->get_param( 'is_block_editor' ) ) ) {
-			$this->is_block_editor = $request->get_param( 'is_block_editor' );
+		if ( pll_is_edit_rest_request( $request ) ) {
+			$this->is_edit_context = true;
 			$this->admin_current_lang = $request->get_param( 'lang' );
 		}
 		return $result;
 	}
 
 	/**
-	 * Adds the attributes to render the block correctly in the block editor.
+	 * Adds the attributes to render the block correctly.
 	 * Also specifies not to echo the switcher in any case.
 	 *
 	 * @since 3.2
 	 *
 	 * @param array $attributes The attributes of the currently rendered block.
-	 * @return array The modified attributes if rendered in the block editor.
+	 * @return array The modified attributes.
 	 */
 	protected function set_attributes_for_block( $attributes ) {
 		$attributes['echo'] = 0;
-		if ( $this->is_block_editor ) {
-			$attributes['admin_render'] = 1;
-			$attributes['admin_current_lang'] = $this->admin_current_lang;
-			$attributes['hide_if_empty'] = 0;
+		if ( $this->is_edit_context ) {
+			$attributes['admin_render']           = 1;
+			$attributes['admin_current_lang']     = $this->admin_current_lang;
+			$attributes['hide_if_empty']          = 0;
 			$attributes['hide_if_no_translation'] = 0; // Force not to hide the language for the block preview even if the option is checked.
 		}
-
 		return $attributes;
 	}
 }

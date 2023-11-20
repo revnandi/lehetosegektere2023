@@ -19,7 +19,7 @@ class PLL_FSE_Tools {
 	 *
 	 * @return string[] Array keys and array values are identical.
 	 */
-	public static function get_post_types() {
+	public static function get_template_post_types() {
 		return array(
 			'wp_template_part' => 'wp_template_part',
 		);
@@ -34,7 +34,7 @@ class PLL_FSE_Tools {
 	 * @return bool
 	 */
 	public static function is_template_post_type( $post_type ) {
-		return is_string( $post_type ) && in_array( $post_type, self::get_post_types(), true );
+		return is_string( $post_type ) && in_array( $post_type, self::get_template_post_types(), true );
 	}
 
 	/**
@@ -200,5 +200,22 @@ class PLL_FSE_Tools {
 	 */
 	public static function is_site_editor() {
 		return isset( $GLOBALS['pagenow'] ) && 'site-editor.php' === $GLOBALS['pagenow'];
+	}
+
+	/**
+	 * Returns translatable post types supporting automatic translations deletion.
+	 *
+	 * @since 3.4.5
+	 *
+	 * @return string[] Array of post types.
+	 */
+	public static function get_translatable_post_types() {
+		return array_merge(
+			self::get_template_post_types(),
+			array(
+				'wp_block'      => 'wp_block',
+				'wp_navigation' => 'wp_navigation',
+			)
+		);
 	}
 }

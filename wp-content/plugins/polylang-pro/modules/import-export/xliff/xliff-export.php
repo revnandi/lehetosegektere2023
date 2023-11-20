@@ -112,10 +112,12 @@ class PLL_Xliff_Export extends PLL_Export_File {
 	 *
 	 * @param DOMNode $parent     Could be a DOMDocument or a DOMElement.
 	 * @param string  $tag_name   Name of the attribute to set.
-	 * @param array   $attributes Optional. {
-	 *                              string $name The name of an attribute to set
-	 *                              string $value The value to set the attribute to
-	 *                            }
+	 * @param array   $attributes {
+	 *   Optional attributes.
+	 *
+	 *   @type string $name  The name of an attribute to set
+	 *   @type string $value The value to set the attribute to
+	 * }
 	 * @param string  $content    Optional. Could specify some text content to insert into the new node
 	 *                            /!\ This works only for text content, CDATA section has to be created with DOMDocument::createCDATASection() and appended.
 	 * @return DOMElement         The newly created DOMElement

@@ -4,19 +4,19 @@
  */
 
 /**
- * Expose terms language and translations in the REST API
+ * Expose terms language and translations in the REST API.
  *
  * @since 2.2
  */
 class PLL_REST_Term extends PLL_REST_Translated_Object {
 
 	/**
-	 * Constructor
+	 * Constructor.
 	 *
 	 * @since 2.2
 	 *
-	 * @param object $rest_api      Instance of PLL_REST_API
-	 * @param array  $content_types Array of arrays with taxonomies as keys and options as values
+	 * @param PLL_REST_API $rest_api      Instance of PLL_REST_API.
+	 * @param array        $content_types Array of arrays with taxonomies as keys and options as values.
 	 */
 	public function __construct( &$rest_api, $content_types ) {
 		parent::__construct( $rest_api, $content_types );
@@ -29,7 +29,7 @@ class PLL_REST_Term extends PLL_REST_Translated_Object {
 	}
 
 	/**
-	 * Filters the query per language according to the 'lang' parameter
+	 * Filters the query per language according to the 'lang' parameter.
 	 *
 	 * @since 2.6.9
 	 *
@@ -50,12 +50,12 @@ class PLL_REST_Term extends PLL_REST_Translated_Object {
 	}
 
 	/**
-	 * Get the rest field type for a content type
+	 * Get the rest field type for a content type.
 	 *
 	 * @since 2.3.11
 	 *
-	 * @param string $type Taxonomy name
-	 * @return string REST API field type
+	 * @param string $type Taxonomy name.
+	 * @return string REST API field type.
 	 */
 	protected function get_rest_field_type( $type ) {
 		// Handles the specific case for tags

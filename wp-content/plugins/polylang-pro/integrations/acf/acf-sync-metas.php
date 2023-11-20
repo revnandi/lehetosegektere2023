@@ -85,13 +85,15 @@ class PLL_ACF_Sync_Metas {
 			case 'text':
 			case 'textarea':
 			case 'wysiwyg':
-				$default = 'translate';
+				if ( empty( $field['ID'] ) ) { // Workaround a bug in ACF which doesn't save options added after a field has been created.
+					$default = 'translate';
+				}
 				// Intentional fall-through to add the translate option below.
-				
+
 			case 'oembed':
 			case 'url':
 			case 'email':
-				// Add translate option at the 3rd position. 
+				// Add translate option at the 3rd position.
 				$choices = array_merge(
 					array_slice( $choices, 0, 2 ),
 					array( 'translate' => __( 'Translate', 'polylang-pro' ) ),

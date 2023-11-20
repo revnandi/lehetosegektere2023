@@ -428,8 +428,10 @@ video {
   height: auto}.h-fit{
   height: -moz-fit-content;
   height: fit-content}.h-full{
-  height: 100%}.min-h-screen{
-  min-height: 100vh}.w-1\/3{
+  height: 100%}.min-h-\[12rem\]{
+  min-height: 12rem}.min-h-screen{
+  min-height: 100vh}.w-1\/2{
+  width: 50%}.w-1\/3{
   width: 33.333333%}.w-10{
   width: 2.5rem}.w-12{
   width: 3rem}.w-16{
@@ -467,9 +469,11 @@ video {
   grid-template-columns: repeat(12, minmax(0, 1fr))}.grid-cols-2{
   grid-template-columns: repeat(2, minmax(0, 1fr))}.grid-rows-3{
   grid-template-rows: repeat(3, minmax(0, 1fr))}.flex-col{
-  flex-direction: column}.flex-wrap{
+  flex-direction: column}.flex-col-reverse{
+  flex-direction: column-reverse}.flex-wrap{
   flex-wrap: wrap}.items-start{
-  align-items: flex-start}.items-center{
+  align-items: flex-start}.items-end{
+  align-items: flex-end}.items-center{
   align-items: center}.justify-end{
   justify-content: flex-end}.justify-center{
   justify-content: center}.justify-between{
@@ -543,7 +547,8 @@ video {
   background-color: rgb(102 199 154 / var(--tw-bg-opacity))}.bg-white{
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity))}.bg-white-transparent{
-  background-color: rgba(255,255,255,0.5)}.bg-chevron-left{
+  background-color: rgba(255,255,255,0.5)}.bg-opacity-60{
+  --tw-bg-opacity: 0.6}.bg-chevron-left{
   background-image: url('/wp-content/themes/lehetosegek-tere/icon_chevron_left.svg')}.bg-chevron-right{
   background-image: url('/wp-content/themes/lehetosegek-tere/icon_chevron_right.svg')}.bg-close{
   background-image: url('/wp-content/themes/lehetosegek-tere/icon_close.svg')}.bg-gradient-to-r{
@@ -934,12 +939,13 @@ http://nicolasgallagher.com/micro-clearfix-hack/
   padding-top: 2rem}html {
   scroll-behavior: smooth;
 }* {
-  font-family: 'Krona One', sans-serif;
+  font-family: "Krona One", sans-serif;
   letter-spacing: -0.075em;
 }.has-cross {
   position: relative;
-}.has-cross::before, .has-cross::after {
-  content: '';
+}.has-cross::before,
+.has-cross::after {
+  content: "";
   position: absolute;
   background-color: #fff;
 }.has-cross::before {
@@ -961,7 +967,35 @@ http://nicolasgallagher.com/micro-clearfix-hack/
   transform: translateY(-50%) translateX(-50%);
 }.-translate-x-50 {
   transform: translateX(-50%);
-}.placeholder\:uppercase::-moz-placeholder{
+}.alt-carousel-text p{
+  font-size: 1rem;
+  line-height: 1.5rem;
+  text-transform: uppercase}.alt-carousel-text p:last-child{
+  margin-bottom: 0px}.alt-carousel-text h1{
+  margin-bottom: 1rem;
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+  text-transform: uppercase}@media (min-width: 782px){.alt-carousel-text h1{
+    font-size: 1.25rem;
+    line-height: 1.75rem}}.alt-carousel-text h2{
+  margin-bottom: 1rem;
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+  text-transform: uppercase}@media (min-width: 782px){.alt-carousel-text h2{
+    font-size: 1.25rem;
+    line-height: 1.75rem}}.alt-carousel-text h3{
+  margin-bottom: 1rem;
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+  text-transform: uppercase}@media (min-width: 782px){.alt-carousel-text h3{
+    font-size: 1.25rem;
+    line-height: 1.75rem}}.alt-carousel-text h4{
+  margin-bottom: 1rem;
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+  text-transform: uppercase}@media (min-width: 782px){.alt-carousel-text h4{
+    font-size: 1.25rem;
+    line-height: 1.75rem}}.placeholder\:uppercase::-moz-placeholder{
   text-transform: uppercase}.placeholder\:uppercase::placeholder{
   text-transform: uppercase}.placeholder\:text-turquoise::-moz-placeholder{
   --tw-text-opacity: 1;
@@ -1007,7 +1041,9 @@ http://nicolasgallagher.com/micro-clearfix-hack/
     grid-template-columns: repeat(2, minmax(0, 1fr))}.sm\:grid-cols-4{
     grid-template-columns: repeat(4, minmax(0, 1fr))}.sm\:text-3xl{
     font-size: 1.875rem;
-    line-height: 2.25rem}}@media (min-width: 782px){.md\:col-span-1{
+    line-height: 2.25rem}}@media (min-width: 782px){.md\:bottom-4{
+    bottom: 1rem}.md\:right-12{
+    right: 3rem}.md\:col-span-1{
     grid-column: span 1 / span 1}.md\:col-span-5{
     grid-column: span 5 / span 5}.md\:col-span-7{
     grid-column: span 7 / span 7}.md\:my-6{
@@ -1018,8 +1054,11 @@ http://nicolasgallagher.com/micro-clearfix-hack/
     margin-right: 0.5rem}.md\:inline-block{
     display: inline-block}.md\:flex{
     display: flex}.md\:w-1\/2{
-    width: 50%}.md\:w-32{
-    width: 8rem}.md\:grow-0{
+    width: 50%}.md\:w-16{
+    width: 4rem}.md\:w-32{
+    width: 8rem}.md\:w-\[55vw\]{
+    width: 55vw}.md\:w-auto{
+    width: auto}.md\:grow-0{
     flex-grow: 0}.md\:grid-cols-2{
     grid-template-columns: repeat(2, minmax(0, 1fr))}.md\:grid-cols-3{
     grid-template-columns: repeat(3, minmax(0, 1fr))}.md\:flex-row{
@@ -1054,7 +1093,8 @@ http://nicolasgallagher.com/micro-clearfix-hack/
     display: block}.lg\:flex{
     display: flex}.lg\:hidden{
     display: none}.lg\:w-60{
-    width: 15rem}.lg\:max-w-prose{
+    width: 15rem}.lg\:w-\[45vw\]{
+    width: 45vw}.lg\:max-w-prose{
     max-width: 65ch}.lg\:grid-cols-2{
     grid-template-columns: repeat(2, minmax(0, 1fr))}.lg\:grid-cols-3{
     grid-template-columns: repeat(3, minmax(0, 1fr))}.lg\:flex-row{
@@ -1097,3 +1137,4 @@ http://nicolasgallagher.com/micro-clearfix-hack/
   --tw-text-opacity: 1;
   color: rgb(102 199 154 / var(--tw-text-opacity))}.\[\&_p\]\:mb-4 p{
   margin-bottom: 1rem}
+

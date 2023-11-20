@@ -95,6 +95,13 @@ module.exports = (function() { return this["wp"]["compose"]; }());
 
 /***/ }),
 
+/***/ 848:
+/***/ ((module) => {
+
+module.exports = (function() { return this["wp"]["coreData"]; }());
+
+/***/ }),
+
 /***/ 15:
 /***/ ((module) => {
 
@@ -141,6 +148,13 @@ module.exports = (function() { return this["wp"]["i18n"]; }());
 /***/ ((module) => {
 
 module.exports = (function() { return this["wp"]["keycodes"]; }());
+
+/***/ }),
+
+/***/ 703:
+/***/ ((module) => {
+
+module.exports = (function() { return this["wp"]["notices"]; }());
 
 /***/ }),
 
@@ -242,592 +256,16 @@ __webpack_require__.r(__webpack_exports__);
 
 // EXTERNAL MODULE: external {"this":["wp","element"]}
 var external_this_wp_element_ = __webpack_require__(293);
-// EXTERNAL MODULE: external {"this":["wp","plugins"]}
-var external_this_wp_plugins_ = __webpack_require__(571);
-// EXTERNAL MODULE: external {"this":["wp","data"]}
-var external_this_wp_data_ = __webpack_require__(15);
-// EXTERNAL MODULE: external "lodash"
-var external_lodash_ = __webpack_require__(991);
 // EXTERNAL MODULE: external {"this":["wp","editPost"]}
 var external_this_wp_editPost_ = __webpack_require__(197);
 // EXTERNAL MODULE: external {"this":["wp","editSite"]}
 var external_this_wp_editSite_ = __webpack_require__(353);
-// EXTERNAL MODULE: external {"this":["wp","i18n"]}
-var external_this_wp_i18n_ = __webpack_require__(122);
-// EXTERNAL MODULE: external {"this":["wp","apiFetch"]}
-var external_this_wp_apiFetch_ = __webpack_require__(514);
-var external_this_wp_apiFetch_default = /*#__PURE__*/__webpack_require__.n(external_this_wp_apiFetch_);
-// EXTERNAL MODULE: external {"this":["wp","url"]}
-var external_this_wp_url_ = __webpack_require__(470);
-// EXTERNAL MODULE: external {"this":["wp","components"]}
-var external_this_wp_components_ = __webpack_require__(893);
-// EXTERNAL MODULE: external {"this":["wp","compose"]}
-var external_this_wp_compose_ = __webpack_require__(576);
-;// CONCATENATED MODULE: ./modules/block-editor/js/sidebar/components/confirmation-modal/index.js
-
-/**
- * Wordpress dependencies
- *
- * @package Polylang-Pro
- */
-
-
-
-
-
-
-class ConfirmationModal extends external_this_wp_element_.Component {
-  constructor() {
-    super(...arguments);
-    this.confirmButton = (0,external_this_wp_element_.createRef)();
-  }
-  componentDidMount() {
-    this.confirmButton.current.focus();
-  }
-  render() {
-    const {
-      idPrefix,
-      title,
-      updateState,
-      handleChange,
-      children
-    } = this.props;
-    return (0,external_this_wp_element_.createElement)(external_this_wp_components_.Modal, {
-      title: title,
-      className: "confirmBox",
-      onRequestClose: updateState,
-      shouldCloseOnEsc: false,
-      shouldCloseOnClickOutside: false,
-      focusOnMount: false
-    }, children, (0,external_this_wp_element_.createElement)(external_this_wp_components_.ButtonGroup, {
-      className: "buttons"
-    }, (0,external_this_wp_element_.createElement)(external_this_wp_components_.Button, {
-      id: `${idPrefix}_confirm`,
-      ref: this.confirmButton,
-      isPrimary: true,
-      onClick: event => {
-        handleChange(event);
-        updateState();
-      }
-    }, (0,external_this_wp_i18n_.__)('OK', 'polylang-pro')), (0,external_this_wp_element_.createElement)(external_this_wp_components_.Button, {
-      id: `${idPrefix}_cancel`,
-      isSecondary: true,
-      onClick: () => updateState()
-    }, (0,external_this_wp_i18n_.__)('Cancel', 'polylang-pro'))));
-  }
-}
-
-/**
- * Control the execution of a component's function with a confirmation modal.
- *
- * @param {string} idPrefix Used to identify the modal's buttons. {@see ConfirmationModal.render()}
- * @param {React.Component} ModalContent Component which contains the content displayed in the confirmation modal.
- * @param {handleChangeCallback} handleChangeCallback Action triggered when we valid the confirmation modal by clicking the confirmation button.
- *
- * @return {Function} Higher-order component.
- */
-const withConfirmation = function (idPrefix, ModalContent, handleChangeCallback) {
-  return (0,external_this_wp_compose_.createHigherOrderComponent)(
-  /**
-   * @function Higher-Order Component
-   *
-   * @param {React.Component} WrappedComponent The component which needs a confirmation to change to its new value.
-   * @param {string} WrappedComponent.labelConfirmationModal Used for both WrappedComponent and ConfirmationModal titles.
-   * @param {WrappedComponent.getChangeValueCallback} WrappedComponent.getChangeValue
-   * @param {WrappedComponent.bypassConfirmationCallback} WrappedComponent.bypassConfirmation
-   * @return {WPComponent}
-   */
-  WrappedComponent => {
-    class enhanceComponent extends external_this_wp_element_.Component {
-      constructor() {
-        super(...arguments);
-        this.state = {
-          isOpen: false,
-          changeValue: null
-        };
-        this.handleChange = this.handleChange.bind(this);
-      }
-      handleChange(event) {
-        let changeValue = WrappedComponent.getChangeValue(event);
-
-        // Process specific case for the template part deletion confirmation.
-        const currentPost = this.props.currentPost;
-        if (!(0,external_lodash_.isNil)(currentPost)) {
-          changeValue = {
-            templateId: changeValue,
-            currentPost: currentPost
-          };
-        }
-        if (!(0,external_lodash_.isUndefined)(WrappedComponent.bypassConfirmation) && WrappedComponent.bypassConfirmation(this.props.translationData)) {
-          handleChangeCallback(changeValue);
-        } else {
-          this.setState({
-            isOpen: true,
-            changeValue: changeValue
-          });
-        }
-      }
-      render() {
-        // isDefaultLang property is only available in translationData which comes from template post type.
-        const isDefaultLang = this.props.translationData?.is_default_lang;
-        const passThroughProps = this.props;
-        const wrappedComponentProps = Object.assign({}, {
-          ...passThroughProps
-        }, {
-          handleChange: this.handleChange
-        });
-        return (0,external_this_wp_element_.createElement)(external_this_wp_element_.Fragment, null, (0,external_this_wp_element_.createElement)(WrappedComponent, wrappedComponentProps), this.state.isOpen && (0,external_this_wp_element_.createElement)(ConfirmationModal, {
-          title: WrappedComponent.labelConfirmationModal,
-          idPrefix: idPrefix,
-          handleChange: () => handleChangeCallback(this.state.changeValue),
-          updateState: () => this.setState({
-            isOpen: false,
-            changeValue: null
-          })
-        }, (0,external_this_wp_element_.createElement)(ModalContent, !(0,external_lodash_.isNil)(isDefaultLang) ? {
-          isDefaultLang: isDefaultLang
-        } : {})));
-      }
-    }
-    ;
-    enhanceComponent.bypassConfirmation = WrappedComponent.bypassConfirmation;
-    enhanceComponent.getChangeValue = WrappedComponent.getChangeValue;
-    return enhanceComponent;
-  }, 'withConfirmation');
-};
-
-/**
- * Callback to trigger the action to change the value in the Component wrapped by the withConfirmation HOC.
- *
- * @callback handleChangeCallback
- * @param {string|Object} changeValue The value computed by {@see WrappedComponent.getChangeValueCallback} and could be completed by the withConfirmation HOC handleChange function.
- */
-
-/**
- * Callback to retrieve the value to change from the Component wrapped by the withConfirmation HOC.
- *
- * @callback WrappedComponent.getChangeValueCallback
- * @param {Event} event A DOM triggered by the wrapped component.
- */
-
-/**
- * Optional callback to check whether the Component wrapped by the withConfirmation HOC need to open the confirmation modal or not.
- *
- * @callback WrappedComponent.bypassConfirmationCallback
- * @param {Object} [translationData] A entry which represents the translation of the current post in a language {@see PLL_REST_Post::get_translations_table()}.
- */
-
-/* harmony default export */ const confirmation_modal = (withConfirmation);
-;// CONCATENATED MODULE: ./modules/block-editor/js/sidebar/settings.js
-/**
- * Module Constants
- *
- * @package Polylang-Pro
- */
-
-const MODULE_KEY = 'pll/metabox';
-const MODULE_CORE_EDITOR_KEY = 'core/editor';
-const MODULE_SITE_EDITOR_KEY = 'core/edit-site';
-const settings_MODULE_POST_EDITOR_KEY = 'core/edit-post';
-const MODULE_CORE_KEY = 'core';
-const DEFAULT_STATE = {
-  languages: [],
-  selectedLanguage: {},
-  translatedPosts: {},
-  fromPost: null,
-  currentTemplatePart: {}
-};
-const UNTRANSLATABLE_POST_TYPE = ['wp_template'];
-const TEMPLATE_PART_SLUG_SEPARATOR = '___'; // Its value must be synchronized with its equivalent in PHP @see PLL_FSE_Template_Slug::SEPARATOR
-const TEMPLATE_PART_SLUG_CHECK_LANGUAGE_PATTERN = '[a-z_-]+'; // Its value must be synchronized with it equivalent in PHP @see PLL_FSE_Template_Slug::SEPARATOR
-
-;// CONCATENATED MODULE: ./modules/block-editor/js/sidebar/utils.js
-/**
- * WordPress Dependencies
- *
- * @package Polylang-Pro
- */
-
-
-
-
-
-/**
- * Internal dependencies
- */
-
-
-/**
- * Converts array of object to a map.
- *
- * @param {array} array Array to convert.
- * @param {*}     key   The key in the object used as key to build the map.
- * @returns {Map}
- */
-function convertArrayToMap(array, key) {
-  const map = new Map();
-  array.reduce(function (accumulator, currentValue) {
-    accumulator.set(currentValue[key], currentValue);
-    return accumulator;
-  }, map);
-  return map;
-}
-
-/**
- * Converts map to an associative array.
- *
- * @param {Map} map The map to convert.
- * @returns {Object}
- */
-function convertMapToObject(map) {
-  const object = {};
-  map.forEach(function (value, key, map) {
-    const obj = this;
-    this[key] = (0,external_lodash_.isBoolean)(value) ? value.toString() : value;
-  }, object);
-  return object;
-}
-
-/**
- * Checks whether the current screen is block-based post type editor.
- *
- * @returns {boolean} True if block editor for post type; false otherwise.
- */
-function isPostTypeBlockEditor() {
-  return !!document.getElementById('editor');
-}
-
-/**
- * Checks whether the current screen is the block-based widgets editor.
- *
- * @returns {boolean} True if we are in the widgets block editor; false otherwise.
- */
-function isWidgetsBlockEditor() {
-  return !!document.getElementById('widgets-editor');
-}
-
-/**
- * Checks whether the current screen is the customizer widgets editor.
- *
- * @returns {boolean} True if we are in the customizer widgets editor; false otherwise.
- */
-function isWidgetsCustomizerEditor() {
-  return !!document.getElementById('customize-controls');
-}
-
-/**
- * Checks whether the current screen is the site editor.
- * Takes in account if Gutenberg is activated.
- *
- * @returns {boolean} True if site editor screen, false otherwise.
- */
-function isSiteBlockEditor() {
-  return !!(document.getElementById('site-editor') || document.getElementById('edit-site-editor'));
-}
-
-/**
- * Returns the post type URL for REST API calls or undefined if the user hasn't the rights.
- *
- * @param {string} name The post type name.
- * @returns {string|undefined}
- */
-function getPostsUrl(name) {
-  const postTypes = (0,external_this_wp_data_.select)('core').getEntitiesByKind('postType');
-  const postType = (0,external_lodash_.find)(postTypes, {
-    name
-  });
-  return postType?.baseURL;
-}
-
-/**
- * Gets all query string parameters and convert them in a URLSearchParams object.
- *
- * @returns {Object}
- */
-function getSearchParams() {
-  // Variable window.location.search is just read for creating and returning a URLSearchParams object to be able to manipulate it more easily.
-  if (!(0,external_lodash_.isEmpty)(window.location.search)) {
-    // phpcs:ignore WordPressVIPMinimum.JS.Window.location
-    return new URLSearchParams(window.location.search); // phpcs:ignore WordPressVIPMinimum.JS.Window.location
-  } else {
-    return null;
-  }
-}
-
-/**
- * Gets selected language.
- *
- * @param {string} lang The post language code.
- * @returns {Object} The selected language.
- */
-function getSelectedLanguage(lang) {
-  const languages = (0,external_this_wp_data_.select)(MODULE_KEY).getLanguages();
-  // Pick up this language as selected in languages list
-  return languages.get(lang);
-}
-
-/**
- * Gets the default language.
- *
- * @returns {Object} The default Language.
- */
-function getDefaultLanguage() {
-  const languages = (0,external_this_wp_data_.select)(MODULE_KEY).getLanguages();
-  return Array.from(languages.values()).find(lang => lang.is_default_lang);
-}
-
-/**
- * Checks if the given language is the default one.
- *
- * @param {string} lang The language code to compare with.
- * @returns {boolean} True if the given language is the default one.
- */
-function isDefaultLanguage(lang) {
-  return lang === getDefaultLanguage().slug;
-}
-
-/**
- * Gets translated posts.
- *
- * @param {Object}                  translations       The translated posts object with language codes as keys and ids as values.
- * @param {Object.<string, Object>} translations_table The translations table data with language codes as keys and data object as values.
- * @returns {Map}
- */
-function getTranslatedPosts(translations, translations_table, lang) {
-  const translationsTable = getTranslationsTable(translations_table, lang);
-  const fromPost = (0,external_this_wp_data_.select)(MODULE_KEY).getFromPost();
-  let translatedPosts = new Map(Object.entries([]));
-  if (!(0,external_lodash_.isUndefined)(translations)) {
-    translatedPosts = new Map(Object.entries(translations));
-  }
-  // If we come from another post for creating a new one, we have to update translated posts from the original post
-  // to be able to update translations attribute of the post
-  if (!(0,external_lodash_.isNil)(fromPost) && !(0,external_lodash_.isNil)(fromPost.id)) {
-    translationsTable.forEach((translationData, lang) => {
-      if (!(0,external_lodash_.isNil)(translationData.translated_post) && !(0,external_lodash_.isNil)(translationData.translated_post.id)) {
-        translatedPosts.set(lang, translationData.translated_post.id);
-      }
-    });
-  }
-  return translatedPosts;
-}
-
-/**
- * Gets synchronized posts.
- *
- * @param {Object.<string, boolean>} pll_sync_post The synchronized posts object with language codes as keys and boolean values to say if the post is synchronized or not.
- * @returns {Map}
- */
-function getSynchronizedPosts(pll_sync_post) {
-  let synchronizedPosts = new Map(Object.entries([]));
-  if (!(0,external_lodash_.isUndefined)(pll_sync_post)) {
-    synchronizedPosts = new Map(Object.entries(pll_sync_post));
-  }
-  return synchronizedPosts;
-}
-
-/**
- * Gets translations table.
- *
- * @param {Object.<string, Object>} translationsTableDatas The translations table data object with language codes as keys and data object as values.
- * @param {string} lang The language code.
- * @returns {Map}
- */
-function getTranslationsTable(translationsTableDatas, lang) {
-  let translationsTable = new Map(Object.entries([]));
-  // get translations table datas from post
-  if (!(0,external_lodash_.isUndefined)(translationsTableDatas)) {
-    // Build translations table map with language slug as key
-    translationsTable = new Map(Object.entries(translationsTableDatas));
-  }
-  return translationsTable;
-}
-
-/**
- * Checks if the given request is for saving.
- *
- * @param {Object} options The initial request.
- * @returns {Boolean} True if the request is for saving.
- */
-function isSaveRequest(options) {
-  // If data is defined we are in a PUT or POST request method otherwise a GET request method
-  // Test options.method property isn't efficient because most of REST request which use fetch API doesn't pass this property.
-  // So, test options.data is necessary to know if the REST request is to save datas.
-  // However test if options.data is undefined isn't sufficient because some REST request pass a null value as the ServerSideRender Gutenberg component.
-  if (!isNil(options.data)) {
-    return true;
-  } else {
-    return false;
-  }
-}
-
-/**
- * Adds `is_block_editor` parameter to the request in a block editor context.
- *
- * @param {Object} options The initial request.
- */
-function addIsBlockEditorToRequest(options) {
-  options.path = addQueryArgs(options.path, {
-    is_block_editor: true
-  });
-}
-
-/**
- * Checks if the given request concerns the current post type.
- *
- * Useful when saving a reusable block contained in another post type.
- * Indeed a reusable block is also a post, but its saving request doesn't concern the post currently edited.
- * As we don't know the language of the reusable block when the user triggers the reusable block saving action,
- * we need to pass the current post language to be sure that the reusable block will have a language.
- *
- * @see https://github.com/polylang/polylang/issues/437 - Reusable block has no language when it's saved from another post type editing.
- *
- * @param {Object} options the initial request
- * @returns {boolean} True if the request concerns the current post.
- */
-function isCurrentPostRequest(options) {
-  // Saving translation data is needed only for all post types.
-  // It's done by verifying options.path matches with one of baseURL of all post types
-  // and compare current post id with this sent in the request.
-
-  // List of post type baseURLs.
-  const postTypeURLs = map(select('core').getEntitiesByKind('postType'), property('baseURL'));
-
-  // Id from the post currently edited.
-  const postId = select('core/editor').getCurrentPostId();
-
-  // Id from the REST request.
-  // options.data never isNil here because it's already verified before in isSaveRequest() function.
-  const id = options.data.id;
-
-  // Return true
-  // if REST request baseURL matches with one of the known post type baseURLs
-  // and the id from the post currently edited corresponds on the id passed to the REST request
-  // Return false otherwise
-  return -1 !== postTypeURLs.findIndex(function (element) {
-    return new RegExp(`${escapeRegExp(element)}`).test(options.path);
-  }) && postId === id;
-}
-
-/**
- * Checks if the given REST request is for the creation of a new template part translation.
- *
- * @param {Object} options The initial request.
- * @returns {Boolean} True if the request concerns a template part translation creation.
- */
-function isTemplatePartTranslationCreationRequest(options) {
-  return 'POST' === options.method && options.path.match(/^\/wp\/v2\/template-parts(?:\/|\?|$)/) && !isNil(options.data.from_post) && !isNil(options.data.lang);
-}
-
-/**
- * Checks if the given REST request is for the creation of a new template part.
- *
- * @param {Object} options The initial request.
- * @returns {Boolean} True if the request concerns a template part creation.
- */
-function isNewTemplatePartCreationRequest(options) {
-  return 'POST' === options.method && options.path.match(/^\/wp\/v2\/template-parts(?:\/|\?|$)/) && isNil(options.data.from_post) && isNil(options.data.lang);
-}
-
-/**
- * Adds language as query string parameter to the given request.
- *
- * @param {Object} options         The initial request.
- * @param {string} currentLanguage The language code to add to the request.
- */
-function addLanguageToRequest(options, currentLanguage) {
-  const hasLangArg = hasQueryArg(options.path, 'lang');
-  const filterLang = isUndefined(options.filterLang) || options.filterLang;
-  if (filterLang && !hasLangArg) {
-    options.path = addQueryArgs(options.path, {
-      lang: currentLanguage
-    });
-  }
-}
-
-/**
- * Adds `include_untranslated` parameter to the request.
- *
- * @param {Object} options The initial request.
- * @returns {void}
- */
-function addIncludeUntranslatedParam(options) {
-  options.path = addQueryArgs(options.path, {
-    include_untranslated: true
-  });
-}
-
-/**
- * Use addIncludeUntranslatedParam if the given page is a template part page.
- * Or if the template editing mode is enabled inside post editing.
- *
- * @param {Object} options The initial request.
- * @returns {void}
- */
-function maybeRequireIncludeUntranslatedTemplate(options) {
-  const params = new URL(document.location).searchParams;
-  const postType = params.get('postType');
-  const postId = params.get('postId');
-  const isEditingTemplate = select(MODULE_POST_EDITOR_KEY)?.isEditingTemplate();
-  if ("wp_template_part" === postType && !isNil(postId) || isEditingTemplate) {
-    addIncludeUntranslatedParam(options);
-  }
-}
-
-/**
- * Returns true if the given post is a template part, false otherwise.
- *
- * @param {Object} post A post object.
- * @returns {boolean} Whether it is a template part or not.
- */
-function isTemplatePart(post) {
-  return 'wp_template_part' === post.type;
-}
-
-/**
- * Returns the current post type considering the Site Editor or Post Editor.
- *
- * @returns {string} The current post type.
- */
-function getCurrentPostType() {
-  if (isSiteBlockEditor()) {
-    return (0,external_this_wp_data_.select)(MODULE_SITE_EDITOR_KEY).getEditedPostType();
-  }
-  return (0,external_this_wp_data_.select)(MODULE_CORE_EDITOR_KEY).getCurrentPostType();
-}
-
-/**
- * Gets the default language from a translations table.
- *
- * @param {Object} translationsTable The translations table data with language codes as keys and data object as values.
- * @returns {Object} The default language.
- */
-function getDefaultLangFromTable(translationsTable) {
-  let defaultLang = {};
-  translationsTable.forEach(translation => {
-    if (translation.is_default_lang) {
-      defaultLang = translation.lang;
-    }
-  });
-  return defaultLang;
-}
-
-/**
- * Returns a regular expression ready to use to perform search and replace.
- *
- * @returns {RegExp} The regular expression.
- */
-function getLangSlugRegex() {
-  let languageCheckPattern = TEMPLATE_PART_SLUG_CHECK_LANGUAGE_PATTERN;
-  const languages = (0,external_this_wp_data_.select)(MODULE_KEY).getLanguages();
-  const languageSlugs = Array.from(languages.keys());
-  if (!(0,external_lodash_.isEmpty)(languageSlugs)) {
-    languageCheckPattern = languageSlugs.join('|');
-  }
-  return new RegExp(`${TEMPLATE_PART_SLUG_SEPARATOR}(?:${languageCheckPattern})$`);
-}
+// EXTERNAL MODULE: external {"this":["wp","plugins"]}
+var external_this_wp_plugins_ = __webpack_require__(571);
 // EXTERNAL MODULE: external {"this":["wp","primitives"]}
 var external_this_wp_primitives_ = __webpack_require__(776);
+// EXTERNAL MODULE: external "lodash"
+var external_lodash_ = __webpack_require__(991);
 ;// CONCATENATED MODULE: ./modules/block-editor/js/icons/library/duplication.js
 
 /**
@@ -1032,6 +470,670 @@ const SubmenuIcon = () => submenu_isPrimitivesComponents ? createElement(SVG, {
 
 
 
+;// CONCATENATED MODULE: ./modules/block-editor/js/sidebar/app.js
+
+/**
+ * WordPress Dependencies.
+ */
+
+
+/**
+ * Internal Dependencies.
+ */
+
+const App = _ref => {
+  let {
+    sidebar,
+    sidebarName,
+    onPromise,
+    children
+  } = _ref;
+  onPromise().then(result => {
+    (0,external_this_wp_plugins_.registerPlugin)(sidebarName, {
+      icon: library_translation,
+      render: sidebar
+    });
+  }, reason => {
+    console.info(reason);
+  });
+  return (0,external_this_wp_element_.createElement)(external_this_wp_element_.Fragment, null, children);
+};
+/* harmony default export */ const app = (App);
+// EXTERNAL MODULE: external {"this":["wp","data"]}
+var external_this_wp_data_ = __webpack_require__(15);
+// EXTERNAL MODULE: external {"this":["wp","url"]}
+var external_this_wp_url_ = __webpack_require__(470);
+;// CONCATENATED MODULE: ./modules/block-editor/js/sidebar/settings.js
+/**
+ * Module Constants
+ *
+ * @package Polylang-Pro
+ */
+const settings_MODULE_KEY = 'pll/metabox';
+const MODULE_CORE_EDITOR_KEY = 'core/editor';
+const MODULE_SITE_EDITOR_KEY = 'core/edit-site';
+const settings_MODULE_POST_EDITOR_KEY = 'core/edit-post';
+const settings_MODULE_CORE_KEY = 'core';
+const DEFAULT_STATE = {
+  languages: [],
+  selectedLanguage: {},
+  translatedPosts: {},
+  fromPost: null,
+  currentTemplatePart: {}
+};
+const UNTRANSLATABLE_POST_TYPE = ['wp_template', 'wp_global_styles'];
+const POST_TYPE_WITH_TRASH = ['page'];
+const TEMPLATE_PART_SLUG_SEPARATOR = '___'; // Its value must be synchronized with its equivalent in PHP @see PLL_FSE_Template_Slug::SEPARATOR
+const TEMPLATE_PART_SLUG_CHECK_LANGUAGE_PATTERN = '[a-z_-]+'; // Its value must be synchronized with it equivalent in PHP @see PLL_FSE_Template_Slug::SEPARATOR
+
+;// CONCATENATED MODULE: ./modules/block-editor/js/sidebar/utils.js
+/**
+ * WordPress Dependencies
+ *
+ * @package Polylang-Pro
+ */
+
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+/**
+ * Converts array of object to a map.
+ *
+ * @param {array} array Array to convert.
+ * @param {*}     key   The key in the object used as key to build the map.
+ * @returns {Map}
+ */
+function convertArrayToMap(array, key) {
+  const map = new Map();
+  array.reduce(function (accumulator, currentValue) {
+    accumulator.set(currentValue[key], currentValue);
+    return accumulator;
+  }, map);
+  return map;
+}
+
+/**
+ * Converts map to an associative array.
+ *
+ * @param {Map} map The map to convert.
+ * @returns {Object}
+ */
+function convertMapToObject(map) {
+  const object = {};
+  map.forEach(function (value, key, map) {
+    const obj = this;
+    this[key] = (0,external_lodash_.isBoolean)(value) ? value.toString() : value;
+  }, object);
+  return object;
+}
+
+/**
+ * Checks whether the current screen is block-based post type editor.
+ *
+ * @returns {boolean} True if block editor for post type; false otherwise.
+ */
+function isPostTypeBlockEditor() {
+  return !!document.getElementById('editor');
+}
+
+/**
+ * Checks whether the current screen is the block-based widgets editor.
+ *
+ * @returns {boolean} True if we are in the widgets block editor; false otherwise.
+ */
+function isWidgetsBlockEditor() {
+  return !!document.getElementById('widgets-editor');
+}
+
+/**
+ * Checks whether the current screen is the customizer widgets editor.
+ *
+ * @returns {boolean} True if we are in the customizer widgets editor; false otherwise.
+ */
+function isWidgetsCustomizerEditor() {
+  return !!document.getElementById('customize-controls');
+}
+
+/**
+ * Checks whether the current screen is the site editor.
+ * Takes in account if Gutenberg is activated.
+ *
+ * @returns {boolean} True if site editor screen, false otherwise.
+ */
+function isSiteBlockEditor() {
+  return !!(document.getElementById('site-editor') || document.getElementById('edit-site-editor'));
+}
+
+/**
+ * Returns the post type URL for REST API calls or undefined if the user hasn't the rights.
+ *
+ * @param {string} name The post type name.
+ * @returns {string|undefined}
+ */
+function getPostsUrl(name) {
+  const postTypes = select('core').getEntitiesByKind('postType');
+  const postType = find(postTypes, {
+    name
+  });
+  return postType?.baseURL;
+}
+
+/**
+ * Gets all query string parameters and convert them in a URLSearchParams object.
+ *
+ * @returns {Object}
+ */
+function getSearchParams() {
+  // Variable window.location.search is just read for creating and returning a URLSearchParams object to be able to manipulate it more easily.
+  if (!(0,external_lodash_.isEmpty)(window.location.search)) {
+    // phpcs:ignore WordPressVIPMinimum.JS.Window.location
+    return new URLSearchParams(window.location.search); // phpcs:ignore WordPressVIPMinimum.JS.Window.location
+  } else {
+    return null;
+  }
+}
+
+/**
+ * Gets selected language.
+ *
+ * @param {string} lang The post language code.
+ * @returns {Object} The selected language.
+ */
+function getSelectedLanguage(lang) {
+  const languages = (0,external_this_wp_data_.select)(settings_MODULE_KEY).getLanguages();
+  // Pick up this language as selected in languages list
+  return languages.get(lang);
+}
+
+/**
+ * Gets the default language.
+ *
+ * @returns {Object} The default Language.
+ */
+function getDefaultLanguage() {
+  const languages = select(MODULE_KEY).getLanguages();
+  return Array.from(languages.values()).find(lang => lang.is_default);
+}
+
+/**
+ * Checks if the given language is the default one.
+ *
+ * @param {string} lang The language code to compare with.
+ * @returns {boolean} True if the given language is the default one.
+ */
+function isDefaultLanguage(lang) {
+  return lang === getDefaultLanguage().slug;
+}
+
+/**
+ * Gets translated posts.
+ *
+ * @param {Object}                  translations       The translated posts object with language codes as keys and ids as values.
+ * @param {Object.<string, Object>} translations_table The translations table data with language codes as keys and data object as values.
+ * @returns {Map}
+ */
+function getTranslatedPosts(translations, translations_table, lang) {
+  const translationsTable = getTranslationsTable(translations_table, lang);
+  const fromPost = (0,external_this_wp_data_.select)(settings_MODULE_KEY).getFromPost();
+  let translatedPosts = new Map(Object.entries([]));
+  if (!(0,external_lodash_.isUndefined)(translations)) {
+    translatedPosts = new Map(Object.entries(translations));
+  }
+  // If we come from another post for creating a new one, we have to update translated posts from the original post
+  // to be able to update translations attribute of the post
+  if (!(0,external_lodash_.isNil)(fromPost) && !(0,external_lodash_.isNil)(fromPost.id)) {
+    translationsTable.forEach((translationData, lang) => {
+      if (!(0,external_lodash_.isNil)(translationData.translated_post) && !(0,external_lodash_.isNil)(translationData.translated_post.id)) {
+        translatedPosts.set(lang, translationData.translated_post.id);
+      }
+    });
+  }
+  return translatedPosts;
+}
+
+/**
+ * Gets synchronized posts.
+ *
+ * @param {Object.<string, boolean>} pll_sync_post The synchronized posts object with language codes as keys and boolean values to say if the post is synchronized or not.
+ * @returns {Map}
+ */
+function getSynchronizedPosts(pll_sync_post) {
+  let synchronizedPosts = new Map(Object.entries([]));
+  if (!(0,external_lodash_.isUndefined)(pll_sync_post)) {
+    synchronizedPosts = new Map(Object.entries(pll_sync_post));
+  }
+  return synchronizedPosts;
+}
+
+/**
+ * Gets translations table.
+ *
+ * @param {Object.<string, Object>} translationsTableDatas The translations table data object with language codes as keys and data object as values.
+ * @returns {Map}
+ */
+function getTranslationsTable(translationsTableDatas) {
+  let translationsTable = new Map(Object.entries([]));
+  // get translations table datas from post
+  if (!(0,external_lodash_.isUndefined)(translationsTableDatas)) {
+    // Build translations table map with language slug as key
+    translationsTable = new Map(Object.entries(translationsTableDatas));
+  }
+  return translationsTable;
+}
+
+/**
+ * Checks if the given request is for saving.
+ *
+ * @param {Object} options The initial request.
+ * @returns {Boolean} True if the request is for saving.
+ */
+function isSaveRequest(options) {
+  // If data is defined we are in a PUT or POST request method otherwise a GET request method
+  // Test options.method property isn't efficient because most of REST request which use fetch API doesn't pass this property.
+  // So, test options.data is necessary to know if the REST request is to save datas.
+  // However test if options.data is undefined isn't sufficient because some REST request pass a null value as the ServerSideRender Gutenberg component.
+  if (!isNil(options.data)) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+/**
+ * Checks if the given request concerns the current post type.
+ *
+ * Useful when saving a reusable block contained in another post type.
+ * Indeed a reusable block is also a post, but its saving request doesn't concern the post currently edited.
+ * As we don't know the language of the reusable block when the user triggers the reusable block saving action,
+ * we need to pass the current post language to be sure that the reusable block will have a language.
+ *
+ * @see https://github.com/polylang/polylang/issues/437 - Reusable block has no language when it's saved from another post type editing.
+ *
+ * @param {Object} options the initial request
+ * @returns {boolean} True if the request concerns the current post.
+ */
+function isCurrentPostRequest(options) {
+  // Saving translation data is needed only for all post types.
+  // It's done by verifying options.path matches with one of baseURL of all post types
+  // and compare current post id with this sent in the request.
+
+  // List of post type baseURLs.
+  const postTypeURLs = map(select('core').getEntitiesByKind('postType'), property('baseURL'));
+
+  // Id from the post currently edited.
+  const postId = select('core/editor').getCurrentPostId();
+
+  // Id from the REST request.
+  // options.data never isNil here because it's already verified before in isSaveRequest() function.
+  const id = options.data.id;
+
+  // Return true
+  // if REST request baseURL matches with one of the known post type baseURLs
+  // and the id from the post currently edited corresponds on the id passed to the REST request
+  // Return false otherwise
+  return -1 !== postTypeURLs.findIndex(function (element) {
+    return new RegExp(`${escapeRegExp(element)}`).test(options.path);
+  }) && postId === id;
+}
+
+/**
+ * Checks if the given REST request is for the creation of a new template part translation.
+ *
+ * @param {Object} options The initial request.
+ * @returns {Boolean} True if the request concerns a template part translation creation.
+ */
+function isTemplatePartTranslationCreationRequest(options) {
+  return 'POST' === options.method && options.path.match(/^\/wp\/v2\/template-parts(?:\/|\?|$)/) && !isNil(options.data.from_post) && !isNil(options.data.lang);
+}
+
+/**
+ * Checks if the given REST request is for the creation of a new template part.
+ *
+ * @param {Object} options The initial request.
+ * @returns {Boolean} True if the request concerns a template part creation.
+ */
+function isNewTemplatePartCreationRequest(options) {
+  return 'POST' === options.method && options.path.match(/^\/wp\/v2\/template-parts(?:\/|\?|$)/) && isNil(options.data.from_post) && isNil(options.data.lang);
+}
+
+/**
+ * Adds language as query string parameter to the given request.
+ *
+ * @param {Object} options         The initial request.
+ * @param {string} currentLanguage The language code to add to the request.
+ */
+function addLanguageToRequest(options, currentLanguage) {
+  const hasLangArg = hasQueryArg(options.path, 'lang');
+  const filterLang = isUndefined(options.filterLang) || options.filterLang;
+  if (filterLang && !hasLangArg) {
+    options.path = addQueryArgs(options.path, {
+      lang: currentLanguage
+    });
+  }
+}
+
+/**
+ * Adds `include_untranslated` parameter to the request.
+ *
+ * @param {Object} options The initial request.
+ * @returns {void}
+ */
+function addIncludeUntranslatedParam(options) {
+  options.path = addQueryArgs(options.path, {
+    include_untranslated: true
+  });
+}
+
+/**
+ * Use addIncludeUntranslatedParam if the given page is a template part page.
+ * Or if the template editing mode is enabled inside post editing.
+ *
+ * @param {Object} options The initial request.
+ * @returns {void}
+ */
+function maybeRequireIncludeUntranslatedTemplate(options) {
+  const params = new URL(document.location).searchParams;
+  const postType = params.get('postType');
+  const postId = params.get('postId');
+  const isEditingTemplate = select(MODULE_POST_EDITOR_KEY)?.isEditingTemplate();
+  if ("wp_template_part" === postType && !isNil(postId) || isEditingTemplate) {
+    addIncludeUntranslatedParam(options);
+  }
+}
+
+/**
+ * Returns true if the given post is a template part, false otherwise.
+ *
+ * @param {Object} post A post object.
+ * @returns {boolean} Whether it is a template part or not.
+ */
+function isTemplatePart(post) {
+  return 'wp_template_part' === post.type;
+}
+
+/**
+ * Returns the current post type considering the Site Editor or Post Editor.
+ *
+ * @returns {string} The current post type.
+ */
+function getCurrentPostType() {
+  if (isSiteBlockEditor()) {
+    return (0,external_this_wp_data_.select)(MODULE_SITE_EDITOR_KEY).getEditedPostType();
+  }
+  return (0,external_this_wp_data_.select)(MODULE_CORE_EDITOR_KEY).getCurrentPostType();
+}
+
+/**
+ * Returns a regular expression ready to use to perform search and replace.
+ *
+ * @returns {RegExp} The regular expression.
+ */
+function getLangSlugRegex() {
+  let languageCheckPattern = TEMPLATE_PART_SLUG_CHECK_LANGUAGE_PATTERN;
+  const languages = (0,external_this_wp_data_.select)(settings_MODULE_KEY).getLanguages();
+  const languageSlugs = Array.from(languages.keys());
+  if (!(0,external_lodash_.isEmpty)(languageSlugs)) {
+    languageCheckPattern = languageSlugs.join('|');
+  }
+  return new RegExp(`${TEMPLATE_PART_SLUG_SEPARATOR}(?:${languageCheckPattern})$`);
+}
+;// CONCATENATED MODULE: ./modules/block-editor/js/sidebar/store/utils.js
+/**
+ * WordPress Dependencies
+ *
+ * @package Polylang-Pro
+ */
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+/**
+ * Wait for the whole post block editor context has been initialized: current post loaded and languages list initialized.
+ */
+const isBlockPostEditorContextInitialized = () => {
+  if ((0,external_lodash_.isNil)((0,external_this_wp_data_.select)(MODULE_CORE_EDITOR_KEY))) {
+    return Promise.reject("Polylang languages panel can't be initialized because block editor isn't fully initialized.");
+  }
+
+  // save url params espacially when a new translation is creating
+  saveURLParams();
+  // call to getCurrentUser to force call to resolvers and initialize state
+  const currentUser = (0,external_this_wp_data_.select)(settings_MODULE_KEY).getCurrentUser();
+
+  /**
+   * Set a promise for waiting for the current post has been fully loaded before making other processes.
+   */
+  const isCurrentPostLoaded = new Promise(function (resolve) {
+    let unsubscribe = (0,external_this_wp_data_.subscribe)(function () {
+      const currentPost = (0,external_this_wp_data_.select)(MODULE_CORE_EDITOR_KEY).getCurrentPost();
+      if (!(0,external_lodash_.isEmpty)(currentPost)) {
+        unsubscribe();
+        resolve();
+      }
+    });
+  });
+
+  // Wait for current post has been loaded and languages list initialized.
+  return Promise.all([isCurrentPostLoaded, isLanguagesinitialized()]).then(function () {
+    // If we come from another post for creating a new one, we have to update translations from the original post.
+    const fromPost = (0,external_this_wp_data_.select)(settings_MODULE_KEY).getFromPost();
+    if (!(0,external_lodash_.isNil)(fromPost) && !(0,external_lodash_.isNil)(fromPost.id)) {
+      const lang = (0,external_this_wp_data_.select)(MODULE_CORE_EDITOR_KEY).getEditedPostAttribute('lang');
+      const translations = (0,external_this_wp_data_.select)(MODULE_CORE_EDITOR_KEY).getEditedPostAttribute('translations');
+      const translations_table = (0,external_this_wp_data_.select)(MODULE_CORE_EDITOR_KEY).getEditedPostAttribute('translations_table');
+      const translatedPosts = getTranslatedPosts(translations, translations_table, lang);
+      (0,external_this_wp_data_.dispatch)(MODULE_CORE_EDITOR_KEY).editPost({
+        translations: convertMapToObject(translatedPosts)
+      });
+    }
+  });
+};
+
+/**
+ * Wait for the whole site editor context to be initialized: current template loaded and languages list initialized.
+ */
+const isSiteEditorContextInitialized = () => {
+  // save url params espacially when a new translation is creating
+  saveURLParams();
+  // call to getCurrentUser to force call to resolvers and initialize state
+  const currentUser = (0,external_this_wp_data_.select)(settings_MODULE_KEY).getCurrentUser();
+
+  /**
+   * Set a promise to wait for the current template to be fully loaded before making other processes.
+   * It allows to see if both Site Editor and Core stores are available (@see getCurrentPostFromDataStore()).
+   */
+  const isTemplatePartLoaded = new Promise(function (resolve) {
+    let unsubscribe = (0,external_this_wp_data_.subscribe)(function () {
+      const store = (0,external_this_wp_data_.select)(MODULE_SITE_EDITOR_KEY);
+      if (store) {
+        unsubscribe();
+        resolve();
+      }
+    });
+  });
+  return Promise.all([isTemplatePartLoaded, isLanguagesinitialized()]);
+};
+
+/**
+ * Returns a promise fulfilled when the languages list is correctly initialized before making other processes.
+ */
+const isLanguagesinitialized = () => new Promise(function (resolve) {
+  let unsubscribe = (0,external_this_wp_data_.subscribe)(function () {
+    const languages = (0,external_this_wp_data_.select)(settings_MODULE_KEY)?.getLanguages();
+    if (languages?.size > 0) {
+      unsubscribe();
+      resolve();
+    }
+  });
+});
+
+/**
+ * Save query string parameters from URL. They could be needed after
+ * They could be null if they does not exist
+ */
+function saveURLParams() {
+  // Variable window.location.search isn't use directly
+  // Function getSearchParams return an URLSearchParams object for manipulating each parameter
+  // Each of them are sanitized below
+  const searchParams = getSearchParams();
+  if (null !== searchParams) {
+    (0,external_this_wp_data_.dispatch)(settings_MODULE_KEY).setFromPost({
+      id: wp.sanitize.stripTagsAndEncodeText(searchParams.get('from_post')),
+      postType: wp.sanitize.stripTagsAndEncodeText(searchParams.get('post_type')),
+      newLanguage: wp.sanitize.stripTagsAndEncodeText(searchParams.get('new_lang'))
+    });
+  }
+}
+const getEditedPostContextWithLegacy = () => {
+  const siteEditorSelector = (0,external_this_wp_data_.select)(MODULE_SITE_EDITOR_KEY);
+
+  /**
+   * Return null when called from our apiFetch middleware without a properly loaded store.
+   */
+  if (!siteEditorSelector) {
+    return null;
+  }
+  const _context = {
+    postId: siteEditorSelector.getEditedPostId(),
+    postType: siteEditorSelector.getEditedPostType()
+  };
+  if (siteEditorSelector.hasOwnProperty('getEditedPostContext')) {
+    const context = siteEditorSelector.getEditedPostContext();
+    return null != context && null !== context.postType && null !== context.postId ? context : _context;
+  }
+
+  /**
+   * Backward compatibility with WordPress < 6.3 where `getEditedPostContext()` doesn't exist yet.
+   */
+  return _context;
+};
+
+/**
+ * Gets the current post using the Site Editor store and the Core store.
+ *
+ * @returns {object|null} The current post object, `null` if none found.
+ */
+const getCurrentPostFromDataStore = () => {
+  const editedContext = getEditedPostContextWithLegacy();
+  return null === editedContext ? null : (0,external_this_wp_data_.select)(settings_MODULE_CORE_KEY).getEntityRecord('postType', editedContext.postType, editedContext.postId);
+};
+;// CONCATENATED MODULE: ./modules/block-editor/js/sidebar/components/cache-flush-provider/index.js
+/**
+ * WordPress Dependencies.
+ */
+
+
+/**
+ * Internal Dependencies.
+ */
+
+
+const CacheFlushProvider = _ref => {
+  let {
+    onPromise
+  } = _ref;
+  const currentLanguageRef = (0,external_this_wp_element_.useRef)({});
+  const getCurrentLanguage = () => {
+    var _getSelectedLanguage;
+    const currentPost = getCurrentPostFromDataStore();
+    return (_getSelectedLanguage = getSelectedLanguage(currentPost?.lang)) !== null && _getSelectedLanguage !== void 0 ? _getSelectedLanguage : 'default';
+  };
+  const maybeInvalidateCache = nextLocation => {
+    currentLanguageRef.current = getCurrentLanguage();
+    if (currentLanguageRef?.current.is_default || 'default' === currentLanguageRef?.current) {
+      /**
+       * Current language is the default one or assimilated as it (i.e. Global Styles or main menu).
+       */
+      return;
+    }
+    const currentQuery = new URL(document.location.href).searchParams;
+    const nextQuery = new URL(nextLocation).searchParams;
+    if (currentQuery.get('postId') === nextQuery.get('postId')) {
+      /**
+       * Current language is not changing (i.e. only edit mode is changing).
+       */
+      return;
+    }
+
+    /**
+     * Current language is changing (i.e. navigate to a untranslatable post type screen or main menu).
+     */
+    dispatch(MODULE_CORE_KEY).invalidateResolutionForStore();
+  };
+  (0,external_this_wp_element_.useEffect)(() => {
+    onPromise().then(() => {
+      currentLanguageRef.current = getCurrentLanguage();
+    });
+    (history => {
+      const originalPushState = history.pushState;
+      const originalReplaceState = history.replaceState;
+      history.pushState = (state, key, path) => {
+        maybeInvalidateCache(path);
+        return originalPushState.apply(history, [state, key, path]);
+      };
+      history.replaceState = (state, key, path) => {
+        maybeInvalidateCache(path);
+        return originalReplaceState.apply(history, [state, key, path]);
+      };
+    })(window.history);
+  }, []);
+
+  /**
+   * Renderless component.
+   */
+  return null;
+};
+/* harmony default export */ const cache_flush_provider = (CacheFlushProvider);
+// EXTERNAL MODULE: external {"this":["wp","i18n"]}
+var external_this_wp_i18n_ = __webpack_require__(122);
+;// CONCATENATED MODULE: ./modules/block-editor/js/sidebar/components/sidebar/index.js
+
+/**
+ * WordPress dependencies
+ *
+ * @package Polylang-Pro
+ */
+
+const Sidebar = _ref => {
+  let {
+    PluginSidebarSlot,
+    sidebarName,
+    children
+  } = _ref;
+  return (0,external_this_wp_element_.createElement)(PluginSidebarSlot, {
+    name: sidebarName,
+    title: (0,external_this_wp_i18n_.__)('Languages', 'polylang-pro')
+  }, children);
+};
+/* harmony default export */ const sidebar = (Sidebar);
+;// CONCATENATED MODULE: ./modules/block-editor/js/sidebar/components/menu-item/index.js
+
+/**
+ * WordPress dependencies.
+ *
+ * @package Polylang-Pro
+ */
+
+const MenuItem = _ref => {
+  let {
+    PluginSidebarMoreMenuItemSlot,
+    sidebarName
+  } = _ref;
+  return (0,external_this_wp_element_.createElement)(PluginSidebarMoreMenuItemSlot, {
+    target: sidebarName
+  }, (0,external_this_wp_i18n_.__)("Languages", "polylang-pro"));
+};
+/* harmony default export */ const menu_item = (MenuItem);
 ;// CONCATENATED MODULE: ./modules/block-editor/js/components/language-flag.js
 
 /**
@@ -1076,204 +1178,8 @@ function LanguageFlag(_ref) {
   }, library_translation);
 }
 /* harmony default export */ const language_flag = (LanguageFlag);
-;// CONCATENATED MODULE: ./modules/block-editor/js/components/language-dropdown.js
-
-/**
- * @package Polylang-Pro
- */
-
-// External dependencies
-
-
-/**
- * Displays a dropdown to select a language.
- *
- * @since 3.1
- *
- * @param {Function} handleChange Callback to be executed when language changes.
- * @param {mixed} children Child components to be used as select options.
- * @param {Object} selectedLanguage An object representing a Polylang Language. Default to null.
- * @param {string} Default value to be selected if the selected language is not provided. Default to an empty string.
- *
- * @return {Object} A dropdown selector for languages.
- */
-function LanguageDropdown(_ref) {
-  let {
-    handleChange,
-    children,
-    selectedLanguage = null,
-    defaultValue = ''
-  } = _ref;
-  const selectedLanguageSlug = selectedLanguage?.slug ? selectedLanguage.slug : defaultValue;
-  return (0,external_this_wp_element_.createElement)("div", {
-    id: "select-post-language"
-  }, (0,external_this_wp_element_.createElement)(language_flag, {
-    language: selectedLanguage
-  }), children && (0,external_this_wp_element_.createElement)("select", {
-    value: selectedLanguageSlug,
-    onChange: event => handleChange(event),
-    id: "pll_post_lang_choice",
-    name: "pll_post_lang_choice",
-    className: "post_lang_choice"
-  }, children));
-}
-
-/**
- * Map languages objects as options for a <select> tag.
- *
- * @since 3.1
- *
- * @param {mixed} languages An iterable object containing languages objects.
- *
- * @return {Object} A list of <option> tags to be used in a <select> tag.
- */
-function LanguagesOptionsList(_ref2) {
-  let {
-    languages
-  } = _ref2;
-  return Array.from(languages.values()).map(_ref3 => {
-    let {
-      slug,
-      name,
-      w3c
-    } = _ref3;
-    return (0,external_this_wp_element_.createElement)("option", {
-      value: slug,
-      lang: w3c,
-      key: slug
-    }, name);
-  });
-}
-
-;// CONCATENATED MODULE: ./modules/block-editor/js/sidebar/components/switcher/index.js
-
-/**
- * WordPress dependencies
- *
- * @package Polylang-Pro
- */
-
-
-
-
-
-
-
-
-/**
- * Internal dependencies
- */
-
-
-
-
-class Switcher extends external_this_wp_element_.Component {
-  static bypassConfirmation() {
-    const editor = (0,external_this_wp_data_.select)(MODULE_CORE_EDITOR_KEY);
-    return !editor.getEditedPostAttribute('title')?.trim() && !editor.getEditedPostContent() && !editor.getEditedPostAttribute('excerpt')?.trim();
-  }
-  static getChangeValue(event) {
-    return event.target.value;
-  }
-
-  /**
-   * Manage language choice in the dropdown list
-   *
-   * @param language New language slug.
-   */
-  static handleLanguageChange(language) {
-    const oldLanguageSlug = (0,external_this_wp_data_.select)(MODULE_CORE_EDITOR_KEY).getEditedPostAttribute('lang');
-    const postId = (0,external_this_wp_data_.select)(MODULE_CORE_EDITOR_KEY).getCurrentPostId();
-    const languages = (0,external_this_wp_data_.select)(MODULE_KEY).getLanguages();
-    const newLanguage = languages.get(language);
-    const oldSelectedLanguage = getSelectedLanguage(oldLanguageSlug);
-    const pll_sync_post = (0,external_this_wp_data_.select)(MODULE_CORE_EDITOR_KEY).getEditedPostAttribute('pll_sync_post');
-    const synchronizedPosts = getSynchronizedPosts(pll_sync_post);
-    const translations_table = (0,external_this_wp_data_.select)(MODULE_CORE_EDITOR_KEY).getEditedPostAttribute('translations_table');
-    const translations = (0,external_this_wp_data_.select)(MODULE_CORE_EDITOR_KEY).getEditedPostAttribute('translations');
-    const translatedPosts = getTranslatedPosts(translations, translations_table, oldSelectedLanguage.slug);
-    const translationsTable = getTranslationsTable(translations_table, oldSelectedLanguage.slug);
-    // The translated post of the previous selected language must be deleted
-    translatedPosts.delete(oldSelectedLanguage.slug);
-    // Replace translated post for the new language
-    translatedPosts.set(newLanguage.slug, postId);
-    // The current post is synchronized itself and synchronization must be deleted for the previous language
-    // to ensure it will be not synchronized with the new language
-    synchronizedPosts.delete(oldSelectedLanguage.slug);
-    // Update translations table
-    // Add old selected language datas - only datas needed just to update visually the metabox
-    const oldTranslationData = translationsTable.get(oldSelectedLanguage.slug);
-    translationsTable.set(oldSelectedLanguage.slug, {
-      can_synchronize: oldTranslationData.can_synchronize,
-      lang: oldTranslationData.lang,
-      links: {
-        add_link: oldTranslationData.links.add_link
-      }
-    });
-    // Update some new language datas from the old selected language datas
-    const newTranslationData = translationsTable.get(newLanguage.slug);
-    translationsTable.set(newLanguage.slug, {
-      can_synchronize: newTranslationData.can_synchronize,
-      lang: newTranslationData.lang,
-      links: oldTranslationData.links,
-      translated_post: oldTranslationData.translated_post
-    });
-    // Update the global javascript variable for maintaining it updated outside block editor context
-    pll_block_editor_plugin_settings = newLanguage;
-
-    // And save changes in store
-    const newData = {
-      lang: newLanguage.slug,
-      pll_sync_post: convertMapToObject(synchronizedPosts),
-      translations: convertMapToObject(translatedPosts),
-      translations_table: convertMapToObject(translationsTable)
-    };
-    (0,external_this_wp_data_.dispatch)(MODULE_CORE_EDITOR_KEY).editPost(newData);
-    // Need to save post to recalculating permalink.
-    (0,external_this_wp_data_.dispatch)(MODULE_CORE_EDITOR_KEY).savePost();
-    Switcher.forceLanguageSave(newLanguage.slug);
-    (0,external_this_wp_data_.dispatch)(MODULE_CORE_KEY).invalidateResolutionForStore();
-  }
-
-  /**
-   * Even if no content has been written, Polylang back-end code needs the correct language to send back the correct metadatas. (e.g.: Attachable Medias).
-   *
-   * @since 3.0
-   *
-   * @param {string} lang A language slug.
-   */
-  static forceLanguageSave(lang) {
-    const editor = (0,external_this_wp_data_.select)(MODULE_CORE_EDITOR_KEY);
-    if (!editor.getEditedPostAttribute('title') && !editor.getEditedPostContent() && !editor.getEditedPostAttribute('excerpt')) {
-      external_this_wp_apiFetch_default()({
-        path: (0,external_this_wp_url_.addQueryArgs)(`wp/v2/posts/${editor.getCurrentPostId()}`, {
-          lang: lang
-        }),
-        method: 'POST'
-      });
-    }
-  }
-  render() {
-    const languages = (0,external_this_wp_data_.select)(MODULE_KEY).getLanguages();
-    const lang = (0,external_this_wp_data_.select)(MODULE_CORE_EDITOR_KEY).getEditedPostAttribute('lang');
-    const selectedLanguage = getSelectedLanguage(lang);
-    return (0,external_this_wp_element_.createElement)(external_this_wp_element_.Fragment, null, (0,external_this_wp_element_.createElement)("p", null, (0,external_this_wp_element_.createElement)("strong", null, (0,external_this_wp_i18n_.__)("Language", "polylang-pro"))), (0,external_this_wp_element_.createElement)("label", {
-      className: "screen-reader-text",
-      htmlFor: "pll_post_lang_choice"
-    }, (0,external_this_wp_i18n_.__)("Language", "polylang-pro")), (0,external_this_wp_element_.createElement)(LanguageDropdown, {
-      selectedLanguage: selectedLanguage,
-      handleChange: this.props.handleChange
-    }, (0,external_this_wp_element_.createElement)(LanguagesOptionsList, {
-      languages: languages
-    })));
-  }
-}
-Switcher.labelConfirmationModal = (0,external_this_wp_i18n_.__)('Change language', 'polylang-pro');
-const ModalContent = function () {
-  return (0,external_this_wp_element_.createElement)("p", null, (0,external_this_wp_i18n_.__)('Are you sure you want to change the language of the current content?', 'polylang-pro'));
-};
-const SwitcherWithConfirmation = confirmation_modal('pll_change_lang', ModalContent, Switcher.handleLanguageChange)(Switcher);
-/* harmony default export */ const switcher = (SwitcherWithConfirmation);
+// EXTERNAL MODULE: external {"this":["wp","components"]}
+var external_this_wp_components_ = __webpack_require__(893);
 ;// CONCATENATED MODULE: ./modules/block-editor/js/sidebar/components/default-lang-icon/index.js
 
 /**
@@ -1307,6 +1213,235 @@ const DefaultLangIcon = () => (0,external_this_wp_element_.createElement)(extern
 
 
 
+/**
+ * Internal dependencies
+ */
+
+
+
+const LanguageItem = _ref => {
+  var _ref2;
+  let {
+    language,
+    currentPost
+  } = _ref;
+  const postType = (0,external_this_wp_data_.useSelect)(select => select(settings_MODULE_CORE_KEY).getPostType(currentPost.type), []);
+  return (0,external_this_wp_element_.createElement)(external_this_wp_element_.Fragment, null, (0,external_this_wp_element_.createElement)("p", null, (0,external_this_wp_element_.createElement)("strong", null, (0,external_this_wp_i18n_.__)("Language", "polylang-pro"))), (0,external_this_wp_element_.createElement)("div", {
+    className: "pll-language-item"
+  }, (0,external_this_wp_element_.createElement)(language_flag, {
+    language: language
+  }), (0,external_this_wp_element_.createElement)("span", {
+    className: "pll-language-name"
+  }, (0,external_this_wp_i18n_.__)(language.name, 'polylang-pro')), language.is_default && (0,external_this_wp_element_.createElement)(default_lang_icon, null)), language.is_default && (0,external_this_wp_element_.createElement)("div", null, (0,external_this_wp_element_.createElement)("span", {
+    className: "pll-metabox-info"
+  }, (_ref2 = 'wp_template_part' === postType?.slug) !== null && _ref2 !== void 0 ? _ref2 : (0,external_this_wp_i18n_.__)('This template part is used for languages that have not yet been translated.', 'polylang-pro'))));
+};
+/* harmony default export */ const language_item = (LanguageItem);
+;// CONCATENATED MODULE: ./modules/block-editor/js/sidebar/components/metaboxes/metabox-wrapper/index.js
+
+/**
+ * WordPress dependencies
+ *
+ * @package Polylang-Pro
+ */
+const MetaboxWrapper = _ref => {
+  let {
+    children
+  } = _ref;
+  return (0,external_this_wp_element_.createElement)("div", {
+    className: "components-panel__body is-opened"
+  }, (0,external_this_wp_element_.createElement)("div", {
+    className: "pll-metabox-location"
+  }, children));
+};
+/* harmony default export */ const metabox_wrapper = (MetaboxWrapper);
+;// CONCATENATED MODULE: ./modules/block-editor/js/sidebar/components/not-translatable-notice/index.js
+
+/**
+ * WordPress Dependencies.
+ */
+
+const NotTranslatableNotice = _ref => {
+  let {
+    postType
+  } = _ref;
+  if ('wp_template' === postType) {
+    return (0,external_this_wp_element_.createElement)("div", {
+      className: "pll-metabox-error components-notice is-warning"
+    }, (0,external_this_wp_i18n_.__)('Templates are not translatable, only template parts are.', 'polylang-pro'));
+  }
+  return (0,external_this_wp_element_.createElement)("div", {
+    className: "pll-metabox-error components-notice is-warning"
+  }, (0,external_this_wp_i18n_.__)('This entity is not translatable.', 'polylang-pro'));
+};
+/* harmony default export */ const not_translatable_notice = (NotTranslatableNotice);
+;// CONCATENATED MODULE: ./modules/block-editor/js/sidebar/components/metaboxes/metabox-container/index.js
+
+/**
+ * WordPress Dependencies.
+ */
+
+
+/**
+ * Internal Dependencies.
+ */
+
+
+const MetaboxContainer = _ref => {
+  let {
+    isError,
+    isAllowedPostType,
+    postType,
+    children
+  } = _ref;
+  if (!isAllowedPostType) {
+    return (0,external_this_wp_element_.createElement)(metabox_wrapper, null, (0,external_this_wp_element_.createElement)(not_translatable_notice, {
+      postType: postType
+    }));
+  }
+  if (isError) {
+    return (0,external_this_wp_element_.createElement)(metabox_wrapper, null, (0,external_this_wp_element_.createElement)("div", {
+      className: "pll-metabox-error components-notice is-error"
+    }, (0,external_this_wp_i18n_.__)('Unable to retrieve the content language', 'polylang-pro')));
+  }
+  return (0,external_this_wp_element_.createElement)(metabox_wrapper, null, children);
+};
+/* harmony default export */ const metabox_container = (MetaboxContainer);
+;// CONCATENATED MODULE: ./modules/block-editor/js/sidebar/components/cells/add-or-edit-cell/index.js
+
+/**
+ * WordPress dependencies
+ *
+ * @package Polylang-Pro
+ */
+const AddOrEditCell = _ref => {
+  let {
+    children
+  } = _ref;
+  return (0,external_this_wp_element_.createElement)("td", {
+    className: "pll-edit-column pll-column-icon"
+  }, children);
+};
+/* harmony default export */ const add_or_edit_cell = (AddOrEditCell);
+;// CONCATENATED MODULE: ./modules/block-editor/js/sidebar/components/cells/default-language-cell/index.js
+
+/**
+ * WordPress dependencies
+ *
+ * @package Polylang-Pro
+ */
+
+/**
+ * Internal Dependencies
+ */
+
+const DefaultLanguageCell = _ref => {
+  let {
+    isDefault
+  } = _ref;
+  return (0,external_this_wp_element_.createElement)("td", {
+    className: "pll-default-lang-column pll-column-icon"
+  }, isDefault && (0,external_this_wp_element_.createElement)(default_lang_icon, null));
+};
+/* harmony default export */ const default_language_cell = (DefaultLanguageCell);
+;// CONCATENATED MODULE: ./modules/block-editor/js/sidebar/components/cells/delete-cell/index.js
+
+/**
+ * WordPress dependencies
+ *
+ * @package Polylang-Pro
+ */
+const DeleteCell = _ref => {
+  let {
+    children
+  } = _ref;
+  return (0,external_this_wp_element_.createElement)("td", {
+    className: "pll-delete-column pll-column-icon"
+  }, children);
+};
+/* harmony default export */ const delete_cell = (DeleteCell);
+;// CONCATENATED MODULE: ./modules/block-editor/js/sidebar/components/cells/flag-cell/index.js
+
+/**
+ * WordPress dependencies
+ *
+ * @package Polylang-Pro
+ */
+
+/**
+ * External dependencies.
+ */
+
+const FlagCell = _ref => {
+  let {
+    language
+  } = _ref;
+  return (0,external_this_wp_element_.createElement)("th", {
+    className: "pll-language-column"
+  }, !(0,external_lodash_.isEmpty)(language.flag) ? (0,external_this_wp_element_.createElement)("span", {
+    className: "pll-select-flag flag"
+  }, (0,external_this_wp_element_.createElement)("img", {
+    src: language.flag_url,
+    alt: language.name,
+    title: language.name
+  })) : (0,external_this_wp_element_.createElement)("abbr", null, language.slug, (0,external_this_wp_element_.createElement)("span", {
+    className: "screen-reader-text"
+  }, language.name)));
+};
+/* harmony default export */ const flag_cell = (FlagCell);
+;// CONCATENATED MODULE: ./modules/block-editor/js/sidebar/components/cells/synchronization-cell/index.js
+
+/**
+ * WordPress dependencies
+ *
+ * @package Polylang-Pro
+ */
+const SynchronizationCell = _ref => {
+  let {
+    children
+  } = _ref;
+  return (0,external_this_wp_element_.createElement)("td", {
+    className: "pll-sync-column pll-column-icon"
+  }, children);
+};
+/* harmony default export */ const synchronization_cell = (SynchronizationCell);
+;// CONCATENATED MODULE: ./modules/block-editor/js/sidebar/components/cells/translation-input-cell/index.js
+
+/**
+ * WordPress dependencies
+ *
+ * @package Polylang-Pro
+ */
+const TranslationInputCell = _ref => {
+  let {
+    children
+  } = _ref;
+  return (0,external_this_wp_element_.createElement)("td", {
+    className: "pll-translation-column"
+  }, children);
+};
+/* harmony default export */ const translation_input_cell = (TranslationInputCell);
+;// CONCATENATED MODULE: ./modules/block-editor/js/sidebar/components/cells/index.js
+/**
+ * Cells components for translations table.
+ *
+ * @package Polylang-Pro
+ */
+
+
+
+
+
+
+;// CONCATENATED MODULE: ./modules/block-editor/js/sidebar/components/buttons/add-button/index.js
+
+/**
+ * WordPress dependencies
+ *
+ * @package Polylang-Pro
+ */
+
+
 
 
 /**
@@ -1314,28 +1449,68 @@ const DefaultLangIcon = () => (0,external_this_wp_element_.createElement)(extern
  */
 
 
+/**
+ * Renders a button to add new translation.
+ *
+ * @param {Object} language Language of the new translation.
+ * @param {string} href URL to add a new translation, pass '#' if managed in REST.
+ * @param {function} handleAddClick Callback to add a translation, default to null.
+ * @returns
+ */
+const AddButton = _ref => {
+  let {
+    language,
+    href,
+    handleAddClick = null
+  } = _ref;
+  const accessibilityText = (0,external_this_wp_i18n_.sprintf)((0,external_this_wp_i18n_.__)('Add a translation in %s', 'polylang-pro'), language.name);
+  return (0,external_this_wp_element_.createElement)(external_this_wp_components_.Button, {
+    href: href,
+    icon: library_plus,
+    label: accessibilityText,
+    className: `pll-button`,
+    onClick: handleAddClick,
+    "data-target-language": language.slug // Store the target language to retrieve it through the click event.
+  }, (0,external_this_wp_element_.createElement)("span", {
+    className: "screen-reader-text"
+  }, accessibilityText));
+};
+/* harmony default export */ const add_button = (AddButton);
+;// CONCATENATED MODULE: ./modules/block-editor/js/sidebar/components/buttons/delete-button/index.js
 
-class LanguageItem extends external_this_wp_element_.Component {
-  constructor() {
-    super(...arguments);
-    this.state = {
-      isDefaultLanguage: this.props.language.slug === getDefaultLangFromTable(this.props.translationsTable).slug
-    };
-  }
-  render() {
-    return (0,external_this_wp_element_.createElement)(external_this_wp_element_.Fragment, null, (0,external_this_wp_element_.createElement)("p", null, (0,external_this_wp_element_.createElement)("strong", null, (0,external_this_wp_i18n_.__)("Language", "polylang-pro"))), (0,external_this_wp_element_.createElement)("div", {
-      className: "pll-language-item"
-    }, (0,external_this_wp_element_.createElement)(language_flag, {
-      language: this.props.language
-    }), (0,external_this_wp_element_.createElement)("span", {
-      className: "pll-language-name"
-    }, (0,external_this_wp_i18n_.__)(this.props.language.name, 'polylang-pro')), this.state.isDefaultLanguage && (0,external_this_wp_element_.createElement)(default_lang_icon, null)), this.state.isDefaultLanguage && (0,external_this_wp_element_.createElement)("div", null, (0,external_this_wp_element_.createElement)("span", {
-      className: "pll-metabox-info"
-    }, (0,external_this_wp_i18n_.__)('This template part is used for languages that have not yet been translated.', 'polylang-pro'))));
-  }
-}
-/* harmony default export */ const language_item = (LanguageItem);
-;// CONCATENATED MODULE: ./modules/block-editor/js/sidebar/components/duplicate-button/index.js
+/**
+ * WordPress dependencies
+ *
+ * @package Polylang-Pro
+ */
+
+
+
+
+/**
+ * Internal dependencies
+ */
+
+const DeleteButton = _ref => {
+  let {
+    language,
+    disabled,
+    onClick
+  } = _ref;
+  // translators: %s is a native language name.
+  const translationScreenReaderText = (0,external_this_wp_i18n_.sprintf)((0,external_this_wp_i18n_.__)('Delete the translation in %s', 'polylang-pro'), language.name);
+  return (0,external_this_wp_element_.createElement)(external_this_wp_components_.Button, {
+    icon: library_trash,
+    label: translationScreenReaderText,
+    disabled: disabled,
+    className: "pll-button",
+    onClick: onClick
+  }, (0,external_this_wp_element_.createElement)("span", {
+    className: "screen-reader-text"
+  }, translationScreenReaderText));
+};
+/* harmony default export */ const delete_button = (DeleteButton);
+;// CONCATENATED MODULE: ./modules/block-editor/js/sidebar/components/buttons/duplicate-button/index.js
 
 /**
  * WordPress dependencies
@@ -1358,7 +1533,7 @@ class LanguageItem extends external_this_wp_element_.Component {
 class DuplicateButton extends external_this_wp_element_.Component {
   constructor() {
     super(...arguments);
-    const currentUser = (0,external_this_wp_data_.select)(MODULE_KEY).getCurrentUser();
+    const currentUser = (0,external_this_wp_data_.select)(settings_MODULE_KEY).getCurrentUser();
     this.postType = getCurrentPostType();
     this.state = {
       isDuplicateActive: this.isDuplicateActive(currentUser),
@@ -1400,7 +1575,7 @@ class DuplicateButton extends external_this_wp_element_.Component {
       isDuplicateActive: !this.state.isDuplicateActive
     });
     // and update currentUser in store
-    (0,external_this_wp_data_.dispatch)(MODULE_KEY).setCurrentUser({
+    (0,external_this_wp_data_.dispatch)(settings_MODULE_KEY).setCurrentUser({
       pll_duplicate_content: currentUser.pll_duplicate_content
     }, true);
   }
@@ -1420,7 +1595,208 @@ class DuplicateButton extends external_this_wp_element_.Component {
   }
 }
 /* harmony default export */ const duplicate_button = (DuplicateButton);
-;// CONCATENATED MODULE: ./modules/block-editor/js/sidebar/components/synchronization-button/index.js
+;// CONCATENATED MODULE: ./modules/block-editor/js/sidebar/components/buttons/edit-button/index.js
+
+/**
+ * WordPress dependencies
+ *
+ * @package Polylang-Pro
+ */
+
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+/**
+ * Renders a button to edit existing translation.
+ *
+ * @param {Object} language Language of the existing translation.
+ * @param {string} href URL to edit a new translation, pass '#' if managed in REST.
+ * @param {function} handleEditClick Callback to edit a translation, default to null.
+ * @returns
+ */
+const EditButton = _ref => {
+  let {
+    language,
+    href,
+    handleEditClick = null
+  } = _ref;
+  /* translators: accessibility text, %s is a native language name. For example Deutsch for German or Français for french. */
+  const accessibilityText = (0,external_this_wp_i18n_.sprintf)((0,external_this_wp_i18n_.__)('Edit the translation in %s', 'polylang-pro'), language.name);
+  return (0,external_this_wp_element_.createElement)(external_this_wp_components_.Button, {
+    href: href,
+    icon: library_pencil,
+    label: accessibilityText,
+    className: `pll-button`,
+    onClick: handleEditClick,
+    "data-target-language": language.slug // Store the target language to retrieve it through the click event.
+  }, (0,external_this_wp_element_.createElement)("span", {
+    className: "screen-reader-text"
+  }, accessibilityText));
+};
+/* harmony default export */ const edit_button = (EditButton);
+// EXTERNAL MODULE: external {"this":["wp","compose"]}
+var external_this_wp_compose_ = __webpack_require__(576);
+;// CONCATENATED MODULE: ./modules/block-editor/js/sidebar/components/confirmation-modal/index.js
+
+/**
+ * Wordpress dependencies
+ *
+ * @package Polylang-Pro
+ */
+
+
+
+
+
+
+class ConfirmationModal extends external_this_wp_element_.Component {
+  constructor() {
+    super(...arguments);
+    this.confirmButton = (0,external_this_wp_element_.createRef)();
+  }
+  componentDidMount() {
+    this.confirmButton.current.focus();
+  }
+  render() {
+    const {
+      idPrefix,
+      title,
+      updateState,
+      handleChange,
+      children
+    } = this.props;
+    return (0,external_this_wp_element_.createElement)(external_this_wp_components_.Modal, {
+      title: title,
+      className: "confirmBox",
+      onRequestClose: updateState,
+      shouldCloseOnEsc: false,
+      shouldCloseOnClickOutside: false,
+      focusOnMount: false
+    }, children, (0,external_this_wp_element_.createElement)(external_this_wp_components_.ButtonGroup, {
+      className: "buttons"
+    }, (0,external_this_wp_element_.createElement)(external_this_wp_components_.Button, {
+      id: `${idPrefix}_confirm`,
+      ref: this.confirmButton,
+      isPrimary: true,
+      onClick: event => {
+        handleChange(event);
+        updateState();
+      }
+    }, (0,external_this_wp_i18n_.__)('OK', 'polylang-pro')), (0,external_this_wp_element_.createElement)(external_this_wp_components_.Button, {
+      id: `${idPrefix}_cancel`,
+      isSecondary: true,
+      onClick: () => updateState()
+    }, (0,external_this_wp_i18n_.__)('Cancel', 'polylang-pro'))));
+  }
+}
+
+/**
+ * Control the execution of a component's function with a confirmation modal.
+ *
+ * @param {string} idPrefix Used to identify the modal's buttons. {@see ConfirmationModal.render()}
+ * @param {React.Component} ModalContent Component which contains the content displayed in the confirmation modal.
+ * @param {handleChangeCallback} handleChangeCallback Action triggered when we valid the confirmation modal by clicking the confirmation button.
+ *
+ * @return {Function} Higher-order component.
+ */
+const withConfirmation = function (idPrefix, ModalContent, handleChangeCallback) {
+  return (0,external_this_wp_compose_.createHigherOrderComponent)(
+  /**
+   * @function Higher-Order Component
+   *
+   * @param {React.Component} WrappedComponent The component which needs a confirmation to change to its new value.
+   * @param {string} WrappedComponent.labelConfirmationModal Used for both WrappedComponent and ConfirmationModal titles.
+   * @param {WrappedComponent.getChangeValueCallback} WrappedComponent.getChangeValue
+   * @param {WrappedComponent.bypassConfirmationCallback} WrappedComponent.bypassConfirmation
+   * @return {WPComponent}
+   */
+  WrappedComponent => {
+    class enhanceComponent extends external_this_wp_element_.Component {
+      constructor() {
+        super(...arguments);
+        this.state = {
+          isOpen: false,
+          changeValue: null
+        };
+        this.handleChange = this.handleChange.bind(this);
+      }
+      handleChange(event) {
+        let changeValue = WrappedComponent.getChangeValue(event);
+
+        // Process specific case for the template part deletion confirmation.
+        const currentPost = this.props.currentPost;
+        if (!(0,external_lodash_.isNil)(currentPost)) {
+          changeValue = {
+            templateId: changeValue,
+            currentPost: currentPost
+          };
+        }
+        if (!(0,external_lodash_.isUndefined)(WrappedComponent.bypassConfirmation) && WrappedComponent.bypassConfirmation(this.props.translationData)) {
+          handleChangeCallback(changeValue);
+        } else {
+          this.setState({
+            isOpen: true,
+            changeValue: changeValue
+          });
+        }
+      }
+      render() {
+        // isDefaultLang property is only available in translationData language which comes from template post type.
+        const isDefaultLang = this.props.translationData?.lang.is_default;
+        const passThroughProps = this.props;
+        const wrappedComponentProps = Object.assign({}, {
+          ...passThroughProps
+        }, {
+          handleChange: this.handleChange
+        });
+        return (0,external_this_wp_element_.createElement)(external_this_wp_element_.Fragment, null, (0,external_this_wp_element_.createElement)(WrappedComponent, wrappedComponentProps), this.state.isOpen && (0,external_this_wp_element_.createElement)(ConfirmationModal, {
+          title: WrappedComponent.labelConfirmationModal,
+          idPrefix: idPrefix,
+          handleChange: () => handleChangeCallback(this.state.changeValue),
+          updateState: () => this.setState({
+            isOpen: false,
+            changeValue: null
+          })
+        }, (0,external_this_wp_element_.createElement)(ModalContent, !(0,external_lodash_.isNil)(isDefaultLang) ? {
+          isDefaultLang: isDefaultLang
+        } : {})));
+      }
+    }
+    ;
+    enhanceComponent.bypassConfirmation = WrappedComponent.bypassConfirmation;
+    enhanceComponent.getChangeValue = WrappedComponent.getChangeValue;
+    return enhanceComponent;
+  }, 'withConfirmation');
+};
+
+/**
+ * Callback to trigger the action to change the value in the Component wrapped by the withConfirmation HOC.
+ *
+ * @callback handleChangeCallback
+ * @param {string|Object} changeValue The value computed by {@see WrappedComponent.getChangeValueCallback} and could be completed by the withConfirmation HOC handleChange function.
+ */
+
+/**
+ * Callback to retrieve the value to change from the Component wrapped by the withConfirmation HOC.
+ *
+ * @callback WrappedComponent.getChangeValueCallback
+ * @param {Event} event A DOM triggered by the wrapped component.
+ */
+
+/**
+ * Optional callback to check whether the Component wrapped by the withConfirmation HOC need to open the confirmation modal or not.
+ *
+ * @callback WrappedComponent.bypassConfirmationCallback
+ * @param {Object} [translationData] A entry which represents the translation of the current post in a language {@see PLL_REST_Post::get_translations_table()}.
+ */
+
+/* harmony default export */ const confirmation_modal = (withConfirmation);
+;// CONCATENATED MODULE: ./modules/block-editor/js/sidebar/components/buttons/synchronization-button/index.js
 
 /**
  * WordPress dependencies
@@ -1500,139 +1876,14 @@ class SynchronizationButton extends external_this_wp_element_.Component {
   }
 }
 SynchronizationButton.labelConfirmationModal = (0,external_this_wp_i18n_.__)('Synchronize this post', 'polylang-pro');
-const synchronization_button_ModalContent = function () {
+const ModalContent = function () {
   return (0,external_this_wp_element_.createElement)("p", null, (0,external_this_wp_i18n_.__)('You are about to overwrite an existing translation. Are you sure you want to proceed?', 'polylang-pro'));
 };
-const SynchronizationButtonWithConfirmation = confirmation_modal('pll_sync_post', synchronization_button_ModalContent, SynchronizationButton.handleSynchronizationChange)(SynchronizationButton);
+const SynchronizationButtonWithConfirmation = confirmation_modal('pll_sync_post', ModalContent, SynchronizationButton.handleSynchronizationChange)(SynchronizationButton);
 /* harmony default export */ const synchronization_button = (SynchronizationButtonWithConfirmation);
-;// CONCATENATED MODULE: ./modules/block-editor/js/sidebar/store/utils.js
+;// CONCATENATED MODULE: ./modules/block-editor/js/sidebar/components/buttons/index.js
 /**
- * WordPress Dependencies
- *
- * @package Polylang-Pro
- */
-
-
-
-
-/**
- * Internal dependencies
- */
-
-
-
-/**
- * Wait for the whole post block editor context has been initialized: current post loaded and languages list initialized.
- */
-const isBlockPostEditorContextInitialized = () => {
-  if ((0,external_lodash_.isNil)((0,external_this_wp_data_.select)(MODULE_CORE_EDITOR_KEY))) {
-    return Promise.reject("Polylang languages panel can't be initialized because block editor isn't fully initialized.");
-  }
-
-  // save url params espacially when a new translation is creating
-  saveURLParams();
-  // call to getCurrentUser to force call to resolvers and initialize state
-  const currentUser = (0,external_this_wp_data_.select)(MODULE_KEY).getCurrentUser();
-
-  /**
-   * Set a promise for waiting for the current post has been fully loaded before making other processes.
-   */
-  const isCurrentPostLoaded = new Promise(function (resolve) {
-    let unsubscribe = (0,external_this_wp_data_.subscribe)(function () {
-      const currentPost = (0,external_this_wp_data_.select)(MODULE_CORE_EDITOR_KEY).getCurrentPost();
-      if (!(0,external_lodash_.isEmpty)(currentPost)) {
-        unsubscribe();
-        resolve();
-      }
-    });
-  });
-
-  // Wait for current post has been loaded and languages list initialized.
-  return Promise.all([isCurrentPostLoaded, isLanguagesinitialized()]).then(function () {
-    // If we come from another post for creating a new one, we have to update translations from the original post.
-    const fromPost = (0,external_this_wp_data_.select)(MODULE_KEY).getFromPost();
-    if (!(0,external_lodash_.isNil)(fromPost) && !(0,external_lodash_.isNil)(fromPost.id)) {
-      const lang = (0,external_this_wp_data_.select)(MODULE_CORE_EDITOR_KEY).getEditedPostAttribute('lang');
-      const translations = (0,external_this_wp_data_.select)(MODULE_CORE_EDITOR_KEY).getEditedPostAttribute('translations');
-      const translations_table = (0,external_this_wp_data_.select)(MODULE_CORE_EDITOR_KEY).getEditedPostAttribute('translations_table');
-      const translatedPosts = getTranslatedPosts(translations, translations_table, lang);
-      (0,external_this_wp_data_.dispatch)(MODULE_CORE_EDITOR_KEY).editPost({
-        translations: convertMapToObject(translatedPosts)
-      });
-    }
-  });
-};
-
-/**
- * Wait for the whole site editor context to be initialized: current template loaded and languages list initialized.
- */
-const isSiteEditorContextInitialized = () => {
-  // save url params espacially when a new translation is creating
-  saveURLParams();
-  // call to getCurrentUser to force call to resolvers and initialize state
-  const currentUser = (0,external_this_wp_data_.select)(MODULE_KEY).getCurrentUser();
-
-  /**
-   * Set a promise to wait for the current template to be fully loaded before making other processes.
-   * It allows to see if both Site Editor and Core stores are available (@see getCurrentTemplateFromDataStore()).
-   */
-  const isTemplatePartLoaded = new Promise(function (resolve) {
-    let unsubscribe = (0,external_this_wp_data_.subscribe)(function () {
-      const currentTemplatePart = utils_getCurrentTemplateFromDataStore();
-      if (!(0,external_lodash_.isNil)(currentTemplatePart) && !(0,external_lodash_.isEmpty)(currentTemplatePart)) {
-        unsubscribe();
-        resolve();
-      }
-    });
-  });
-  return Promise.all([isTemplatePartLoaded, isLanguagesinitialized()]);
-};
-
-/**
- * Set a promise for waiting for the languages list is correctly initialized before making other processes.
- */
-const isLanguagesinitialized = () => new Promise(function (resolve) {
-  let unsubscribe = (0,external_this_wp_data_.subscribe)(function () {
-    const languages = (0,external_this_wp_data_.select)(MODULE_KEY)?.getLanguages();
-    if (languages?.size > 0) {
-      unsubscribe();
-      resolve();
-    }
-  });
-});
-
-/**
- * Save query string parameters from URL. They could be needed after
- * They could be null if they does not exist
- */
-function saveURLParams() {
-  // Variable window.location.search isn't use directly
-  // Function getSearchParams return an URLSearchParams object for manipulating each parameter
-  // Each of them are sanitized below
-  const searchParams = getSearchParams(window.location.search); // phpcs:ignore WordPressVIPMinimum.JS.Window.location
-  if (null !== searchParams) {
-    (0,external_this_wp_data_.dispatch)(MODULE_KEY).setFromPost({
-      id: wp.sanitize.stripTagsAndEncodeText(searchParams.get('from_post')),
-      postType: wp.sanitize.stripTagsAndEncodeText(searchParams.get('post_type')),
-      newLanguage: wp.sanitize.stripTagsAndEncodeText(searchParams.get('new_lang'))
-    });
-  }
-}
-
-/**
- * Gets the current template using the Site Editor store and the Core store.
- *
- * @returns {object} The current template object.
- */
-function utils_getCurrentTemplateFromDataStore() {
-  const currentTemplateId = (0,external_this_wp_data_.select)(MODULE_SITE_EDITOR_KEY)?.getEditedPostId();
-  const currentTemplateType = (0,external_this_wp_data_.select)(MODULE_SITE_EDITOR_KEY)?.getEditedPostType();
-  return (0,external_this_wp_data_.select)(MODULE_CORE_KEY).getEntityRecord('postType', currentTemplateType, currentTemplateId);
-}
-;// CONCATENATED MODULE: ./modules/block-editor/js/sidebar/components/add-edit-link/index.js
-
-/**
- * WordPress dependencies
+ * Buttons components.
  *
  * @package Polylang-Pro
  */
@@ -1642,89 +1893,6 @@ function utils_getCurrentTemplateFromDataStore() {
 
 
 
-/**
- * Internal dependencies
- */
-
-
-
-const AddEditLink = _ref => {
-  let {
-    translationData
-  } = _ref;
-  const isTranslated = !(0,external_lodash_.isUndefined)(translationData.translated_post) && !(0,external_lodash_.isNil)(translationData.translated_post.id);
-  const currentUserCanEdit = !(0,external_lodash_.isUndefined)(translationData.links) && !(0,external_lodash_.isNil)(translationData.links.edit_link);
-  const currentUSerCanCreate = !(0,external_lodash_.isUndefined)(translationData.links) && !(0,external_lodash_.isEmpty)(translationData.links.add_link);
-  let translationIcon = library_plus;
-  /* translators: accessibility text, %s is a native language name. For example Deutsch for German or Français for french. */
-  let translationScreenReaderText = (0,external_this_wp_i18n_.sprintf)((0,external_this_wp_i18n_.__)('Add a translation in %s', 'polylang-pro'), translationData.lang.name);
-  let translationUrl = decodeURI(translationData.links.add_link);
-  if (isTranslated) {
-    translationIcon = library_pencil;
-    /* translators: accessibility text, %s is a native language name. For example Deutsch for German or Français for french. */
-    translationScreenReaderText = (0,external_this_wp_i18n_.sprintf)((0,external_this_wp_i18n_.__)('Edit the translation in %s', 'polylang-pro'), translationData.lang.name);
-    translationUrl = decodeURI(translationData.links.edit_link);
-  }
-  // if the current user can't create or can't edit return nothing
-  if (!currentUSerCanCreate && !isTranslated || !currentUserCanEdit && isTranslated) {
-    return null;
-  }
-  if (isSiteBlockEditor() && !isTranslated) {
-    return (0,external_this_wp_element_.createElement)(external_this_wp_components_.Button, {
-      href: '#',
-      icon: translationIcon,
-      label: translationScreenReaderText,
-      className: `pll-button`,
-      onClick: handleAddClick,
-      "data-target-language": translationData.lang.slug // Store the target language to retrieve it through the click event.
-    }, (0,external_this_wp_element_.createElement)("span", {
-      className: "screen-reader-text"
-    }, translationScreenReaderText));
-  }
-  return (0,external_this_wp_element_.createElement)(external_this_wp_components_.Button, {
-    href: translationUrl,
-    icon: translationIcon,
-    label: translationScreenReaderText,
-    className: `pll-button`
-  }, (0,external_this_wp_element_.createElement)("span", {
-    className: "screen-reader-text"
-  }, translationScreenReaderText));
-};
-
-/**
- * Handle the template part translation creation when the "add" button is clicked.
- * Indeed, the Site Editor now create template through REST request.
- *
- * @param {object} event
- */
-const handleAddClick = event => {
-  const targetLanguage = event.target.closest('a.pll-button').getAttribute('data-target-language');
-  const currentTemplate = utils_getCurrentTemplateFromDataStore();
-  const translationsData = {
-    [currentTemplate.lang]: currentTemplate.wp_id
-  };
-  const langSlugRegex = getLangSlugRegex();
-  const newSlug = currentTemplate.slug.replace(langSlugRegex, '');
-  external_this_wp_apiFetch_default()({
-    path: '/wp/v2/template-parts',
-    method: 'POST',
-    data: {
-      slug: newSlug,
-      title: currentTemplate.title.raw,
-      content: currentTemplate.content.raw,
-      area: currentTemplate.area,
-      lang: targetLanguage,
-      from_post: currentTemplate.wp_id,
-      translations: translationsData
-    }
-  }).then(createdTemplate => {
-    const editLinkToRedirect = (0,external_lodash_.get)(createdTemplate.translations_table, targetLanguage)?.links.edit_link;
-    if (!(0,external_lodash_.isNil)(editLinkToRedirect)) {
-      location.href = editLinkToRedirect;
-    }
-  });
-};
-/* harmony default export */ const add_edit_link = (AddEditLink);
 // EXTERNAL MODULE: ./node_modules/classnames/index.js
 var classnames = __webpack_require__(184);
 var classnames_default = /*#__PURE__*/__webpack_require__.n(classnames);
@@ -2379,6 +2547,63 @@ function scrollIntoView(elem, container, config) {
 var external_this_wp_htmlEntities_ = __webpack_require__(638);
 // EXTERNAL MODULE: external {"this":["wp","keycodes"]}
 var external_this_wp_keycodes_ = __webpack_require__(19);
+// EXTERNAL MODULE: external {"this":["wp","apiFetch"]}
+var external_this_wp_apiFetch_ = __webpack_require__(514);
+var external_this_wp_apiFetch_default = /*#__PURE__*/__webpack_require__.n(external_this_wp_apiFetch_);
+;// CONCATENATED MODULE: ./modules/block-editor/js/sidebar/components/translation-input/input-change.js
+/**
+ * WordPress dependencies
+ *
+ * @package Polylang-Pro
+ */
+
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+const onInputChange = _ref => {
+  let {
+    value,
+    post = null,
+    translatedPosts,
+    translationData,
+    language
+  } = _ref;
+  if ((0,external_lodash_.isEmpty)(post)) {
+    translationData.translated_post = {
+      id: null,
+      title: value
+    };
+    translationData.links = {
+      add_link: translationData.links.add_link
+    };
+    // unlink translation
+    translatedPosts.delete(language.slug);
+  } else {
+    translatedPosts.set(language.slug, post.id);
+    translationData.translated_post = {
+      id: post.id,
+      title: post.title.rendered
+    };
+    translationData.block_editor = {
+      edit_link: post.block_editor.edit_link
+    };
+    translationData.caps = post.caps;
+  }
+  // update translations table in store
+  (0,external_this_wp_data_.dispatch)(MODULE_CORE_EDITOR_KEY).editPost({
+    translations: convertMapToObject(translatedPosts)
+  });
+  // simulate a post modification to change status of the publish/update button
+  (0,external_this_wp_data_.dispatch)(MODULE_CORE_EDITOR_KEY).editPost({
+    title: (0,external_this_wp_data_.select)(MODULE_CORE_EDITOR_KEY).getEditedPostAttribute('title')
+  });
+};
+/* harmony default export */ const input_change = (onInputChange);
 ;// CONCATENATED MODULE: ./modules/block-editor/js/sidebar/components/translation-input/index.js
 
 /**
@@ -2386,7 +2611,6 @@ var external_this_wp_keycodes_ = __webpack_require__(19);
  *
  * @package Polylang-Pro
  */
-
 
 
 
@@ -2407,6 +2631,7 @@ var external_this_wp_keycodes_ = __webpack_require__(19);
 /**
  * Internal dependencies
  */
+
 
 
 // Since TranslationInput is rendered in the context of other inputs, but should be
@@ -2482,7 +2707,7 @@ class TranslationInput extends external_this_wp_element_.Component {
         untranslated_in: postLanguageSlug,
         lang: translationLanguageSlug,
         type: postType,
-        is_block_editor: true
+        context: 'edit'
       })
     });
     request.then(posts => {
@@ -2516,12 +2741,12 @@ class TranslationInput extends external_this_wp_element_.Component {
   onChange(event) {
     const inputValue = event.target.value;
     const translatedPosts = this.props.translatedPosts;
-    const translationsTable = this.props.translationsTable;
+    const translationData = this.props.translationData;
     const language = this.props.translationData.lang;
-    this.props.onChange({
+    input_change({
       value: inputValue,
       translatedPosts,
-      translationsTable,
+      translationData,
       language
     });
     this.updateSuggestions(inputValue);
@@ -2605,14 +2830,14 @@ class TranslationInput extends external_this_wp_element_.Component {
     }
   }
   selectLink(post) {
-    const translationsTable = this.props.translationsTable;
+    const translationData = this.props.translationData;
     const translatedPosts = this.props.translatedPosts;
     const language = this.props.translationData.lang;
-    this.props.onChange({
+    input_change({
       value: post.title.rendered,
       post,
       translatedPosts,
-      translationsTable,
+      translationData,
       language
     });
     this.setState({
@@ -2634,8 +2859,11 @@ class TranslationInput extends external_this_wp_element_.Component {
       selectedSuggestion,
       loading
     } = this.state;
-    const currentUserCanEdit = !(0,external_lodash_.isUndefined)(translationData.links) && ((0,external_lodash_.isUndefined)(translationData.links.edit_link) || !(0,external_lodash_.isUndefined)(translationData.links.edit_link) && !(0,external_lodash_.isNull)(translationData.links.edit_link));
-    return (0,external_this_wp_element_.createElement)(external_this_wp_element_.Fragment, null, (0,external_this_wp_element_.createElement)("div", {
+    const currentUserCanAddOrEdit = translationData.caps.edit || translationData.caps.add;
+    return (0,external_this_wp_element_.createElement)(external_this_wp_element_.Fragment, null, (0,external_this_wp_element_.createElement)("label", {
+      className: "screen-reader-text",
+      htmlFor: `tr_lang_${translationData.lang.slug}`
+    }, /* translators: accessibility text */(0,external_this_wp_i18n_.__)('Translation', 'polylang-pro')), (0,external_this_wp_element_.createElement)("div", {
       className: "translation-input"
     }, (0,external_this_wp_element_.createElement)("input", {
       lang: language.w3c,
@@ -2644,7 +2872,7 @@ class TranslationInput extends external_this_wp_element_.Component {
         direction: language.is_rtl ? 'rtl' : 'ltr'
       },
       autoFocus: autoFocus,
-      disabled: !currentUserCanEdit,
+      disabled: !currentUserCanAddOrEdit,
       type: "text",
       "aria-label": /* translators: accessibility text */(0,external_this_wp_i18n_.__)('URL', 'polylang-pro'),
       required: true,
@@ -2682,23 +2910,7 @@ class TranslationInput extends external_this_wp_element_.Component {
   }
 }
 /* harmony default export */ const translation_input = ((0,external_this_wp_components_.withSpokenMessages)((0,external_this_wp_compose_.withInstanceId)(TranslationInput)));
-;// CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/extends.js
-function _extends() {
-  _extends = Object.assign ? Object.assign.bind() : function (target) {
-    for (var i = 1; i < arguments.length; i++) {
-      var source = arguments[i];
-      for (var key in source) {
-        if (Object.prototype.hasOwnProperty.call(source, key)) {
-          target[key] = source[key];
-        }
-      }
-    }
-    return target;
-  };
-  return _extends.apply(this, arguments);
-}
-;// CONCATENATED MODULE: ./modules/block-editor/js/sidebar/components/delete-button/index.js
-
+;// CONCATENATED MODULE: ./modules/block-editor/js/sidebar/components/translation-row/index.js
 
 /**
  * WordPress dependencies
@@ -2706,255 +2918,109 @@ function _extends() {
  * @package Polylang-Pro
  */
 
-
-
-
-
-
-
-
-
 /**
- * Internal dependencies
+ * Internal dependencies.
  */
 
-
-
-
-class DeleteButton extends external_this_wp_element_.Component {
-  /**
-   * Handles the deletion of an item after confirmation.
-   * Used as the handleChangeCallback for the confirmation modal (3rd param of withConfirmation()).
-   *
-   * @param {Object} deleteData             The delete data required to manage a template deletion.
-   * @param {string} deleteData.templateId  The id of the template to delete.
-   * @param {Object} deleteData.currentPost The current post we need to refresh after the template deletion.
-   */
-  static handleDelete(_ref) {
-    let {
-      templateId,
-      currentPost
-    } = _ref;
-    if (!(0,external_lodash_.isEmpty)(templateId)) {
-      const restBaseUrl = getPostsUrl(currentPost.type);
-      external_this_wp_apiFetch_default()({
-        path: `${restBaseUrl}/${templateId}`,
-        method: 'GET'
-      }).then(template => {
-        if (!(0,external_lodash_.isEmpty)(template)) {
-          const {
-            translations_table,
-            translations
-          } = currentPost;
-          const translationsTable = getTranslationsTable(translations_table);
-          // Gets the removed translation from the translations table to update it.
-          const removedTranslation = translationsTable.get(template.lang);
-
-          // Modifies the template title rendered to change the confirmation's message when deleting the template.
-          template.title.rendered = template.title.rendered + ' in ' + removedTranslation.lang.name;
-          // Deletes the template in the corresponding language
-          (0,external_this_wp_data_.dispatch)(MODULE_SITE_EDITOR_KEY).removeTemplate(template);
-          // Needs to update the translated posts in the store to refresh the metabox after the template deletion.
-          // Removes the translated_post property to say that it doesn't exist a translation anymore for the deleted language.
-          delete removedTranslation.translated_post;
-          // Needs to update the translations group of the currentPost accordingly.
-          const translatedPosts = getTranslatedPosts(translations);
-          // Removes the removed translation from the translations group.
-          translatedPosts.delete(template.lang);
-          // Updates the translations group.
-          currentPost.translations = convertMapToObject(translatedPosts);
-          // Updates the current template in store to refresh the metabox UI.
-          (0,external_this_wp_data_.dispatch)(MODULE_SITE_EDITOR_KEY).setTemplatePart(currentPost.id);
-          // When the current language is the default one,
-          // always returns back to the template parts list because user's custom template parts doesn't exist anymore after deletion.
-          // For template parts provided by the theme as a file, template parts deletion remove user's customisation.
-          // So it's consistent to redirect to the template parts list too.
-          if (isDefaultLanguage(removedTranslation.lang.slug)) {
-            // Simply remove the postId query string parameter from the URL to redirect to the template parts list.
-            location.href = (0,external_this_wp_url_.removeQueryArgs)(location.href, 'postId');
-          }
-        }
-      });
-    }
-  }
-
-  /**
-   * Returns the templateId of the template by clicking the delete link button component.
-   * Used internally in the HOC withConfirmation as the getChangeValueCallback of the wrapped component.
-   *
-   * @param {object} event The onClick event from the Button component.
-   * @returns {string} The link to delete the current item.
-   */
-  static getChangeValue(event) {
-    const id = event.currentTarget.id;
-    if ((0,external_lodash_.isEmpty)(id)) {
-      return '';
-    }
-    return id.match(/\[(.[^[]+)\]/i)[1];
-  }
-  render() {
-    const {
-      lang: language,
-      translated_post,
-      links,
-      template
-    } = this.props.translationData;
-    // translators: %s is a native language name.
-    const translationScreenReaderText = (0,external_this_wp_i18n_.sprintf)((0,external_this_wp_i18n_.__)('Delete the translation in %s', 'polylang-pro'), language.name);
-    const currentUserCanDelete = !(0,external_lodash_.isUndefined)(links.delete_link);
-    const isTranslated = !(0,external_lodash_.isUndefined)(translated_post) && !(0,external_lodash_.isNil)(translated_post.id);
-
-    // If the current user can't delete return nothing.
-    if (!currentUserCanDelete) {
-      return null;
-    }
-    return (0,external_this_wp_element_.createElement)(external_this_wp_components_.Button, _extends({
-      icon: library_trash,
-      label: translationScreenReaderText,
-      disabled: !isTranslated
-    }, template ? {
-      id: `templateId[${template.id}]`
-    } : {}, {
-      className: "pll-button",
-      onClick: this.props.handleChange
-    }), (0,external_this_wp_element_.createElement)("span", {
-      className: "screen-reader-text"
-    }, translationScreenReaderText));
-  }
-}
-DeleteButton.labelConfirmationModal = (0,external_this_wp_i18n_.__)('Delete template part confirmation', 'polylang-pro');
-const delete_button_ModalContent = _ref2 => {
+const TranslationRow = _ref => {
   let {
-    isDefaultLang
-  } = _ref2;
-  return (0,external_this_wp_element_.createElement)(external_this_wp_element_.Fragment, null, isDefaultLang && (0,external_this_wp_element_.createElement)("p", null, (0,external_this_wp_i18n_.__)('You are about to delete the template part in the default language.', 'polylang-pro'), (0,external_this_wp_element_.createElement)("br", null), (0,external_this_wp_i18n_.__)('This will delete its customization and all its corresponding translations.', 'polylang-pro')), (0,external_this_wp_element_.createElement)("p", null, (0,external_this_wp_i18n_.__)('Are you sure you want to delete this template part?', 'polylang-pro')));
-};
-const DeleteWithConfirmation = confirmation_modal('pll_delete_translation', delete_button_ModalContent, DeleteButton.handleDelete)(DeleteButton);
-/* harmony default export */ const delete_button = (DeleteWithConfirmation);
-;// CONCATENATED MODULE: ./modules/block-editor/js/sidebar/components/translations-table/index.js
-
-/**
- * WordPress dependencies
- *
- * @package Polylang-Pro
- */
-
-
-
-
-
-/**
- * Internal dependencies
- */
-
-
-
-
-
-
-
-const onChange = _ref => {
-  let {
-    value,
-    post = null,
-    translatedPosts,
-    translationsTable,
-    language
+    language,
+    children
   } = _ref;
-  const translationData = translationsTable.get(language.slug);
-  if ((0,external_lodash_.isEmpty)(post)) {
-    translationData.translated_post = {
-      id: null,
-      title: value
-    };
-    translationData.links = {
-      add_link: translationData.links.add_link
-    };
-    // unlink translation
-    translatedPosts.delete(language.slug);
-  } else {
-    translatedPosts.set(language.slug, post.id);
-    translationData.translated_post = {
-      id: post.id,
-      title: post.title.rendered
-    };
-    translationData.links.edit_link = post.edit_link;
-  }
-  // update translations table in store
-  translationsTable.set(language.slug, translationData);
-  (0,external_this_wp_data_.dispatch)(MODULE_CORE_EDITOR_KEY).editPost({
-    translations: convertMapToObject(translatedPosts)
-  });
-  // simulate a post modification to change status of the publish/update button
-  (0,external_this_wp_data_.dispatch)(MODULE_CORE_EDITOR_KEY).editPost({
-    title: (0,external_this_wp_data_.select)(MODULE_CORE_EDITOR_KEY).getEditedPostAttribute('title')
-  });
+  return (0,external_this_wp_element_.createElement)(external_this_wp_element_.Fragment, null, (0,external_this_wp_element_.createElement)(flag_cell, {
+    language: language
+  }), children);
 };
-const TranslationsTable = _ref2 => {
+/* harmony default export */ const translation_row = (TranslationRow);
+;// CONCATENATED MODULE: ./modules/block-editor/js/sidebar/components/translations-table/post-editor-translation-table/index.js
+
+/**
+ * WordPress dependencies
+ *
+ * @package Polylang-Pro
+ */
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+
+
+
+const PostEditorTranslationsTable = _ref => {
   let {
     selectedLanguage,
-    translationsTable,
-    translatedPosts,
-    currentPost
-  } = _ref2;
-  return (0,external_this_wp_element_.createElement)("div", {
-    id: "post-translations",
-    className: "translations"
-  }, (0,external_this_wp_element_.createElement)("p", null, (0,external_this_wp_element_.createElement)("strong", null, (0,external_this_wp_i18n_.__)("Translations", "polylang-pro"))), (0,external_this_wp_element_.createElement)("table", null, (0,external_this_wp_element_.createElement)("tbody", null, Array.from(translationsTable.values()).map(translationData => {
-    return selectedLanguage.slug !== translationData.lang.slug && (0,external_this_wp_element_.createElement)("tr", {
+    translationsTable
+  } = _ref;
+  const translations = (0,external_this_wp_data_.select)(MODULE_CORE_EDITOR_KEY).getEditedPostAttribute('translations');
+  const translatedPosts = getTranslatedPosts(translations, translationsTable, selectedLanguage.slug);
+  return Array.from(translationsTable.values()).map(translationData => {
+    // Don't display current post in the translation table.
+    if (selectedLanguage.slug === translationData.lang.slug) {
+      return;
+    }
+    const isTranslated = null != translationData.translated_post?.id;
+    const currentUserCanEdit = translationData.caps.edit;
+    const currentUSerCanCreate = translationData.caps.add;
+    const addEditButton = () => {
+      if (isTranslated && currentUserCanEdit) {
+        return (0,external_this_wp_element_.createElement)(edit_button, {
+          href: decodeURI(translationData.block_editor.edit_link),
+          language: translationData.lang
+        });
+      } else if (currentUSerCanCreate) {
+        return (0,external_this_wp_element_.createElement)(add_button, {
+          href: decodeURI(translationData.links.add_link),
+          language: translationData.lang
+        });
+      }
+      return null;
+    };
+    return (0,external_this_wp_element_.createElement)("tr", {
       key: translationData.lang.slug
-    }, (0,external_this_wp_element_.createElement)("th", {
-      className: "pll-language-column"
-    }, !(0,external_lodash_.isEmpty)(translationData.lang.flag) ? (0,external_this_wp_element_.createElement)("span", {
-      className: "pll-select-flag flag"
-    }, (0,external_this_wp_element_.createElement)("img", {
-      src: translationData.lang.flag_url,
-      alt: translationData.lang.name,
-      title: translationData.lang.name
-    })) : (0,external_this_wp_element_.createElement)("abbr", null, translationData.lang.slug, (0,external_this_wp_element_.createElement)("span", {
-      className: "screen-reader-text"
-    }, translationData.lang.name))), isSiteBlockEditor() && (0,external_this_wp_element_.createElement)(external_this_wp_element_.Fragment, null, (0,external_this_wp_element_.createElement)("td", {
-      className: "pll-translation-column"
-    }, (0,external_this_wp_element_.createElement)("span", {
-      className: "pll-translation-language"
-    }, translationData.lang.name)), (0,external_this_wp_element_.createElement)("td", {
-      className: "pll-edit-column pll-column-icon"
-    }, (0,external_this_wp_element_.createElement)(add_edit_link, {
+    }, (0,external_this_wp_element_.createElement)(translation_row, {
+      language: translationData.lang
+    }, (0,external_this_wp_element_.createElement)(add_or_edit_cell, null, addEditButton()), (0,external_this_wp_element_.createElement)(synchronization_cell, null, translationData.can_synchronize && (0,external_this_wp_element_.createElement)(synchronization_button, {
       translationData: translationData
-    })), (0,external_this_wp_element_.createElement)("td", {
-      className: "pll-delete-column pll-column-icon"
-    }, (0,external_this_wp_element_.createElement)(delete_button, {
-      translationData: translationData,
-      currentPost: currentPost
-    })), (0,external_this_wp_element_.createElement)("td", {
-      className: "pll-default-lang-column pll-column-icon"
-    }, translationData.is_default_lang && (0,external_this_wp_element_.createElement)(default_lang_icon, null))), !isSiteBlockEditor() && (0,external_this_wp_element_.createElement)(external_this_wp_element_.Fragment, null, (0,external_this_wp_element_.createElement)("td", {
-      className: "pll-edit-column pll-column-icon"
-    }, (0,external_this_wp_element_.createElement)(add_edit_link, {
-      translationData: translationData
-    })), (0,external_this_wp_element_.createElement)("td", {
-      className: "pll-sync-column pll-column-icon"
-    }, translationData.can_synchronize && (0,external_this_wp_element_.createElement)(synchronization_button, {
-      translationData: translationData
-    })), (0,external_this_wp_element_.createElement)("td", {
-      className: "pll-translation-column"
-    }, (0,external_this_wp_element_.createElement)("label", {
-      className: "screen-reader-text",
-      htmlFor: `tr_lang_${translationData.lang.slug}`
-    }, /* translators: accessibility text */(0,external_this_wp_i18n_.__)('Translation', 'polylang-pro')), (0,external_this_wp_element_.createElement)(translation_input, {
+    })), (0,external_this_wp_element_.createElement)(translation_input_cell, null, (0,external_this_wp_element_.createElement)(translation_input, {
       id: `htr_lang_${translationData.lang.slug}`,
       autoFocus: false,
-      translationsTable: translationsTable,
       translatedPosts: translatedPosts,
       translationData: translationData,
-      value: !(0,external_lodash_.isUndefined)(translationData.translated_post) ? translationData.translated_post.title : '',
-      onChange: onChange
+      value: undefined !== translationData.translated_post?.title ? translationData.translated_post?.title : ''
     }))));
-  }))));
+  });
 };
-/* harmony default export */ const translations_table = (TranslationsTable);
-;// CONCATENATED MODULE: ./modules/block-editor/js/sidebar/components/metabox/index.js
+/* harmony default export */ const post_editor_translation_table = (PostEditorTranslationsTable);
+;// CONCATENATED MODULE: ./modules/block-editor/js/sidebar/components/delete-modal-body/index.js
 
+/**
+ * WordPress dependencies
+ *
+ * @package Polylang-Pro
+ */
+
+const DeleteModalBody = _ref => {
+  let {
+    isDefaultLang
+  } = _ref;
+  const defaultLangText = () => {
+    if (!isDefaultLang) {
+      return null;
+    }
+    return (0,external_this_wp_element_.createElement)("p", null, (0,external_this_wp_i18n_.__)('You are about to delete an entity in the default language.', 'polylang-pro'), (0,external_this_wp_element_.createElement)("br", null), (0,external_this_wp_i18n_.__)('This will delete its customizations and all its corresponding translations.', 'polylang-pro'));
+  };
+  return (0,external_this_wp_element_.createElement)(external_this_wp_element_.Fragment, null, defaultLangText(), (0,external_this_wp_element_.createElement)("p", null, (0,external_this_wp_i18n_.__)('Are you sure you want to delete this translation?', 'polylang-pro')));
+};
+/* harmony default export */ const delete_modal_body = (DeleteModalBody);
+// EXTERNAL MODULE: external {"this":["wp","coreData"]}
+var external_this_wp_coreData_ = __webpack_require__(848);
+// EXTERNAL MODULE: external {"this":["wp","notices"]}
+var external_this_wp_notices_ = __webpack_require__(703);
+;// CONCATENATED MODULE: ./modules/block-editor/js/sidebar/components/delete-with-confirmation/use-delete-post.js
 /**
  * WordPress dependencies
  *
@@ -2965,121 +3031,72 @@ const TranslationsTable = _ref2 => {
 
 
 
-
-/**
- * Internal dependencies
- */
-
-
-
-
-
-
-
-class MetaBox extends external_this_wp_element_.Component {
-  /**
-   * Render the language metabox
-   */
-  render() {
-    if (!this.props.isAllowedPostType) {
-      return (0,external_this_wp_element_.createElement)("div", {
-        className: "components-panel__body is-opened"
-      }, (0,external_this_wp_element_.createElement)("div", {
-        className: "pll-metabox-error components-notice is-warning"
-      }, (0,external_this_wp_i18n_.__)('Templates are not translatable, only template parts are.', 'polylang-pro')));
+const useDeletePost = () => {
+  const {
+    deleteEntityRecord
+  } = (0,external_this_wp_data_.useDispatch)(external_this_wp_coreData_.store);
+  const {
+    createSuccessNotice,
+    createErrorNotice
+  } = (0,external_this_wp_data_.useDispatch)(external_this_wp_notices_.store);
+  const handleDelete = async (postId, postType) => {
+    try {
+      const forceDelete = !POST_TYPE_WITH_TRASH.includes(postType);
+      await deleteEntityRecord('postType', postType, postId, {
+        force: forceDelete
+      }, {
+        throwOnError: true
+      });
+      createSuccessNotice((0,external_this_wp_i18n_.__)('The translation has been deleted.', 'polylang-pro'), {
+        type: 'snackbar'
+      });
+    } catch (error) {
+      createErrorNotice((0,external_this_wp_i18n_.sprintf)( /* translators: %s: Error message describing why the post could not be deleted. */
+      (0,external_this_wp_i18n_.__)('Unable to delete the translation. %s', 'polylang-pro'), error?.message), {
+        type: 'snackbar'
+      });
     }
-    return (0,external_this_wp_element_.createElement)("div", {
-      className: "components-panel__body is-opened"
-    }, !(0,external_lodash_.isNil)(this.props.selectedLanguage) ? (0,external_this_wp_element_.createElement)("form", {
-      className: "pll-metabox-location"
-    }, isTemplatePart(this.props.currentPost) ? (0,external_this_wp_element_.createElement)(external_this_wp_element_.Fragment, null, (0,external_this_wp_element_.createElement)(language_item, {
-      language: this.props.selectedLanguage,
-      translationsTable: this.props.translationsTable
-    })) : (0,external_this_wp_element_.createElement)(external_this_wp_element_.Fragment, null, (0,external_this_wp_element_.createElement)(switcher, {
-      selectedLanguage: this.props.selectedLanguage
-    }), (0,external_this_wp_element_.createElement)(duplicate_button, null)), (0,external_this_wp_element_.createElement)(translations_table, {
-      selectedLanguage: this.props.selectedLanguage,
-      translationsTable: this.props.translationsTable,
-      translatedPosts: this.props.translatedPosts,
-      currentPost: this.props.currentPost
-    })) : (0,external_this_wp_element_.createElement)("div", {
-      className: "pll-metabox-error components-notice is-error"
-    }, (0,external_this_wp_i18n_.__)('Unable to retrieve the content language', 'polylang-pro')));
-  }
-}
-
-/**
- * High Order Component to wrap polylang sidebar component
- */
-const wrapLanguagesPanel = select => {
-  let lang = '';
-  let translations_table = [];
-  let translations = [];
-  let currentPost = {};
-  let isAllowedPostType = false;
-  if (isSiteBlockEditor()) {
-    currentPost = utils_getCurrentTemplateFromDataStore();
-    lang = currentPost?.lang;
-    translations_table = currentPost?.translations_table;
-    translations = currentPost?.translations;
-  } else {
-    currentPost = select(MODULE_CORE_EDITOR_KEY).getCurrentPost();
-    lang = select(MODULE_CORE_EDITOR_KEY).getEditedPostAttribute('lang');
-    translations_table = select(MODULE_CORE_EDITOR_KEY).getEditedPostAttribute('translations_table');
-    translations = select(MODULE_CORE_EDITOR_KEY).getEditedPostAttribute('translations');
-  }
-  isAllowedPostType = !(0,external_lodash_.isNil)(currentPost) && !UNTRANSLATABLE_POST_TYPE.includes(currentPost.type);
-  const selectedLanguage = getSelectedLanguage(lang);
-  const translationsTable = getTranslationsTable(translations_table, lang);
-  const translatedPosts = getTranslatedPosts(translations, translations_table, lang);
+  };
   return {
-    currentPost,
-    selectedLanguage,
-    translationsTable,
-    translatedPosts,
-    isAllowedPostType
+    handleDelete: handleDelete
   };
 };
-const MetaBoxWatch = (0,external_this_wp_data_.withSelect)(wrapLanguagesPanel)(MetaBox);
-/* harmony default export */ const metabox = (MetaBoxWatch);
-;// CONCATENATED MODULE: ./modules/block-editor/js/sidebar/components/sidebar/index.js
-
+/* harmony default export */ const use_delete_post = (useDeletePost);
+;// CONCATENATED MODULE: ./modules/block-editor/js/sidebar/components/delete-with-confirmation/maybe-redirect.js
 /**
  * WordPress dependencies
  *
  * @package Polylang-Pro
  */
 
-
-
-
-/**
- * Internal Dependencies
- */
-
-
-const Sidebar = () => {
-  if (isSiteBlockEditor()) {
-    return (0,external_this_wp_element_.createElement)(external_this_wp_editSite_.PluginSidebar, {
-      name: "polylang-sidebar",
-      title: (0,external_this_wp_i18n_.__)('Languages', 'polylang-pro')
-    }, (0,external_this_wp_element_.createElement)(metabox, null));
-  } else {
-    return (0,external_this_wp_element_.createElement)(external_this_wp_editPost_.PluginSidebar, {
-      name: "polylang-sidebar",
-      title: (0,external_this_wp_i18n_.__)('Languages', 'polylang-pro')
-    }, (0,external_this_wp_element_.createElement)(metabox, null));
+const maybeRedirect = (postLang, postType) => {
+  if (!postLang.is_default || 'page' === postType) {
+    return;
   }
+  const newUrl = window.location.origin + wp.sanitize.stripTags(window.location.pathname); // phpcs:ignore WordPressVIPMinimum.JS.Window.location
+
+  const queryString = {};
+  switch (postType) {
+    case 'wp_navigation':
+      queryString.path = '/navigation';
+      break;
+    case 'wp_block':
+      queryString.path = '/patterns';
+      queryString.categoryType = postType;
+      break;
+    case 'wp_template_part':
+      queryString.path = '/' + postType + '/all';
+      break;
+  }
+  location.href = (0,external_this_wp_url_.addQueryArgs)(newUrl, queryString);
 };
-/* harmony default export */ const sidebar = (Sidebar);
-;// CONCATENATED MODULE: ./modules/block-editor/js/sidebar/components/menu-item/index.js
+/* harmony default export */ const maybe_redirect = (maybeRedirect);
+;// CONCATENATED MODULE: ./modules/block-editor/js/sidebar/components/delete-with-confirmation/index.js
 
 /**
+ * WordPress Dependencies.
+ *
  * @package Polylang-Pro
- */
-
-/**
- * WordPress dependencies.
  */
 
 
@@ -3089,24 +3106,562 @@ const Sidebar = () => {
  * Internal Dependencies.
  */
 
-const MenuItem = () => {
-  if (isSiteBlockEditor()) {
-    return (0,external_this_wp_element_.createElement)(external_this_wp_editSite_.PluginSidebarMoreMenuItem, {
-      target: "polylang-sidebar"
-    }, (0,external_this_wp_i18n_.__)("Languages", "polylang-pro"));
-  }
-  return (0,external_this_wp_element_.createElement)(external_this_wp_editPost_.PluginSidebarMoreMenuItem, {
-    target: "polylang-sidebar"
-  }, (0,external_this_wp_i18n_.__)("Languages", "polylang-pro"));
+
+
+
+const DeleteWithConfirmation = _ref => {
+  let {
+    translationData,
+    postType,
+    onDeleteSuccess
+  } = _ref;
+  const [isOpen, setOpen] = (0,external_this_wp_element_.useState)(false);
+  const openModal = () => setOpen(true);
+  const closeModal = () => setOpen(false);
+  const isTranslated = null != translationData.translated_post?.id;
+  const canTrash = translationData.caps.delete;
+  const {
+    handleDelete
+  } = use_delete_post();
+  const _handleDelete = () => {
+    const postId = 'wp_template_part' === postType && undefined !== translationData.template ? translationData.template.id : translationData.translated_post.id;
+    handleDelete(postId, postType).then(() => onDeleteSuccess());
+    closeModal();
+    maybe_redirect(translationData.lang, postType);
+  };
+  return (0,external_this_wp_element_.createElement)(external_this_wp_element_.Fragment, null, (0,external_this_wp_element_.createElement)(delete_button, {
+    onClick: openModal,
+    language: translationData.lang,
+    disabled: !isTranslated || !canTrash
+  }), isOpen && (0,external_this_wp_element_.createElement)(external_this_wp_components_.Modal, {
+    title: "Delete",
+    onRequestClose: closeModal
+  }, (0,external_this_wp_element_.createElement)(delete_modal_body, {
+    isDefaultLang: translationData.lang.is_default && 'page' !== postType // No message for default language deletion with a page.
+  }), (0,external_this_wp_element_.createElement)("div", {
+    role: "group",
+    className: "components-button-group buttons"
+  }, (0,external_this_wp_element_.createElement)(external_this_wp_components_.Button, {
+    variant: "tertiary",
+    onClick: closeModal,
+    type: "button"
+  }, (0,external_this_wp_i18n_.__)('Cancel', 'polylang-pro')), (0,external_this_wp_element_.createElement)("span", null, "\xA0"), (0,external_this_wp_element_.createElement)(external_this_wp_components_.Button, {
+    variant: "primary",
+    onClick: _handleDelete,
+    type: "submit"
+  }, (0,external_this_wp_i18n_.__)('Delete', 'polylang-pro')))));
 };
-/* harmony default export */ const menu_item = (MenuItem);
+/* harmony default export */ const delete_with_confirmation = (DeleteWithConfirmation);
+;// CONCATENATED MODULE: ./modules/block-editor/js/sidebar/components/translations-table/site-editor-translation-table/use-create-translation.js
+/**
+ * WordPress dependencies
+ *
+ * @package Polylang-Pro
+ */
+
+
+
+
+
+/**
+ * Internal Dependencies.
+ */
+
+const useCreateTranslation = () => {
+  const {
+    saveEntityRecord
+  } = (0,external_this_wp_data_.useDispatch)(external_this_wp_coreData_.store);
+  const {
+    createSuccessNotice,
+    createErrorNotice
+  } = (0,external_this_wp_data_.useDispatch)(external_this_wp_notices_.store);
+  const handleCreateTranslation = async (language, post) => {
+    const data = {
+      title: post.title.raw,
+      content: post.content.raw,
+      lang: language,
+      from_post: post.id,
+      translations: post.translations,
+      status: post.status
+    };
+    if ('wp_template_part' === post.type) {
+      const langSlugRegex = getLangSlugRegex();
+      const newSlug = post.slug.replace(langSlugRegex, '');
+      const translationsData = {
+        [post.lang]: post.wp_id
+      };
+      data.slug = newSlug;
+      data.area = post.area;
+      data.from_post = post.wp_id;
+      data.translations = translationsData;
+    }
+    try {
+      const translation = await saveEntityRecord('postType', post.type, data, {
+        throwOnError: true
+      });
+      createSuccessNotice((0,external_this_wp_i18n_.__)('The translation is created, you will be redirected.', 'polylang-pro'), {
+        type: 'snackbar'
+      });
+      const editLink = translation.translations_table[language]?.site_editor.edit_link;
+      if (undefined !== editLink) {
+        location.href = editLink;
+      }
+    } catch (error) {
+      const errorMessage = error.message && error.code !== 'unknown_error' ? error.message : (0,external_this_wp_i18n_.__)('An error occurred while creating the translation.', 'polylang-pro');
+      createErrorNotice(errorMessage, {
+        type: 'snackbar'
+      });
+    }
+  };
+  return {
+    handleCreateTranslation: handleCreateTranslation
+  };
+};
+/* harmony default export */ const use_create_translation = (useCreateTranslation);
+;// CONCATENATED MODULE: ./modules/block-editor/js/sidebar/components/translations-table/site-editor-translation-table/index.js
+
+/**
+ * WordPress dependencies
+ *
+ * @package Polylang-Pro
+ */
+
+
+/**
+ * Internal Dependencies.
+ */
+
+
+
+
+
+
+const SiteEditorTranslationsTable = _ref => {
+  let {
+    translationsTable,
+    currentPost,
+    translationsTabeDispatch
+  } = _ref;
+  const {
+    handleCreateTranslation
+  } = use_create_translation();
+  return Array.from(translationsTable.values()).map(translationData => {
+    // Don't display current post in the translation table.
+    if (currentPost?.lang === translationData.lang.slug) {
+      return;
+    }
+    function onDeleteSuccess() {
+      translationsTabeDispatch({
+        type: 'remove_translation',
+        lang: translationData.lang.slug
+      });
+    }
+    const isTranslated = null != translationData.translated_post?.id;
+    const currentUserCanEdit = translationData.caps.edit;
+    const currentUserCanCreate = 'wp_template_part' === currentPost.type && !currentPost.wp_id // Template Parts translation can be created from a file.
+    || translationData.caps.add;
+    const addEditButton = () => {
+      if (isTranslated && currentUserCanEdit) {
+        return (0,external_this_wp_element_.createElement)(edit_button, {
+          href: decodeURI(translationData.site_editor.edit_link),
+          language: translationData.lang
+        });
+      } else if (currentUserCanCreate) {
+        const _handleCreateTranslation = () => {
+          handleCreateTranslation(translationData.lang.slug, currentPost);
+        };
+        return (0,external_this_wp_element_.createElement)(add_button, {
+          href: `#`,
+          language: translationData.lang,
+          handleAddClick: _handleCreateTranslation
+        });
+      }
+      return null;
+    };
+    return (0,external_this_wp_element_.createElement)("tr", {
+      key: translationData.lang.slug
+    }, (0,external_this_wp_element_.createElement)(translation_row, {
+      language: translationData.lang
+    }, (0,external_this_wp_element_.createElement)(translation_input_cell, null, (0,external_this_wp_element_.createElement)("span", {
+      className: "pll-translation-language"
+    }, translationData.lang.name)), (0,external_this_wp_element_.createElement)(add_or_edit_cell, null, addEditButton()), (0,external_this_wp_element_.createElement)(delete_cell, null, (0,external_this_wp_element_.createElement)(delete_with_confirmation, {
+      translationData: translationData,
+      postType: currentPost.type,
+      onDeleteSuccess: onDeleteSuccess
+    })), (0,external_this_wp_element_.createElement)(default_language_cell, {
+      isDefault: translationData.lang.is_default
+    })));
+  });
+};
+/* harmony default export */ const site_editor_translation_table = (SiteEditorTranslationsTable);
+;// CONCATENATED MODULE: ./modules/block-editor/js/sidebar/components/translations-table/translations-table-wrapper/index.js
+
+/**
+ * WordPress dependencies
+ *
+ * @package Polylang-Pro
+ */
+
+/**
+ * External Dependencies.
+ */
+
+const TranslationsTableWrapper = _ref => {
+  let {
+    children
+  } = _ref;
+  return (0,external_this_wp_element_.createElement)("div", {
+    id: "post-translations",
+    className: "translations"
+  }, (0,external_this_wp_element_.createElement)("p", null, (0,external_this_wp_element_.createElement)("strong", null, (0,external_this_wp_i18n_.__)("Translations", "polylang-pro"))), (0,external_this_wp_element_.createElement)("table", null, (0,external_this_wp_element_.createElement)("tbody", null, children)));
+};
+/* harmony default export */ const translations_table_wrapper = (TranslationsTableWrapper);
+;// CONCATENATED MODULE: ./modules/block-editor/js/sidebar/components/translations-table/index.js
+/**
+ * Translations table components.
+ *
+ * @package Polylang-Pro
+ */
+
+
+
+;// CONCATENATED MODULE: ./modules/block-editor/js/sidebar/components/metaboxes/site-editor-metabox/index.js
+
+/**
+ * WordPress Dependencies.
+ */
+
+
+
+/**
+ * Internal Dependencies.
+ */
+
+
+
+
+
+
+const translationTableReducer = (state, action) => {
+  switch (action.type) {
+    case 'remove_translation':
+      const removedTranslation = state.get(action.lang);
+      delete removedTranslation.translated_post;
+      return new Map(state);
+    case 'set_table':
+      return action.table;
+    default:
+      return state;
+  }
+};
+const SiteEditorMetabox = () => {
+  const [translationTable, tableDispatch] = (0,external_this_wp_element_.useReducer)(translationTableReducer, new Map());
+  const [currentPost, setCurrentPost] = (0,external_this_wp_element_.useState)({});
+  const [selectedLanguage, setSelectedLanguage] = (0,external_this_wp_element_.useState)({});
+  const [currentPostType, setCurrentPostType] = (0,external_this_wp_element_.useState)('');
+  (0,external_this_wp_element_.useEffect)(() => {
+    let currentPostType;
+    // Global Styles screen doesn't provide `wp_global_style` as current edited post type.
+    if ('/wp_global_styles' === wp.sanitize.stripTagsAndEncodeText((0,external_this_wp_url_.getQueryArg)(window.location.href, 'path'))) {
+      // phpcs:ignore WordPressVIPMinimum.JS.Window.location
+      currentPostType = 'wp_global_styles';
+    }
+    // Template context can return a page. So, we need to check post type from the URL.
+    if ('wp_template' === wp.sanitize.stripTagsAndEncodeText((0,external_this_wp_url_.getQueryArg)(window.location.href, 'postType'))) {
+      // phpcs:ignore WordPressVIPMinimum.JS.Window.location
+      currentPostType = 'wp_template';
+    }
+    if (currentPostType) {
+      setCurrentPostType(currentPostType);
+      return;
+    }
+    const currentPost = getCurrentPostFromDataStore();
+    setCurrentPost(currentPost);
+    setCurrentPostType(currentPost?.type);
+    const selectedLanguage = getSelectedLanguage(currentPost?.lang);
+    setSelectedLanguage(selectedLanguage);
+    tableDispatch({
+      type: 'set_table',
+      table: getTranslationsTable(currentPost?.translations_table)
+    });
+  }, [setCurrentPost, setCurrentPostType, setSelectedLanguage, tableDispatch]);
+  return (0,external_this_wp_element_.createElement)(metabox_container, {
+    isError: !selectedLanguage,
+    isAllowedPostType: !UNTRANSLATABLE_POST_TYPE.includes(currentPostType),
+    postType: currentPostType
+  }, (0,external_this_wp_element_.createElement)(language_item, {
+    language: selectedLanguage,
+    currentPost: currentPost
+  }), (0,external_this_wp_element_.createElement)(translations_table_wrapper, null, (0,external_this_wp_element_.createElement)(site_editor_translation_table, {
+    translationsTable: translationTable,
+    currentPost: currentPost,
+    translationsTabeDispatch: tableDispatch
+  })));
+};
+/* harmony default export */ const site_editor_metabox = (SiteEditorMetabox);
+;// CONCATENATED MODULE: ./modules/block-editor/js/components/language-dropdown.js
+
+/**
+ * @package Polylang-Pro
+ */
+
+// External dependencies
+
+
+/**
+ * Displays a dropdown to select a language.
+ *
+ * @since 3.1
+ *
+ * @param {Function} handleChange Callback to be executed when language changes.
+ * @param {mixed} children Child components to be used as select options.
+ * @param {Object} selectedLanguage An object representing a Polylang Language. Default to null.
+ * @param {string} Default value to be selected if the selected language is not provided. Default to an empty string.
+ *
+ * @return {Object} A dropdown selector for languages.
+ */
+function LanguageDropdown(_ref) {
+  let {
+    handleChange,
+    children,
+    selectedLanguage = null,
+    defaultValue = ''
+  } = _ref;
+  const selectedLanguageSlug = selectedLanguage?.slug ? selectedLanguage.slug : defaultValue;
+  return (0,external_this_wp_element_.createElement)("div", {
+    id: "select-post-language"
+  }, (0,external_this_wp_element_.createElement)(language_flag, {
+    language: selectedLanguage
+  }), children && (0,external_this_wp_element_.createElement)("select", {
+    value: selectedLanguageSlug,
+    onChange: event => handleChange(event),
+    id: "pll_post_lang_choice",
+    name: "pll_post_lang_choice",
+    className: "post_lang_choice"
+  }, children));
+}
+
+/**
+ * Map languages objects as options for a <select> tag.
+ *
+ * @since 3.1
+ *
+ * @param {mixed} languages An iterable object containing languages objects.
+ *
+ * @return {Object} A list of <option> tags to be used in a <select> tag.
+ */
+function LanguagesOptionsList(_ref2) {
+  let {
+    languages
+  } = _ref2;
+  return Array.from(languages.values()).map(_ref3 => {
+    let {
+      slug,
+      name,
+      w3c
+    } = _ref3;
+    return (0,external_this_wp_element_.createElement)("option", {
+      value: slug,
+      lang: w3c,
+      key: slug
+    }, name);
+  });
+}
+
+;// CONCATENATED MODULE: ./modules/block-editor/js/sidebar/components/switcher/index.js
+
+/**
+ * WordPress dependencies
+ *
+ * @package Polylang-Pro
+ */
+
+
+
+
+
+
+
+/**
+ * Internal dependencies
+ */
+
+
+
+
+class Switcher extends external_this_wp_element_.Component {
+  static bypassConfirmation() {
+    const editor = (0,external_this_wp_data_.select)(MODULE_CORE_EDITOR_KEY);
+    return !editor.getEditedPostAttribute('title')?.trim() && !editor.getEditedPostContent() && !editor.getEditedPostAttribute('excerpt')?.trim();
+  }
+  static getChangeValue(event) {
+    return event.target.value;
+  }
+
+  /**
+   * Manage language choice in the dropdown list
+   *
+   * @param language New language slug.
+   */
+  static handleLanguageChange(language) {
+    const oldLanguageSlug = (0,external_this_wp_data_.select)(MODULE_CORE_EDITOR_KEY).getEditedPostAttribute('lang');
+    const postId = (0,external_this_wp_data_.select)(MODULE_CORE_EDITOR_KEY).getCurrentPostId();
+    const languages = (0,external_this_wp_data_.select)(settings_MODULE_KEY).getLanguages();
+    const newLanguage = languages.get(language);
+    const oldSelectedLanguage = getSelectedLanguage(oldLanguageSlug);
+    const pll_sync_post = (0,external_this_wp_data_.select)(MODULE_CORE_EDITOR_KEY).getEditedPostAttribute('pll_sync_post');
+    const synchronizedPosts = getSynchronizedPosts(pll_sync_post);
+    const translations_table = (0,external_this_wp_data_.select)(MODULE_CORE_EDITOR_KEY).getEditedPostAttribute('translations_table');
+    const translations = (0,external_this_wp_data_.select)(MODULE_CORE_EDITOR_KEY).getEditedPostAttribute('translations');
+    const translatedPosts = getTranslatedPosts(translations, translations_table, oldSelectedLanguage.slug);
+    const translationsTable = getTranslationsTable(translations_table, oldSelectedLanguage.slug);
+    // The translated post of the previous selected language must be deleted
+    translatedPosts.delete(oldSelectedLanguage.slug);
+    // Replace translated post for the new language
+    translatedPosts.set(newLanguage.slug, postId);
+    // The current post is synchronized itself and synchronization must be deleted for the previous language
+    // to ensure it will be not synchronized with the new language
+    synchronizedPosts.delete(oldSelectedLanguage.slug);
+    // Update translations table
+    // Add old selected language data - only data needed just to update visually the metabox
+    const oldTranslationData = translationsTable.get(oldSelectedLanguage.slug);
+    translationsTable.set(oldSelectedLanguage.slug, {
+      can_synchronize: oldTranslationData.can_synchronize,
+      lang: oldTranslationData.lang,
+      links: {
+        add_link: oldTranslationData.links.add_link
+      },
+      caps: oldTranslationData.caps,
+      site_editor: oldTranslationData.site_editor,
+      block_editor: oldTranslationData.block_editor
+    });
+    // Update some new language data from the old selected language data
+    const newTranslationData = translationsTable.get(newLanguage.slug);
+    translationsTable.set(newLanguage.slug, {
+      can_synchronize: newTranslationData.can_synchronize,
+      lang: newTranslationData.lang,
+      links: newTranslationData.links,
+      translated_post: oldTranslationData.translated_post,
+      caps: newTranslationData.caps,
+      site_editor: newTranslationData.site_editor,
+      block_editor: newTranslationData.block_editor
+    });
+    // Update the global javascript variable for maintaining it updated outside block editor context
+    pll_block_editor_plugin_settings.lang = newLanguage;
+
+    // And save changes in store
+    const newData = {
+      lang: newLanguage.slug,
+      pll_sync_post: convertMapToObject(synchronizedPosts),
+      translations: convertMapToObject(translatedPosts),
+      translations_table: convertMapToObject(translationsTable)
+    };
+    (0,external_this_wp_data_.dispatch)(MODULE_CORE_EDITOR_KEY).editPost(newData);
+    // Need to save post to recalculating permalink.
+    (0,external_this_wp_data_.dispatch)(MODULE_CORE_EDITOR_KEY).savePost();
+    Switcher.forceLanguageSave(newLanguage.slug);
+    (0,external_this_wp_data_.dispatch)(settings_MODULE_CORE_KEY).invalidateResolutionForStore();
+  }
+
+  /**
+   * Even if no content has been written, Polylang back-end code needs the correct language to send back the correct metadatas. (e.g.: Attachable Medias).
+   *
+   * @since 3.0
+   *
+   * @param {string} lang A language slug.
+   */
+  static forceLanguageSave(lang) {
+    const editor = (0,external_this_wp_data_.select)(MODULE_CORE_EDITOR_KEY);
+    if (!editor.getEditedPostAttribute('title') && !editor.getEditedPostContent() && !editor.getEditedPostAttribute('excerpt')) {
+      external_this_wp_apiFetch_default()({
+        path: (0,external_this_wp_url_.addQueryArgs)(`wp/v2/posts/${editor.getCurrentPostId()}`, {
+          lang: lang
+        }),
+        method: 'POST'
+      });
+    }
+  }
+  render() {
+    const languages = (0,external_this_wp_data_.select)(settings_MODULE_KEY).getLanguages();
+    const lang = (0,external_this_wp_data_.select)(MODULE_CORE_EDITOR_KEY).getEditedPostAttribute('lang');
+    const selectedLanguage = getSelectedLanguage(lang);
+    return (0,external_this_wp_element_.createElement)(external_this_wp_element_.Fragment, null, (0,external_this_wp_element_.createElement)("p", null, (0,external_this_wp_element_.createElement)("strong", null, (0,external_this_wp_i18n_.__)("Language", "polylang-pro"))), (0,external_this_wp_element_.createElement)("label", {
+      className: "screen-reader-text",
+      htmlFor: "pll_post_lang_choice"
+    }, (0,external_this_wp_i18n_.__)("Language", "polylang-pro")), (0,external_this_wp_element_.createElement)(LanguageDropdown, {
+      selectedLanguage: selectedLanguage,
+      handleChange: this.props.handleChange
+    }, (0,external_this_wp_element_.createElement)(LanguagesOptionsList, {
+      languages: languages
+    })));
+  }
+}
+Switcher.labelConfirmationModal = (0,external_this_wp_i18n_.__)('Change language', 'polylang-pro');
+const switcher_ModalContent = function () {
+  return (0,external_this_wp_element_.createElement)("p", null, (0,external_this_wp_i18n_.__)('Are you sure you want to change the language of the current content?', 'polylang-pro'));
+};
+const SwitcherWithConfirmation = confirmation_modal('pll_change_lang', switcher_ModalContent, Switcher.handleLanguageChange)(Switcher);
+/* harmony default export */ const switcher = (SwitcherWithConfirmation);
+;// CONCATENATED MODULE: ./modules/block-editor/js/sidebar/components/metaboxes/post-editor-metabox/index.js
+
+/**
+ * WordPress Dependencies.
+ */
+
+
+/**
+ * Internal Dependencies.
+ */
+
+
+
+
+
+
+const PostEditorMetabox = () => {
+  const {
+    currentPost,
+    selectedLanguage,
+    translationsTable,
+    isAllowedPostType
+  } = (0,external_this_wp_data_.useSelect)(select => {
+    const currentPost = select(MODULE_CORE_EDITOR_KEY).getCurrentPost();
+    const lang = select(MODULE_CORE_EDITOR_KEY).getEditedPostAttribute('lang');
+    const translations_table = select(MODULE_CORE_EDITOR_KEY).getEditedPostAttribute('translations_table');
+    const isAllowedPostType = !UNTRANSLATABLE_POST_TYPE.includes(currentPost?.type);
+    const selectedLanguage = getSelectedLanguage(lang);
+    const translationsTable = getTranslationsTable(translations_table, lang);
+    return {
+      currentPost,
+      selectedLanguage,
+      translationsTable,
+      isAllowedPostType
+    };
+  }, []);
+  return (0,external_this_wp_element_.createElement)(metabox_container, {
+    isError: !selectedLanguage,
+    isAllowedPostType: isAllowedPostType,
+    postType: currentPost?.type
+  }, (0,external_this_wp_element_.createElement)(switcher, {
+    selectedLanguage: selectedLanguage
+  }), (0,external_this_wp_element_.createElement)(duplicate_button, null), (0,external_this_wp_element_.createElement)(translations_table_wrapper, null, (0,external_this_wp_element_.createElement)(post_editor_translation_table, {
+    translationsTable: translationsTable,
+    selectedLanguage: selectedLanguage
+  })));
+};
+/* harmony default export */ const post_editor_metabox = (PostEditorMetabox);
+;// CONCATENATED MODULE: ./modules/block-editor/js/sidebar/components/metaboxes/index.js
+/**
+ * Metabox components.
+ */
+
+
 ;// CONCATENATED MODULE: ./modules/block-editor/js/sidebar/store/index.js
 /**
  * WordPress Dependencies
  *
  * @package Polylang-Pro
  */
-
 
 
 
@@ -3141,15 +3696,9 @@ const actions = {
       type: 'FETCH_FROM_API',
       options
     };
-  },
-  setCurrentTemplatePart(currentTemplatePart) {
-    return {
-      type: 'SET_CURRENT_TEMPLATE_PART',
-      currentTemplatePart
-    };
   }
 };
-const store = (0,external_this_wp_data_.createReduxStore)(MODULE_KEY, {
+const store = (0,external_this_wp_data_.createReduxStore)(settings_MODULE_KEY, {
   reducer() {
     let state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : DEFAULT_STATE;
     let action = arguments.length > 1 ? arguments[1] : undefined;
@@ -3190,9 +3739,6 @@ const store = (0,external_this_wp_data_.createReduxStore)(MODULE_KEY, {
     },
     getFromPost(state) {
       return state.fromPost;
-    },
-    getCurrentTemplatePart(state) {
-      return state.currentTemplatePart;
     }
   },
   actions,
@@ -3219,10 +3765,6 @@ const store = (0,external_this_wp_data_.createReduxStore)(MODULE_KEY, {
         filterLang: true
       });
       return actions.setCurrentUser(currentUser);
-    },
-    *getCurrentTemplatePart() {
-      const currentTemplatePart = getCurrentTemplateFromDataStore();
-      return actions.setCurrentTemplatePart(currentTemplatePart);
     }
   }
 });
@@ -3249,112 +3791,68 @@ function updateCurrentUser(currentUser) {
  */
 
 
+/**
+ * WordPress Dependencies.
+ */
+
+
+
 
 /**
- * WordPress Dependencies
+ * Internal Dependencies.
  */
 
 
 
 
 
-/**
- * Internal dependencies
- */
 
 
 
-
-
-
-
-
-/**
- * Polylang plugin sidebar component definition.
- */
-const PolylangSidebar = () => {
-  return (0,external_this_wp_element_.createElement)(external_this_wp_element_.Fragment, null, (0,external_this_wp_element_.createElement)(sidebar, null), (0,external_this_wp_element_.createElement)(menu_item, null));
+const _root = document.createElement('div');
+_root.id = 'pll-root';
+const root = document.body.appendChild(_root);
+const sidebarName = 'polylang-sidebar';
+const renderWithLegacy = (reactNode, rootNode) => {
+  if (external_this_wp_element_.createRoot) {
+    (0,external_this_wp_element_.createRoot)(rootNode).render(reactNode);
+  } else {
+    // Backward compatibility with WordPress < 6.2.
+    (0,external_this_wp_element_.render)(reactNode, rootNode);
+  }
 };
-
-/**
- * Call initialization of pll/metabox store for getting ready some datas
- */
 if (isSiteBlockEditor()) {
-  /**
-   * Refreshes data store when the given location implies a current language change.
-   * For instance, when switching from editing a template part in secondary language to editing a template,
-   * or the other way round.
-   *
-   * @param {string} nextLocation The URL to check.
-   * @return {void}
-   */
-  const maybeRefreshData = nextLocation => {
-    const langSlugRegex = getLangSlugRegex();
-    const currentParams = new URL(document.location.href).searchParams;
-    const currentPostType = currentParams.get('postType');
-    const currentPostId = currentParams.get('postId');
-    const currentTemplatePartLangMatch = currentPostId?.match(langSlugRegex);
-    const currentTemplatePartLang = !(0,external_lodash_.isEmpty)(currentTemplatePartLangMatch) ? currentTemplatePartLangMatch[0] : null;
-    const nextParams = new URL(nextLocation).searchParams;
-    const nextPostType = nextParams.get('postType');
-    const nextPostId = nextParams.get('postId');
-    const nextTemplatePartLangMatch = nextPostId?.match(langSlugRegex);
-    const nextTemplatePartLang = !(0,external_lodash_.isEmpty)(nextTemplatePartLangMatch) ? nextTemplatePartLangMatch[0] : null;
-    const isPostTypeChanges = nextPostType !== currentPostType;
-    const isCurrentLangChanges = !(0,external_lodash_.isNil)(currentPostId) && !(0,external_lodash_.isNil)(nextPostId) && nextTemplatePartLang !== currentTemplatePartLang;
-    if (isPostTypeChanges && 'wp_template' === nextPostType && !(0,external_lodash_.isNil)(currentPostId) && (0,external_lodash_.isNil)(currentTemplatePartLang)) {
-      // Comes from a template part in default language, to a template which should stay in default language.
-      return;
-    }
-    if (isPostTypeChanges && 'wp_template_part' === nextPostType && !(0,external_lodash_.isNil)(nextPostId) && (0,external_lodash_.isNil)(nextTemplatePartLang)) {
-      // Comes from a template (in default language), to a template part in default language.
-      return;
-    }
-    if (!isCurrentLangChanges) {
-      // Current language is not changing.
-      return;
-    }
-
-    /*
-     * The current language is changing, for istance when coming from a template part
-     * in secondary language to a template (which should be displayed in default).
-     */
-    (0,external_this_wp_data_.dispatch)(MODULE_CORE_KEY).invalidateResolutionForStore();
+  const PolylangSidebar = () => {
+    return (0,external_this_wp_element_.createElement)(external_this_wp_element_.Fragment, null, (0,external_this_wp_element_.createElement)(sidebar, {
+      PluginSidebarSlot: external_this_wp_editSite_.PluginSidebar,
+      sidebarName: sidebarName
+    }, (0,external_this_wp_element_.createElement)(site_editor_metabox, null)), (0,external_this_wp_element_.createElement)(menu_item, {
+      PluginSidebarMoreMenuItemSlot: external_this_wp_editSite_.PluginSidebarMoreMenuItem,
+      sidebarName: sidebarName
+    }));
   };
-
-  // Let's refresh data when the client go back in history.
-  window.onpopstate = event => {
-    maybeRefreshData(document.location.href);
-  };
-
-  // Overrides pushState and replaceState to call maybeRefreshData() when the client navigates through the Site Editor.
-  (history => {
-    const originalPushState = history.pushState;
-    const originalReplaceState = history.replaceState;
-    history.pushState = (state, key, path) => {
-      maybeRefreshData(path);
-      return originalPushState.apply(history, [state, key, path]);
-    };
-    history.replaceState = (state, key, path) => {
-      maybeRefreshData(path);
-      return originalReplaceState.apply(history, [state, key, path]);
-    };
-  })(window.history);
-  isSiteEditorContextInitialized().then(function (result) {
-    (0,external_this_wp_plugins_.registerPlugin)("polylang-sidebar", {
-      icon: library_translation,
-      render: PolylangSidebar
-    });
-  });
+  renderWithLegacy((0,external_this_wp_element_.createElement)(app, {
+    sidebar: PolylangSidebar,
+    sidebarName: sidebarName,
+    onPromise: isSiteEditorContextInitialized
+  }, (0,external_this_wp_element_.createElement)(cache_flush_provider, {
+    onPromise: isSiteEditorContextInitialized
+  })), root);
 } else {
-  isBlockPostEditorContextInitialized().then(function (result) {
-    (0,external_this_wp_plugins_.registerPlugin)("polylang-sidebar", {
-      icon: library_translation,
-      render: PolylangSidebar
-    });
-  }, function (reason) {
-    console.info(reason);
-  });
+  const PolylangSidebar = () => {
+    return (0,external_this_wp_element_.createElement)(external_this_wp_element_.Fragment, null, (0,external_this_wp_element_.createElement)(sidebar, {
+      PluginSidebarSlot: external_this_wp_editPost_.PluginSidebar,
+      sidebarName: sidebarName
+    }, (0,external_this_wp_element_.createElement)(post_editor_metabox, null)), (0,external_this_wp_element_.createElement)(menu_item, {
+      PluginSidebarMoreMenuItemSlot: external_this_wp_editPost_.PluginSidebarMoreMenuItem,
+      sidebarName: sidebarName
+    }));
+  };
+  renderWithLegacy((0,external_this_wp_element_.createElement)(app, {
+    sidebar: PolylangSidebar,
+    sidebarName: sidebarName,
+    onPromise: isBlockPostEditorContextInitialized
+  }), root);
 }
 })();
 

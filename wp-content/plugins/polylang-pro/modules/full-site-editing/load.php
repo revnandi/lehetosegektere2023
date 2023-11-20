@@ -5,11 +5,6 @@
 
 defined( 'ABSPATH' ) || exit; // @phpstan-ignore-line
 
-if ( ! function_exists( 'get_block_template' ) ) {
-	// `get_block_template()` was introduced in WP 5.9, like the Full Site Editing.
-	return;
-}
-
 if ( ! $polylang->model->has_languages() ) {
 	return;
 }
@@ -26,7 +21,7 @@ add_action(
 			PLL_FSE_Query_Filters::class,
 			PLL_FSE_REST_Duplicate_Template::class,
 			PLL_FSE_REST_Enforce_Default_Template::class,
-			PLL_FSE_Template_Deletion::class,
+			PLL_FSE_Post_Deletion::class,
 			PLL_FSE_Template_Model::class,
 			PLL_FSE_Template_Slug_Sync::class,
 		);
@@ -43,7 +38,7 @@ add_action(
 		add_action(
 			'rest_api_init',
 			function() use ( $polylang ) {
-				$polylang->rest_api->template = ( new PLL_FSE_REST_Template( $polylang->rest_api, PLL_FSE_Tools::get_post_types() ) )->init();
+				$polylang->rest_api->template = ( new PLL_FSE_REST_Template( $polylang->rest_api, PLL_FSE_Tools::get_template_post_types() ) )->init();
 			},
 			20 // Load the FSE modules after the PLL_REST_API.
 		);

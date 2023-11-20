@@ -11,7 +11,7 @@ html {
 }
 
 * {
-  font-family: 'Krona One', sans-serif;
+  font-family: "Krona One", sans-serif;
   letter-spacing: -0.075em;
 }
 
@@ -19,8 +19,9 @@ html {
   position: relative;
 }
 
-.has-cross::before, .has-cross::after {
-  content: '';
+.has-cross::before,
+.has-cross::after {
+  content: "";
   position: absolute;
   background-color: #fff;
 }
@@ -50,4 +51,25 @@ html {
 
 .-translate-x-50 {
   transform: translateX(-50%);
+}
+
+.alt-carousel-text {
+  p {
+    @apply text-base uppercase;
+  }
+  p:last-child {
+    @apply mb-0;
+  }
+  h1 {
+    @apply mb-4 text-lg uppercase md:text-xl;
+  }
+  h2 {
+    @apply mb-4 text-lg uppercase md:text-xl;
+  }
+  h3 {
+    @apply mb-4 text-lg uppercase md:text-xl;
+  }
+  h4 {
+    @apply mb-4 text-lg uppercase md:text-xl;
+  }
 }

@@ -96,8 +96,11 @@ class PLL_Xdata_Domain extends PLL_Xdata_Base {
 			'nologin'  => is_user_logged_in(),
 		);
 
-		$url = $this->ajax_url( $this->options['default_lang'], $args );
-		printf( '<script async type="text/javascript" src="%s"></script>', esc_url( $url ) );
+		printf(
+			'<script%1$s src="%2$s" async></script>',
+			current_theme_supports( 'html5', 'script' ) ? '' : ' type="text/javascript"',
+			esc_url( $this->ajax_url( $this->options['default_lang'], $args ) )
+		);
 	}
 
 	/**

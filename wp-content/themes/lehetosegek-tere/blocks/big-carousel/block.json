@@ -9,8 +9,5 @@
   "acf": {
       "mode": "preview",
       "renderTemplate": "big-carousel.php"
-  },
-  "supports": {
-      "anchor": true
   }
 }

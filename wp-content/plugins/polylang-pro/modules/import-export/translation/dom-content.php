@@ -225,6 +225,11 @@ class PLL_DOM_Content {
 		$content = '';
 
 		foreach ( iterator_to_array( $node->childNodes ) as $node ) {
+			if ( ! $node instanceof DOMNode || ! $node->ownerDocument instanceof DOMDocument ) {
+				// Don't return partial content: if there is at least 1 error, return an empty content.
+				return '';
+			}
+
 			$node_content = $node->ownerDocument->saveHTML( $node );
 
 			if ( ! is_string( $node_content ) ) {

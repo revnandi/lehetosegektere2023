@@ -3803,7 +3803,7 @@ window.addEventListener("load", function () {
   });
   // const smallCarousel = new Carousel("lt_small_carousel", {
   //   rewind: true,
-  //   type: "fade",
+  //   type: 'fade',
   //   arrows: false,
   //   classes: {
   //     pagination:
@@ -3818,7 +3818,7 @@ window.addEventListener("load", function () {
     bigCarouselWrappers.forEach(function (wrapper) {
       var newCarusel = new _components_carousel__WEBPACK_IMPORTED_MODULE_1__.Carousel(wrapper, {
         rewind: true,
-        type: "fade",
+        type: 'fade',
         arrows: false,
         lazyLoad: true,
         classes: {
@@ -3831,9 +3831,41 @@ window.addEventListener("load", function () {
       bigCarousels.push(newCarusel);
     });
   }
+  var bigAltCarousels = [];
+  var bigAltCarouselWrappers = document.querySelectorAll('.lt_splide_alt');
+  if (bigAltCarouselWrappers && bigAltCarouselWrappers.length > 0) {
+    bigAltCarouselWrappers.forEach(function (wrapper) {
+      var newCarusel = new _components_carousel__WEBPACK_IMPORTED_MODULE_1__.Carousel(wrapper, {
+        rewind: true,
+        type: 'fade',
+        arrows: false,
+        lazyLoad: true,
+        pagination: false,
+        classes: {
+          pagination: "z-10 absolute bottom-6 left-11 flex justify-center py-2 space-x-2 [&>li]:h-fit [&>li]:flex",
+          page: "w-4 h-4 bg-black rounded-full [&.is-active]:bg-turquoise"
+        }
+        // dots: '#lt_small_carousel_dots'
+      });
+
+      bigAltCarousels.push(newCarusel);
+      var prevButtons = wrapper.querySelectorAll('.lt_button_prev');
+      prevButtons.forEach(function (item) {
+        return item.addEventListener('click', function () {
+          newCarusel.prev();
+        });
+      });
+      var nextButtons = wrapper.querySelectorAll('.lt_button_next');
+      nextButtons.forEach(function (item) {
+        return item.addEventListener('click', function () {
+          newCarusel.next();
+        });
+      });
+    });
+  }
   var gallery = new _components_gallery__WEBPACK_IMPORTED_MODULE_4__.Gallery("lt_gallery", {
     rewind: true,
-    type: "fade",
+    type: 'fade',
     pagination: false,
     lazyLoad: true,
     classes: {
@@ -3850,6 +3882,9 @@ window.addEventListener("load", function () {
   gallery.init();
   console.log(bigCarousels);
   bigCarousels.forEach(function (carousel) {
+    return carousel.init();
+  });
+  bigAltCarousels.forEach(function (carousel) {
     return carousel.init();
   });
   console.log(picker);
@@ -3998,12 +4033,14 @@ var Carousel = /*#__PURE__*/function () {
   }, {
     key: "next",
     value: function next() {
-      // this.glider?.scrollItem(1, true);
+      var _this$carousel;
+      (_this$carousel = this.carousel) === null || _this$carousel === void 0 || _this$carousel.go('>');
     }
   }, {
     key: "prev",
     value: function prev() {
-      // this.glider?.scrollItem(-1, true);
+      var _this$carousel2;
+      (_this$carousel2 = this.carousel) === null || _this$carousel2 === void 0 || _this$carousel2.go('<');
     }
   }, {
     key: "destroy",

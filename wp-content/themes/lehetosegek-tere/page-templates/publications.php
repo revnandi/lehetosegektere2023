@@ -21,25 +21,30 @@
       </h2>
     </div>
 
-    <?php if (have_posts()): ?>
+    <?php if (have_rows('publications')): ?>
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-x-2 gap-y-6">
-        <?php while (have_posts()):
-          the_post(); ?>
+        <?php  while( have_rows('publications') ) : the_row();
+        $image = get_sub_field('image');
+        $description = get_sub_field('description');
+        $location = get_sub_field('location');
+        $price = get_sub_field('price');
+        
+        ?>
 
           <div class="text-turquoise">
-            <?php if (has_post_thumbnail()): ?>
+            <?php if ($image): ?>
               <div
                 class="relative mb-8 overflow-hidden border group aspect-wide-header aspect-square ">
                 <img class="object-cover w-full h-full" loading="lazy"
-                  src="<?php echo get_the_post_thumbnail_url(null, 'lqip') ?>"
-                  data-srcset="<?php echo get_the_post_thumbnail_url(null, 'thumbnail') ?> 150w, <?php echo get_the_post_thumbnail_url(null, 'medium') ?> 300w, <?php echo get_the_post_thumbnail_url(null, 'large') ?> 1024w"
+                  src="<?php echo $image['sizes']['lqip']; ?>"
+                  data-srcset="<?php echo $image['sizes']['thumbnail']; ?> 150w, <?php echo $image['sizes']['medium']; ?> 300w, <?php echo $image['sizes']['large'];?> 1024w"
                   data-sizes="auto" />
               </div>
             <?php endif; ?>
             <h3 class="text-3xl text-center uppercase">
-              <?php the_title() ?>
+              <?php the_sub_field('title') ?>
             </h3>
-            <?php if (get_field('location')): ?>
+            <?php if (get_sub_field('location')): ?>
               <div class="mt-4 text-lg text-center uppercase">
                 <?php
                 if (function_exists('pll__')):
@@ -48,14 +53,14 @@
                   echo 'elérhető';
                 endif;
                 ?> |
-                <?php echo the_field('location') ?><br />
-                <?php if (get_field('price')):
-                  echo the_field('price') . ' Ft';
+                <?php echo get_sub_field('location') ?><br />
+                <?php if (get_sub_field('price')):
+                  echo get_sub_field('price') . ' Ft';
                 endif; ?>
               </div>
             <?php endif; ?>
             <div class="mt-6 text-base">
-              <?php echo $post->post_content ?>
+              <?php echo get_sub_field('description') ?>
             </div>
           </div>
         <?php endwhile; ?>

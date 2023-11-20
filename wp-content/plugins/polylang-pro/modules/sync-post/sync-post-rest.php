@@ -51,7 +51,7 @@ class PLL_Sync_Post_REST {
 					'update_callback' => array( $this, 'sync_posts' ),
 					'schema'          => array(
 						'pll_sync_post' => __( 'Synchronizations', 'polylang-pro' ),
-						'type' => 'object',
+						'type'          => 'object',
 					),
 				)
 			);

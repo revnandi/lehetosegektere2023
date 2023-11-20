@@ -247,7 +247,7 @@ class PLL_Sync_Post_Model {
 	 *
 	 * @since 2.1
 	 *
-	 * @param int   $post_id   Id of the post currently being saved
+	 * @param int   $post_id   ID of the post currently being saved.
 	 * @param array $sync_post Array of languages to sync with this post.
 	 * @return void
 	 */

@@ -107,19 +107,18 @@ __webpack_require__.r(__webpack_exports__);
 // EXTERNAL MODULE: external {"this":["wp","apiFetch"]}
 var external_this_wp_apiFetch_ = __webpack_require__(514);
 var external_this_wp_apiFetch_default = /*#__PURE__*/__webpack_require__.n(external_this_wp_apiFetch_);
-// EXTERNAL MODULE: external "lodash"
-var external_lodash_ = __webpack_require__(991);
 // EXTERNAL MODULE: external {"this":["wp","data"]}
 var external_this_wp_data_ = __webpack_require__(15);
 // EXTERNAL MODULE: external {"this":["wp","url"]}
 var external_this_wp_url_ = __webpack_require__(470);
+// EXTERNAL MODULE: external "lodash"
+var external_lodash_ = __webpack_require__(991);
 ;// CONCATENATED MODULE: ./modules/block-editor/js/sidebar/settings.js
 /**
  * Module Constants
  *
  * @package Polylang-Pro
  */
-
 const settings_MODULE_KEY = 'pll/metabox';
 const settings_MODULE_CORE_EDITOR_KEY = 'core/editor';
 const settings_MODULE_SITE_EDITOR_KEY = 'core/edit-site';
@@ -132,7 +131,8 @@ const DEFAULT_STATE = {
 	fromPost: null,
 	currentTemplatePart: {}
 };
-const UNTRANSLATABLE_POST_TYPE = (/* unused pure expression or super */ null && (['wp_template']));
+const UNTRANSLATABLE_POST_TYPE = (/* unused pure expression or super */ null && (['wp_template', 'wp_global_styles']));
+const POST_TYPE_WITH_TRASH = (/* unused pure expression or super */ null && (['page']));
 const settings_TEMPLATE_PART_SLUG_SEPARATOR = '___'; // Its value must be synchronized with its equivalent in PHP @see PLL_FSE_Template_Slug::SEPARATOR
 const settings_TEMPLATE_PART_SLUG_CHECK_LANGUAGE_PATTERN = '[a-z_-]+'; // Its value must be synchronized with it equivalent in PHP @see PLL_FSE_Template_Slug::SEPARATOR
 
@@ -143,7 +143,6 @@ const settings_TEMPLATE_PART_SLUG_CHECK_LANGUAGE_PATTERN = '[a-z_-]+'; // Its va
  *
  * @package Polylang-Pro
  */
-
 
 
 
@@ -273,7 +272,7 @@ function getSelectedLanguage( lang ) {
  */
 function getDefaultLanguage() {
 	const languages = select( MODULE_KEY ).getLanguages();
-	return Array.from( languages.values() ).find( lang => lang.is_default_lang );
+	return Array.from( languages.values() ).find( lang => lang.is_default );
 }
 
 /**
@@ -332,10 +331,9 @@ function getSynchronizedPosts( pll_sync_post ){
  * Gets translations table.
  *
  * @param {Object.<string, Object>} translationsTableDatas The translations table data object with language codes as keys and data object as values.
- * @param {string} lang The language code.
  * @returns {Map}
  */
-function getTranslationsTable( translationsTableDatas, lang ){
+function getTranslationsTable( translationsTableDatas ){
 	let translationsTable = new Map( Object.entries( [] ) );
 	// get translations table datas from post
 	if ( ! isUndefined( translationsTableDatas ) ) {
@@ -356,25 +354,11 @@ function isSaveRequest( options ){
 	// Test options.method property isn't efficient because most of REST request which use fetch API doesn't pass this property.
 	// So, test options.data is necessary to know if the REST request is to save datas.
 	// However test if options.data is undefined isn't sufficient because some REST request pass a null value as the ServerSideRender Gutenberg component.
-	if ( ! (0,external_lodash_.isNil)( options.data ) ) {
+	if ( ! isNil( options.data ) ) {
 		return true;
 	} else {
 		return false;
 	}
-}
-
-/**
- * Adds `is_block_editor` parameter to the request in a block editor context.
- *
- * @param {Object} options The initial request.
- */
-function addIsBlockEditorToRequest( options ){
-	options.path = (0,external_this_wp_url_.addQueryArgs)(
-		options.path,
-		{
-			is_block_editor: true
-		}
-	);
 }
 
 /**
@@ -517,24 +501,6 @@ function getCurrentPostType() {
 }
 
 /**
- * Gets the default language from a translations table.
- *
- * @param {Object} translationsTable The translations table data with language codes as keys and data object as values.
- * @returns {Object} The default language.
- */
-function getDefaultLangFromTable( translationsTable ) {
-	let defaultLang = {}
-	translationsTable.forEach( ( translation ) => {
-		if ( translation.is_default_lang ) {
-				defaultLang = translation.lang;
-			}
-		}
-	);
-
-	return defaultLang;
-}
-
-/**
  * Returns a regular expression ready to use to perform search and replace.
  *
  * @returns {RegExp} The regular expression.
@@ -556,7 +522,6 @@ function getLangSlugRegex() {
  *
  * @package Polylang-Pro
  */
-
 
 
 
@@ -591,12 +556,6 @@ const actions = {
 			type: 'FETCH_FROM_API',
 			options,
 		};
-	},
-	setCurrentTemplatePart( currentTemplatePart ) {
-		return {
-			type: 'SET_CURRENT_TEMPLATE_PART',
-			currentTemplatePart,
-		}
 	}
 };
 
@@ -641,9 +600,6 @@ const store = (0,external_this_wp_data_.createReduxStore)(
 			},
 			getFromPost( state ){
 				return state.fromPost;
-			},
-			getCurrentTemplatePart( state ){
-				return state.currentTemplatePart;
 			}
 		},
 		actions,
@@ -662,10 +618,6 @@ const store = (0,external_this_wp_data_.createReduxStore)(
 				const path = '/wp/v2/users/me';
 				const currentUser = yield actions.fetchFromAPI( { path, filterLang: true } );
 				return actions.setCurrentUser( currentUser );
-			},
-			* getCurrentTemplatePart() {
-				const currentTemplatePart = getCurrentTemplateFromDataStore();
-				return actions.setCurrentTemplatePart( currentTemplatePart );
 			}
 		}
 	}
@@ -688,6 +640,30 @@ function updateCurrentUser( currentUser ) {
 	);
 }
 
+;// CONCATENATED MODULE: ./modules/block-editor/js/middleware/filter-path-middleware.js
+/**
+ * @package Polylang Pro
+ */
+
+/**
+ * Filters requests for translatable entities.
+ * This logic is shared accross all Polylang plugins.
+ *
+ * @since 3.5
+ *
+ * @param {APIFetchOptions} options
+ * @param {Array} filteredRoutes
+ * @param {CallableFunction} filter
+ * @returns {APIFetchOptions}
+ */
+const filterPathMiddleware = ( options, filteredRoutes, filter ) => {
+	const cleanPath = options.path.split( '?' )[0].replace(/^\/+|\/+$/g, ''); // Get path without query parameters and trim '/'.
+
+	return Object.values( filteredRoutes ).find( ( path ) => cleanPath === path ) ? filter( options ) : options;
+}
+
+/* harmony default export */ const filter_path_middleware = (filterPathMiddleware);
+
 ;// CONCATENATED MODULE: ./modules/block-editor/js/widget-editor-plugin.js
 /**
  * WordPress dependencies
@@ -701,14 +677,10 @@ function updateCurrentUser( currentUser ) {
 
 
 /**
- * External dependencies.
- */
-
-
-/**
  * Internal dependencies.
  */
  // Store used for Polylang block attribute.
+
 
 
 /*
@@ -716,18 +688,31 @@ function updateCurrentUser( currentUser ) {
  */
 external_this_wp_apiFetch_default().use(
 	( options, next ) => {
-		// If options.url is defined, this is not a REST request but a direct call to post.php for legacy metaboxes.
-		if ( (0,external_lodash_.isUndefined)( options.url ) ) {
-			if ( isSaveRequest( options ) ) {
-				options.data.is_block_editor = true;
-			} else {
-				addIsBlockEditorToRequest( options )
-			}
-			addLanguageToRequest( options, pllDefaultLanguage );
+		/*
+		 * If options.url is defined, this is not a REST request but a direct call to post.php for legacy metaboxes.
+		 * If `filteredRoutes` is not defined, return early.
+		 */
+		if ( 'undefined' !== typeof options.url || 'undefined' === typeof pllFilteredRoutes ) {
+			return next( options );
 		}
-		return next( options );
+
+		return next( filter_path_middleware( options, pllFilteredRoutes, addParametersToRequest ) );
 	}
 );
+
+/**
+ * Adds parameters according to the context of the request.
+ *
+ * @since 3.5
+ *
+ * @param {APIFetchOptions} options
+ * @returns {APIFetchOptions}
+ */
+const addParametersToRequest = ( options ) => {
+	addLanguageToRequest( options, pllDefaultLanguage );
+
+	return options;
+}
 
 })();
 

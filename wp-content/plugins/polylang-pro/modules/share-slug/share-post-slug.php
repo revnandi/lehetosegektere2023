@@ -280,7 +280,7 @@ class PLL_Share_Post_Slug {
 	 *
 	 * @since 1.9
 	 *
-	 * @param string $slug          The slug defined by wp_unique_post_slug in WP
+	 * @param string $slug          The slug defined by wp_unique_post_slug() in WP.
 	 * @param int    $post_ID       The post id.
 	 * @param string $post_status   Not used.
 	 * @param string $post_type     The Post type.

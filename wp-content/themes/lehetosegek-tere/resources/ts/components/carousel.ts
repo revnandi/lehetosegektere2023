@@ -16,13 +16,12 @@ export class Carousel {
   }
 
   next(): void {
-    // this.glider?.scrollItem(1, true);
+    this.carousel?.go('>');
   }
 
   prev(): void {
-    // this.glider?.scrollItem(-1, true);
+    this.carousel?.go('<');
   }
-
   destroy(): void {
     // if (this.glider) {
     //   this.glider.destroy();

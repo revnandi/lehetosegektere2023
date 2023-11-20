@@ -292,7 +292,7 @@ if(function_exists('pll_register_string')) {
 	pll_register_string( 'sectiontitles', 'Iratkozz fel a
 	programajánlónk' );
 	pll_register_string( 'sectiontitles', 'Rólunk mondták' );
-	pll_register_string( 'parners', 'A Lehetőségek Tere a tranzit.hu kezdeményezése. A tranzit.hu fő partnere az erste alapítvány.' );
+	pll_register_string( 'partners', 'A Lehetőségek Tere a tranzit.hu kezdeményezése. A tranzit.hu fő partnere az erste alapítvány.' );
 	pll_register_string( 'random', 'elérhető' );
 	pll_register_string( 'footer', 'Kövessetek bennünket!' );
 	pll_register_string( 'footer', 'Partnerek' );
@@ -316,6 +316,7 @@ function fz_register_acf_blocks() {
 	 */
 	register_block_type( __DIR__ . '/blocks/testimonial' );
 	register_block_type( __DIR__ . '/blocks/big-carousel' );
+	register_block_type( __DIR__ . '/blocks/big-carousel-alt' );
 }
 // Here we call our fz_register_acf_block() function on init.
 add_action( 'init', 'fz_register_acf_blocks' );

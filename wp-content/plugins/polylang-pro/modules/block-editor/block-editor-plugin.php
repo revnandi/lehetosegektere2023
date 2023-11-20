@@ -30,6 +30,11 @@ class PLL_Block_Editor_Plugin {
 	protected $curlang;
 
 	/**
+	 * @var PLL_Admin_Block_Editor|null
+	 */
+	protected $block_editor;
+
+	/**
 	 * Constructor
 	 *
 	 * @since 2.6
@@ -37,10 +42,11 @@ class PLL_Block_Editor_Plugin {
 	 * @param PLL_Frontend|PLL_Admin|PLL_Settings|PLL_REST_Request $polylang Polylang object.
 	 */
 	public function __construct( &$polylang ) {
-		$this->model   = &$polylang->model;
-		$this->posts   = &$polylang->posts;
-		$this->options = &$polylang->options;
-		$this->curlang = &$polylang->curlang;
+		$this->model        = &$polylang->model;
+		$this->posts        = &$polylang->posts;
+		$this->options      = &$polylang->options;
+		$this->curlang      = &$polylang->curlang;
+		$this->block_editor = &$polylang->block_editor; // Used to get a shared instance of `PLL_Filter_REST_Route` and call a single instance through the plugin.
 
 		add_filter( 'block_editor_rest_api_preload_paths', array( $this, 'filter_preload_paths' ), 50, 2 );
 		add_filter( 'widget_types_to_hide_from_legacy_widget_block', array( $this, 'filter_legacy_widgets' ) );
@@ -52,116 +58,44 @@ class PLL_Block_Editor_Plugin {
 	 *
 	 * @since 3.4
 	 *
-	 * @param array                   $preload_paths Preload paths.
+	 * @param (string|string[])[]     $preload_paths Preload paths.
 	 * @param WP_Block_Editor_Context $context       Editor context.
 	 * @return array Filtered preload paths.
 	 */
 	public function filter_preload_paths( $preload_paths, $context ) {
-		if ( ! $context instanceof WP_Block_Editor_Context ) {
+		if ( ! $context instanceof WP_Block_Editor_Context || empty( $this->block_editor ) ) {
 			return $preload_paths;
 		}
 
 		if ( $context->post instanceof WP_Post && ! $this->model->is_translated_post_type( $context->post->post_type ) ) {
-			// Do nothing if untranslatable post block editor.
 			return $preload_paths;
 		}
 
-		$language = $this->get_language_from_context( $context );
+		$preload_paths = (array) $preload_paths;
 
-		// Check that the property exists for backward compatibility with WP < 6.0.
-		if ( ! property_exists( $context, 'name' ) || 'core/edit-post' === $context->name || 'core/edit-site' === $context->name ) { // Backward compatibility with WordPress < 6.0 (`WP_Block_Editor_Context::$name` created back then).
-			// User data required for post block editor and site editor.
-			$preload_paths = array_merge( $preload_paths, array( '/wp/v2/users/me' ) );
-		}
+		// Do nothing if in post editor since `PLL_Admin_Block_Editor` has already filtered.
+		if ( ! $this->is_edit_post_context( $context ) ) {
+			$lang = ! empty( $this->curlang ) ? $this->curlang->slug : null;
 
-		// All editors.
-		$preload_paths = array_merge(
-			$this->add_preload_paths_parameters(
+			if ( empty( $lang ) || $this->is_edit_widgets_context( $context, $preload_paths ) ) {
+				// WP 6.0+: widget screen filtered by default language. See `pllDefaultLanguage` JS var added.
+				$lang = $this->model->options['default_lang'];
+			}
+
+			$preload_paths = $this->block_editor->filter_rest_routes->add_query_parameters(
 				$preload_paths,
 				array(
-					'lang'            => $language,
-					'is_block_editor' => 'true',
+					'lang' => $lang,
 				)
-			),
-			array( add_query_arg( 'is_block_editor', 'true', '/pll/v1/languages' ) )
-		);
+			);
 
-		// We have to add one more `/pll/v1/languages` until issue #1628 is closed {https://github.com/polylang/polylang-pro/issues/1628}.
-		return array_merge(
-			$preload_paths,
-			array( '/pll/v1/languages' )
-		);
-	}
-
-	/**
-	 * Returns the language of a given block editor context.
-	 *
-	 * @since 3.4
-	 *
-	 * @param WP_Block_Editor_Context $context Block editor context.
-	 * @return string Context language slug, fallback to default if none found.
-	 * @phpstan-return non-empty-string
-	 */
-	private function get_language_from_context( WP_Block_Editor_Context $context ) {
-		$language = $this->curlang;
-
-		if ( $context->post instanceof WP_Post ) {
-			// Set default language according to the context if no language is defined yet.
-			$this->posts->set_default_language( $context->post->ID );
-			$language = $this->model->post->get_language( $context->post->ID );
-		}
-
-		return ! empty( $language ) ? $language->slug : $this->options['default_lang'];
-	}
-
-	/**
-	 * Add query parameters to the preload paths.
-	 *
-	 * @since 3.1
-	 *
-	 * @param (string|string[])[] $preload_paths Array of paths to preload.
-	 * @param array               $args Optional args.
-	 * @return (string|string[])[]
-	 */
-	private function add_preload_paths_parameters( $preload_paths, $args = array() ) {
-		foreach ( $preload_paths as $k => $path ) {
-			if ( empty( $path ) ) {
-				continue;
-			}
-
-			$query_params = array();
-			// If the method request is OPTIONS, $path is an array and the first element is the path
-			if ( is_array( $path ) ) {
-				$temp_path = $path[0];
-			} else {
-				$temp_path = $path;
-			}
-
-			$path_parts = wp_parse_url( $temp_path );
-
-			if ( ! empty( $path_parts['query'] ) ) {
-				parse_str( $path_parts['query'], $query_params );
-			}
-
-			if ( is_array( $args ) ) {
-				// Add params in query params
-				foreach ( $args as $key => $value ) {
-					$query_params[ $key ] = $value;
-				}
-			}
-
-			// Sort query params to put it in the same order as the preloading middleware does
-			ksort( $query_params );
-
-			// Replace the key by the correct path with query params reordered
-			$sorted_path = add_query_arg( urlencode_deep( $query_params ), $path_parts['path'] );
-
-			if ( is_array( $path ) ) {
-				$preload_paths[ $k ][0] = $sorted_path;
-			} else {
-				$preload_paths[ $k ] = $sorted_path;
+			if ( $this->is_edit_site_context( $context, $preload_paths ) ) {
+				// User data required for the site editor (WP already adds it to the post block editor).
+				$preload_paths[] = '/wp/v2/users/me';
 			}
 		}
+
+		$preload_paths[] = '/pll/v1/languages';
 
 		return $preload_paths;
 	}
@@ -186,8 +120,9 @@ class PLL_Block_Editor_Plugin {
 		// Enqueue scripts for widget screen
 		if ( $this->is_widget_screen( $screen ) ) {
 			$script_filename = '/js/build/widget-editor-plugin' . $suffix . '.js';
+			$script_handle   = 'pll_widget-editor-plugin';
 			wp_enqueue_script(
-				'pll_widget-editor-plugin',
+				$script_handle,
 				plugins_url( $script_filename, POLYLANG_BASENAME ),
 				array(
 					'wp-api-fetch',
@@ -200,13 +135,17 @@ class PLL_Block_Editor_Plugin {
 
 			$default_lang_script = 'const pllDefaultLanguage = "' . $this->options['default_lang'] . '";';
 			wp_add_inline_script(
-				'pll_widget-editor-plugin',
+				$script_handle,
 				$default_lang_script,
 				'before'
 			);
 
+			if ( ! empty( $this->block_editor ) ) {
+				$this->block_editor->filter_rest_routes->add_inline_script( $script_handle );
+			}
+
 			// Translated strings used in JS code
-			wp_set_script_translations( 'pll_widget-editor-plugin', 'polylang-pro' );
+			wp_set_script_translations( $script_handle, 'polylang-pro' );
 
 			return;
 		}
@@ -231,8 +170,7 @@ class PLL_Block_Editor_Plugin {
 			// Set default language according to the context if no language is defined yet.
 			$editor_lang = $this->get_editor_language();
 			if ( ! empty( $editor_lang ) ) {
-				$editor_lang                    = $editor_lang->to_array();
-				$editor_lang['is_default_lang'] = $editor_lang['is_default'];
+				$editor_lang = $editor_lang->to_array();
 			}
 			$pll_settings = 'let pll_block_editor_plugin_settings = ' . wp_json_encode(
 				array(
@@ -240,6 +178,11 @@ class PLL_Block_Editor_Plugin {
 				)
 			);
 			wp_add_inline_script( $script_handle, $pll_settings, 'before' );
+
+			if ( ! empty( $this->block_editor ) ) {
+				$this->block_editor->filter_rest_routes->add_inline_script( $script_handle );
+			}
+
 			wp_enqueue_script( $script_handle );
 
 			$script_filename = '/js/build/sidebar' . $suffix . '.js';
@@ -258,29 +201,6 @@ class PLL_Block_Editor_Plugin {
 
 			// Translated strings used in JS code
 			wp_set_script_translations( 'pll_sidebar', 'polylang-pro' );
-		}
-
-		if ( $this->is_navigation_screen( $screen ) ) {
-			$navigation_script_handle = 'pll_navigation-editor-plugin';
-			wp_register_script(
-				$navigation_script_handle,
-				plugins_url( '/js/build/navigation-editor-plugin' . $suffix . '.js', POLYLANG_ROOT_FILE ),
-				array(
-					'wp-api-fetch',
-					'wp-data',
-					'wp-sanitize',
-					'lodash',
-				),
-				POLYLANG_VERSION,
-				true
-			);
-			$navigation_default_language = 'let pll_block_editor_plugin_settings = ' . wp_json_encode(
-				array(
-					'lang' => $this->model->get_default_language(),
-				)
-			);
-			wp_add_inline_script( $navigation_script_handle, $navigation_default_language, 'before' );
-			wp_enqueue_script( $navigation_script_handle );
 		}
 	}
 
@@ -345,18 +265,6 @@ class PLL_Block_Editor_Plugin {
 	}
 
 	/**
-	 * Check if we're in the context of a Navigation Screen
-	 *
-	 * @since 3.1
-	 *
-	 * @param WP_Screen $screen The current screen.
-	 * @return bool True if Navigation Screen, false otherwise.
-	 */
-	private function is_navigation_screen( $screen ) {
-		return 'gutenberg_page_gutenberg-navigation' === $screen->base;
-	}
-
-	/**
 	 * Check if we're in the context of a widget customizer screen.
 	 *
 	 * @since 3.2
@@ -409,4 +317,111 @@ class PLL_Block_Editor_Plugin {
 		return $widget_ids;
 	}
 
+	/**
+	 * Tells if we're in the post editor context.
+	 *
+	 * @since 3.5
+	 *
+	 * @param WP_Block_Editor_Context $context Editor context.
+	 * @return bool
+	 */
+	private function is_edit_post_context( WP_Block_Editor_Context $context ): bool {
+		if ( property_exists( $context, 'name' ) ) {
+			// WP 6.0+.
+			return 'core/edit-post' === $context->name;
+		}
+
+		/*
+		 * Backward compatibility with WP < 6.0 where `WP_Block_Editor_Context::$name` doesn't exist yet:
+		 * A post is passed only in the 'core/edit-post' context (still true, so far).
+		 */
+		return $context->post instanceof WP_Post;
+	}
+
+	/**
+	 * Tells if we're in the widgets editor context.
+	 *
+	 * @since 3.5
+	 *
+	 * @param WP_Block_Editor_Context $context       Editor context.
+	 * @param (string|string[])[]     $preload_paths Preload paths.
+	 * @return bool
+	 */
+	private function is_edit_widgets_context( WP_Block_Editor_Context $context, array $preload_paths ): bool {
+		if ( property_exists( $context, 'name' ) ) {
+			// WP 6.0+.
+			return 'core/edit-widgets' === $context->name;
+		}
+
+		/*
+		 * Backward compatibility with WP < 6.0 where `WP_Block_Editor_Context::$name` doesn't exist yet:
+		 * Sniff preload paths.
+		 * Search for:
+		 *  - '/wp/v2/sidebars?context=edit&per_page=-1',
+		 *  - '/wp/v2/widgets?context=edit&per_page=-1&_embed=about'.
+		 *
+		 * @see wp-admin/widgets-form-blocks.php
+		 */
+		return $this->match_paths( array( 'sidebars', 'widgets' ), $preload_paths );
+	}
+
+	/**
+	 * Tells if we're in the site editor context.
+	 *
+	 * @since 3.5
+	 *
+	 * @param WP_Block_Editor_Context $context       Editor context.
+	 * @param (string|string[])[]     $preload_paths Preload paths.
+	 * @return bool
+	 */
+	private function is_edit_site_context( WP_Block_Editor_Context $context, array $preload_paths ): bool {
+		if ( property_exists( $context, 'name' ) ) {
+			// WP 6.0+.
+			return 'core/edit-site' === $context->name;
+		}
+
+		/*
+		 * Backward compatibility with WP < 6.0 where `WP_Block_Editor_Context::$name` doesn't exist yet:
+		 * Sniff preload paths.
+		 * Search for:
+		 *  - '/wp/v2/types/wp_template?context=edit',
+		 *  - '/wp/v2/types/wp_template-part?context=edit',
+		 *  - '/wp/v2/templates?context=edit&per_page=-1',
+		 *  - '/wp/v2/template-parts?context=edit&per_page=-1',
+		 *  - '/wp/v2/themes?context=edit&status=active',
+		 *  - '/wp/v2/global-styles/{$active_global_styles_id}?context=edit'.
+		 *
+		 * @see wp-admin/site-editor.php
+		 */
+		return $this->match_paths(
+			array(
+				'types/wp_template',
+				'types/wp_template-part',
+				'templates',
+				'template-parts',
+				'themes',
+				'global-styles/\d+',
+			),
+			$preload_paths
+		);
+	}
+
+	/**
+	 * Tells if a given list of URIs matches a given list of preload paths.
+	 * Works only for paths in the form of `/wp/v2/{URI}?context=edit`.
+	 * This is used for backward compatibility with WP < 6.0.
+	 *
+	 * @since 3.5
+	 *
+	 * @param string[]            $uris_to_find   List of URIs to find in `$paths_haystack`.
+	 * @param (string|string[])[] $paths_haystack List of preload paths to search in.
+	 * @return bool
+	 */
+	private function match_paths( array $uris_to_find, array $paths_haystack ): bool {
+		$pattern  = sprintf( '@^/wp/v2/(?:%s)\?(?:.+&)?context=edit(?:&|$)@m', implode( '|', $uris_to_find ) );
+		$haystack = implode( "\n", array_filter( $paths_haystack, 'is_string' ) );
+
+		// We expect a precise number of matches but a plugin could add more.
+		return preg_match_all( $pattern, $haystack, $matches ) >= count( $uris_to_find );
+	}
 }

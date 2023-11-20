@@ -16,11 +16,12 @@ interface PLL_Import_Object_Interface {
 	 * @since 3.3
 	 *
 	 * @param array        $entry {
-	 *     @type string       $type Either 'post', 'term' or 'string_translations'
-	 *     @type int          $id   Id of the object in the database (if applicable)
-	 *     @type Translations $data Objects holding all the retrieved Translations
-	 * }
+	 *   An array containing the translations data.
 	 *
+	 *   @type string       $type Either 'post', 'term' or 'string_translations'.
+	 *   @type int          $id   Id of the object in the database (if applicable).
+	 *   @type Translations $data Objects holding all the retrieved Translations.
+	 * }
 	 * @param PLL_Language $target_language The targeted language for import.
 	 * @return void
 	 */

@@ -52,7 +52,7 @@ class PLL_FSE_REST_Enforce_Default_Template extends PLL_FSE_Abstract_Module impl
 	 * @return self
 	 */
 	public function init() {
-		foreach ( PLL_FSE_Tools::get_post_types() as $post_type ) {
+		foreach ( PLL_FSE_Tools::get_template_post_types() as $post_type ) {
 			add_action( "rest_after_insert_{$post_type}", array( $this, 'maybe_duplicate_template' ), 10, 3 );
 		}
 		return $this;
@@ -76,10 +76,10 @@ class PLL_FSE_REST_Enforce_Default_Template extends PLL_FSE_Abstract_Module impl
 			return;
 		}
 
-		if ( empty( $request->get_param( 'is_block_editor' ) ) ) {
+		if ( ! pll_is_edit_rest_request( $request ) ) {
 			return;
 		}
-
+		
 		if ( ! empty( $request->get_param( 'from_post' ) ) ) {
 			// We're creating a template from a template that exists in the database.
 			return;

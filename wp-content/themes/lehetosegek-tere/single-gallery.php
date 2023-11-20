@@ -41,6 +41,12 @@
               </g>
             </svg>
           </button>
+          <a href="/galeria" class="flex items-center justify-center w-16 h-16 bg-turquoise">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 13" class="w-8 h-8">
+              <line x1="0.748977" y1="12.6991" x2="12.6991" y2="0.748977" stroke="white" stroke-width="0.71" />
+              <line x1="1.25102" y1="0.748977" x2="13.2011" y2="12.6991" stroke="white" stroke-width="0.71" />
+            </svg>
+          </a>
         </div>
 
         <div class="h-full splide__track">
@@ -48,8 +54,7 @@
             <?php foreach ($images as $image): ?>
               <li class="splide__slide">
                 <?php if ($image): ?>
-                  <div
-                    class="relative w-full col-span-1 overflow-hidden border group md:col-span-5 aspect-video">
+                  <div class="relative w-full col-span-1 overflow-hidden border group md:col-span-5 aspect-video">
                     <img class="object-cover w-full h-full" class="object-contain w-auto h-full"
                       alt="<?php echo esc_attr($image['alt']); ?>"
                       data-splide-lazy="<?php echo esc_url($image['sizes']['2048x2048']); ?>"

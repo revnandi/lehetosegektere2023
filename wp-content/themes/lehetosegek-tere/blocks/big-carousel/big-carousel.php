@@ -8,12 +8,7 @@
 
 // Load values and assign defaults.
 $slides = get_field('slides');
-// pretty_dump($slides);
 $slides = $slides ?: [];
-$image = get_sub_field('Szerkesztés Duplicate Move Delete
-image');
-$title = get_sub_field('title');
-$button = get_sub_field('button');
 
 ?>
 
@@ -24,13 +19,6 @@ $button = get_sub_field('button');
         <?php while (have_rows('slides')):
           the_row();
           $image = get_sub_field('image');
-          // $lqip = $image['sizes']['lqip'];
-          // $thumb = $image['sizes']['thumbnail'];
-          // $medium = $image['sizes']['medium'];
-          // $medium_large = $image['sizes']['medium_large'];
-          // $large = $image['sizes']['large'];
-          // $xl = $image['sizes']['1536x1536'];
-          // $xxl = $image['sizes']['2048x2048'];
 
           $link = get_sub_field('button');
           if ($link):

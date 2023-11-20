@@ -39,12 +39,12 @@ class PLL_Translate_Slugs_Model {
 		$this->model       = &$polylang->model;
 		$this->links_model = &$polylang->links_model;
 
-		add_action( 'switch_blog', array( $this, 'switch_blog' ), 20, 2 );
+		add_action( 'switch_blog', array( $this, 'switch_blog' ), 20, 2 ); // After `PLL_Base::switch_blog()`.
 
 		add_action( 'wp_loaded', array( $this, 'init_translated_slugs' ), 1 );
 
 		// Make sure to prepare rewrite rules when flushing.
-		add_filter( 'pre_option_rewrite_rules', array( $this, 'prepare_rewrite_rules' ), 20 ); // After Polylang.
+		add_action( 'pll_prepare_rewrite_rules', array( $this, 'prepare_rewrite_rules' ), 20 ); // After Polylang.
 
 		// Flush rewrite rules when saving string translations.
 		add_action( 'pll_save_strings_translations', array( $this, 'flush_rewrite_rules' ) );
@@ -73,12 +73,15 @@ class PLL_Translate_Slugs_Model {
 	 * @return void
 	 */
 	public function switch_blog( $new_blog, $old_blog ) {
-		$plugins = ( $sitewide_plugins = get_site_option( 'active_sitewide_plugins' ) ) && is_array( $sitewide_plugins ) ? array_keys( $sitewide_plugins ) : array();
-		$plugins = array_merge( $plugins, get_option( 'active_plugins', array() ) );
+		if ( (int) $new_blog === (int) $old_blog ) {
+			// Do nothing if same blog.
+			return;
+		}
 
-		// FIXME should I wait for an action as I must have *all* registered post types and taxonomies.
-		if ( $new_blog != $old_blog && in_array( POLYLANG_BASENAME, $plugins ) && get_option( 'polylang' ) ) {
-			$this->init_translated_slugs();
+		$this->remove_filters();
+
+		if ( pll_is_plugin_active( POLYLANG_BASENAME ) && get_option( 'polylang' ) ) {
+			$this->prepare_rewrite_rules();
 		}
 	}
 
@@ -257,21 +260,55 @@ class PLL_Translate_Slugs_Model {
 	 * Prepares rewrite rules filters to translate slugs
 	 *
 	 * @since 1.9
+	 * @since 3.5 Hooked to `pll_prepare_rewrite_rules` and remove $pre parameter.
 	 *
-	 * @param string[] $pre Not used.
-	 * @return string[] Unmodified $pre.
+	 * @return void
 	 */
-	public function prepare_rewrite_rules( $pre ) {
-		if ( did_action( 'wp_loaded' ) && ! has_filter( 'rewrite_rules_array', array( $this, 'rewrite_translated_slug' ) ) ) {
-			$this->init_translated_slugs();
-			foreach ( $this->links_model->get_rewrite_rules_filters() as $type ) {
-				add_filter( $type . '_rewrite_rules', array( $this, 'rewrite_translated_slug' ), 5 );
-			}
-
-			add_filter( 'rewrite_rules_array', array( $this, 'rewrite_translated_slug' ), 5 );
+	public function prepare_rewrite_rules() {
+		if ( ! $this->model->has_languages() || ! did_action( 'wp_loaded' ) || has_filter( 'rewrite_rules_array', array( $this, 'rewrite_translated_slug' ) ) ) {
+			return;
 		}
 
-		return $pre;
+		foreach ( $this->get_rewrite_rules_filter_with_callbacks() as $rule => $callback ) {
+			add_filter( $rule, $callback, 5 );
+		}
+	}
+
+	/**
+	 * Removes hooks to filter rewrite rules, see `self::prepare_rewrite_rules()` for added ones.
+	 *
+	 * @since 3.5
+	 *
+	 * @return void
+	 */
+	protected function remove_filters() {
+		foreach ( $this->get_rewrite_rules_filter_with_callbacks() as $rule => $callback ) {
+			remove_filter( $rule, $callback, 5 );
+		}
+	}
+
+	/**
+	 * Returns *all* rewrite rules filters with their associated callbacks.
+	 *
+	 * @since 3.5
+	 *
+	 * @return callable[] Array of hook names as keys and callbacks as values.
+	 */
+	protected function get_rewrite_rules_filter_with_callbacks() {
+		if ( ! method_exists( $this->links_model, 'get_rewrite_rules_filters' ) ) {
+			// Current links model instance doesn't support rewrite rules (i.e. nothing to filter here).
+			return array();
+		}
+
+		$filters = array(
+			'rewrite_rules_array' => array( $this, 'rewrite_translated_slug' ),
+		);
+
+		foreach ( $this->links_model->get_rewrite_rules_filters() as $type ) {
+			$filters[ $type . '_rewrite_rules' ] = array( $this, 'rewrite_translated_slug' );
+		}
+
+		return $filters;
 	}
 
 	/**
@@ -283,6 +320,7 @@ class PLL_Translate_Slugs_Model {
 	 */
 	public function flush_rewrite_rules() {
 		delete_transient( 'pll_translated_slugs' );
+		$this->init_translated_slugs();
 		flush_rewrite_rules();
 	}
 

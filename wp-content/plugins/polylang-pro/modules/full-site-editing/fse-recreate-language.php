@@ -172,7 +172,7 @@ class PLL_FSE_Recreate_Language extends PLL_FSE_Abstract_Module implements PLL_M
 
 		if ( ! empty( $clean_cache_post_ids ) ) {
 			// Clean posts cache.
-			clean_object_term_cache( $clean_cache_post_ids, PLL_FSE_Tools::get_post_types() );
+			clean_object_term_cache( $clean_cache_post_ids, PLL_FSE_Tools::get_template_post_types() );
 		}
 
 		if ( ! empty( $clean_cache_term_ids ) ) {
@@ -204,7 +204,7 @@ class PLL_FSE_Recreate_Language extends PLL_FSE_Abstract_Module implements PLL_M
 	private function get_posts_with_lang_suffix( PLL_Language $language ) {
 		global $wpdb;
 
-		$post_types = PLL_Db_Tools::prepare_values_list( PLL_FSE_Tools::get_post_types() );
+		$post_types = PLL_Db_Tools::prepare_values_list( PLL_FSE_Tools::get_template_post_types() );
 
 		// 'dummy' => 'dummy___fr' => 'dummy\_\_\_fr' => '%\_\_\_fr' - No it's not commented code damnit.
 		$post_slug = ( new PLL_FSE_Template_Slug( 'dummy' ) )->update_language( $language->slug );
@@ -271,7 +271,7 @@ class PLL_FSE_Recreate_Language extends PLL_FSE_Abstract_Module implements PLL_M
 	private function get_translation_groups( array $post_names, $theme_id ) {
 		global $wpdb;
 
-		$post_types = PLL_Db_Tools::prepare_values_list( PLL_FSE_Tools::get_post_types() );
+		$post_types = PLL_Db_Tools::prepare_values_list( PLL_FSE_Tools::get_template_post_types() );
 		$post_names = PLL_Db_Tools::prepare_values_list( $post_names );
 
 		// phpcs:disable WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQL.NotPrepared

@@ -91,7 +91,7 @@ abstract class PLL_FSE_Abstract_Bulk_Edit_Template_Slugs_Module extends PLL_FSE_
 		/** @var WP_Post[] */
 		$results = ( new WP_Query() )->query(
 			array(
-				'post_type'              => PLL_Db_Tools::prepare_values_list( PLL_FSE_Tools::get_post_types() ),
+				'post_type'              => PLL_Db_Tools::prepare_values_list( PLL_FSE_Tools::get_template_post_types() ),
 				'post_status'            => array( 'publish', 'draft' ),
 				'tax_query'              => array(
 					array(

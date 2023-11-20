@@ -501,7 +501,6 @@ function LanguagesOptionsList(_ref2) {
  *
  * @package Polylang-Pro
  */
-
 const settings_MODULE_KEY = 'pll/metabox';
 const settings_MODULE_CORE_EDITOR_KEY = 'core/editor';
 const settings_MODULE_SITE_EDITOR_KEY = 'core/edit-site';
@@ -514,7 +513,8 @@ const DEFAULT_STATE = {
   fromPost: null,
   currentTemplatePart: {}
 };
-const UNTRANSLATABLE_POST_TYPE = (/* unused pure expression or super */ null && (['wp_template']));
+const UNTRANSLATABLE_POST_TYPE = (/* unused pure expression or super */ null && (['wp_template', 'wp_global_styles']));
+const POST_TYPE_WITH_TRASH = (/* unused pure expression or super */ null && (['page']));
 const settings_TEMPLATE_PART_SLUG_SEPARATOR = '___'; // Its value must be synchronized with its equivalent in PHP @see PLL_FSE_Template_Slug::SEPARATOR
 const settings_TEMPLATE_PART_SLUG_CHECK_LANGUAGE_PATTERN = '[a-z_-]+'; // Its value must be synchronized with it equivalent in PHP @see PLL_FSE_Template_Slug::SEPARATOR
 
@@ -526,7 +526,6 @@ var external_this_wp_url_ = __webpack_require__(470);
  *
  * @package Polylang-Pro
  */
-
 
 
 
@@ -652,7 +651,7 @@ function getSelectedLanguage(lang) {
  */
 function getDefaultLanguage() {
   const languages = select(MODULE_KEY).getLanguages();
-  return Array.from(languages.values()).find(lang => lang.is_default_lang);
+  return Array.from(languages.values()).find(lang => lang.is_default);
 }
 
 /**
@@ -709,10 +708,9 @@ function getSynchronizedPosts(pll_sync_post) {
  * Gets translations table.
  *
  * @param {Object.<string, Object>} translationsTableDatas The translations table data object with language codes as keys and data object as values.
- * @param {string} lang The language code.
  * @returns {Map}
  */
-function getTranslationsTable(translationsTableDatas, lang) {
+function getTranslationsTable(translationsTableDatas) {
   let translationsTable = new Map(Object.entries([]));
   // get translations table datas from post
   if (!isUndefined(translationsTableDatas)) {
@@ -738,17 +736,6 @@ function isSaveRequest(options) {
   } else {
     return false;
   }
-}
-
-/**
- * Adds `is_block_editor` parameter to the request in a block editor context.
- *
- * @param {Object} options The initial request.
- */
-function addIsBlockEditorToRequest(options) {
-  options.path = addQueryArgs(options.path, {
-    is_block_editor: true
-  });
 }
 
 /**
@@ -876,22 +863,6 @@ function getCurrentPostType() {
 }
 
 /**
- * Gets the default language from a translations table.
- *
- * @param {Object} translationsTable The translations table data with language codes as keys and data object as values.
- * @returns {Object} The default language.
- */
-function getDefaultLangFromTable(translationsTable) {
-  let defaultLang = {};
-  translationsTable.forEach(translation => {
-    if (translation.is_default_lang) {
-      defaultLang = translation.lang;
-    }
-  });
-  return defaultLang;
-}
-
-/**
  * Returns a regular expression ready to use to perform search and replace.
  *
  * @returns {RegExp} The regular expression.
@@ -911,7 +882,6 @@ function getLangSlugRegex() {
  *
  * @package Polylang-Pro
  */
-
 
 
 
@@ -974,12 +944,12 @@ const isSiteEditorContextInitialized = () => {
 
   /**
    * Set a promise to wait for the current template to be fully loaded before making other processes.
-   * It allows to see if both Site Editor and Core stores are available (@see getCurrentTemplateFromDataStore()).
+   * It allows to see if both Site Editor and Core stores are available (@see getCurrentPostFromDataStore()).
    */
   const isTemplatePartLoaded = new Promise(function (resolve) {
     let unsubscribe = subscribe(function () {
-      const currentTemplatePart = getCurrentTemplateFromDataStore();
-      if (!isNil(currentTemplatePart) && !isEmpty(currentTemplatePart)) {
+      const store = select(MODULE_SITE_EDITOR_KEY);
+      if (store) {
         unsubscribe();
         resolve();
       }
@@ -989,7 +959,7 @@ const isSiteEditorContextInitialized = () => {
 };
 
 /**
- * Set a promise for waiting for the languages list is correctly initialized before making other processes.
+ * Returns a promise fulfilled when the languages list is correctly initialized before making other processes.
  */
 const isLanguagesinitialized = () => new Promise(function (resolve) {
   let unsubscribe = (0,external_this_wp_data_.subscribe)(function () {
@@ -1009,7 +979,7 @@ function saveURLParams() {
   // Variable window.location.search isn't use directly
   // Function getSearchParams return an URLSearchParams object for manipulating each parameter
   // Each of them are sanitized below
-  const searchParams = getSearchParams(window.location.search); // phpcs:ignore WordPressVIPMinimum.JS.Window.location
+  const searchParams = getSearchParams();
   if (null !== searchParams) {
     dispatch(MODULE_KEY).setFromPost({
       id: wp.sanitize.stripTagsAndEncodeText(searchParams.get('from_post')),
@@ -1018,17 +988,39 @@ function saveURLParams() {
     });
   }
 }
+const getEditedPostContextWithLegacy = () => {
+  const siteEditorSelector = select(MODULE_SITE_EDITOR_KEY);
+
+  /**
+   * Return null when called from our apiFetch middleware without a properly loaded store.
+   */
+  if (!siteEditorSelector) {
+    return null;
+  }
+  const _context = {
+    postId: siteEditorSelector.getEditedPostId(),
+    postType: siteEditorSelector.getEditedPostType()
+  };
+  if (siteEditorSelector.hasOwnProperty('getEditedPostContext')) {
+    const context = siteEditorSelector.getEditedPostContext();
+    return null != context && null !== context.postType && null !== context.postId ? context : _context;
+  }
+
+  /**
+   * Backward compatibility with WordPress < 6.3 where `getEditedPostContext()` doesn't exist yet.
+   */
+  return _context;
+};
 
 /**
- * Gets the current template using the Site Editor store and the Core store.
+ * Gets the current post using the Site Editor store and the Core store.
  *
- * @returns {object} The current template object.
+ * @returns {object|null} The current post object, `null` if none found.
  */
-function getCurrentTemplateFromDataStore() {
-  const currentTemplateId = select(MODULE_SITE_EDITOR_KEY)?.getEditedPostId();
-  const currentTemplateType = select(MODULE_SITE_EDITOR_KEY)?.getEditedPostType();
-  return select(MODULE_CORE_KEY).getEntityRecord('postType', currentTemplateType, currentTemplateId);
-}
+const getCurrentPostFromDataStore = () => {
+  const editedContext = getEditedPostContextWithLegacy();
+  return null === editedContext ? null : select(MODULE_CORE_KEY).getEntityRecord('postType', editedContext.postType, editedContext.postId);
+};
 ;// CONCATENATED MODULE: ./modules/block-editor/js/blocks/attributes.js
 
 /**

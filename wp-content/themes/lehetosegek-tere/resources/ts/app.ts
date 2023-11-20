@@ -27,7 +27,7 @@ window.addEventListener("load", function () {
 
   // const smallCarousel = new Carousel("lt_small_carousel", {
   //   rewind: true,
-  //   type: "fade",
+  //   type: 'fade',
   //   arrows: false,
   //   classes: {
   //     pagination:
@@ -44,7 +44,7 @@ window.addEventListener("load", function () {
     bigCarouselWrappers.forEach(wrapper => {
       const newCarusel = new Carousel(wrapper as HTMLElement, {
         rewind: true,
-        type: "fade",
+        type: 'fade',
         arrows: false,
         lazyLoad: true,
         classes: {
@@ -59,9 +59,44 @@ window.addEventListener("load", function () {
     })
   }
 
+  const bigAltCarousels: Carousel[] = [];
+  const bigAltCarouselWrappers = document.querySelectorAll('.lt_splide_alt');
+
+  if(bigAltCarouselWrappers && bigAltCarouselWrappers.length > 0) {
+    bigAltCarouselWrappers.forEach(wrapper => {
+      const newCarusel = new Carousel(wrapper as HTMLElement, {
+        rewind: true,
+        type: 'fade',
+        arrows: false,
+        lazyLoad: true,
+        pagination: false,
+        classes: {
+          pagination: "z-10 absolute bottom-6 left-11 flex justify-center py-2 space-x-2 [&>li]:h-fit [&>li]:flex",
+          page: "w-4 h-4 bg-black rounded-full [&.is-active]:bg-turquoise",
+        },
+        // dots: '#lt_small_carousel_dots'
+      });
+
+      bigAltCarousels.push(newCarusel)
+
+      const prevButtons = wrapper.querySelectorAll('.lt_button_prev')
+
+      prevButtons.forEach(item => item.addEventListener('click', () => {
+        newCarusel.prev()
+      }))
+
+      const nextButtons = wrapper.querySelectorAll('.lt_button_next')
+
+      nextButtons.forEach(item => item.addEventListener('click', () => {
+        newCarusel.next()
+      }))
+    })
+
+  }
+
   const gallery = new Gallery("lt_gallery", {
     rewind: true,
-    type: "fade",
+    type: 'fade',
     pagination: false,
     lazyLoad: true,
     classes: {
@@ -81,6 +116,7 @@ window.addEventListener("load", function () {
   console.log(bigCarousels)
 
   bigCarousels.forEach(carousel =>  carousel.init())
+  bigAltCarousels.forEach(carousel =>  carousel.init())
 
   console.log(picker);
   console.log(eventPopUp);

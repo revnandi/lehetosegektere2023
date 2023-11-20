@@ -50,7 +50,7 @@ class PLL_FSE_Post_Types implements PLL_Module_Interface {
 			return $post_types;
 		}
 
-		return array_merge( $post_types, PLL_FSE_Tools::get_post_types() );
+		return array_merge( $post_types, PLL_FSE_Tools::get_template_post_types() );
 	}
 
 	/**
@@ -66,6 +66,6 @@ class PLL_FSE_Post_Types implements PLL_Module_Interface {
 			return $post_types;
 		}
 
-		return array_diff_key( $post_types, PLL_FSE_Tools::get_post_types() );
+		return array_diff_key( $post_types, PLL_FSE_Tools::get_template_post_types() );
 	}
 }

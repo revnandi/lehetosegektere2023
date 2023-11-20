@@ -10,8 +10,8 @@
  * Plugin Name:       Polylang Pro
  * Plugin URI:        https://polylang.pro
  * Description:       Adds multilingual capability to WordPress
- * Version:           3.4.6
- * Requires at least: 5.8
+ * Version:           3.5.2
+ * Requires at least: 5.9
  * Requires PHP:      7.0
  * Author:            WP SYNTEX
  * Author URI:        https://polylang.pro
@@ -52,7 +52,15 @@ if ( ! defined( 'POLYLANG_ROOT_FILE' ) ) {
 if ( defined( 'POLYLANG_BASENAME' ) ) {
 	// The user is attempting to activate a second plugin instance, typically Polylang and Polylang Pro.
 	require_once ABSPATH . 'wp-admin/includes/plugin.php';
-	deactivate_plugins( POLYLANG_BASENAME ); // Deactivate the other plugin.
+
+	deactivate_plugins( POLYLANG_BASENAME, false, is_network_admin() ); // Deactivate the other plugin.
+
+	// Add the deactivated plugin to the list of recent activated plugins.
+	if ( ! is_network_admin() ) {
+		update_option( 'recently_activated', array( POLYLANG_BASENAME => time() ) + (array) get_option( 'recently_activated' ) );
+	} else {
+		update_site_option( 'recently_activated', array( POLYLANG_BASENAME => time() ) + (array) get_site_option( 'recently_activated' ) );
+	}
 } else {
 	define( 'POLYLANG_BASENAME', plugin_basename( __FILE__ ) ); // Plugin name as known by WP.
 }

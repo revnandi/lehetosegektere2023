@@ -19,8 +19,8 @@ class PLL_REST_Post extends PLL_REST_Translated_Object {
 	 *
 	 * @since 2.2
 	 *
-	 * @param PLL_REST_API $rest_api      Instance of PLL_REST_API
-	 * @param array        $content_types Array of arrays with post types as keys and options as values
+	 * @param PLL_REST_API $rest_api      Instance of PLL_REST_API.
+	 * @param array        $content_types Array of arrays with post types as keys and options as values.
 	 */
 	public function __construct( &$rest_api, $content_types ) {
 		parent::__construct( $rest_api, $content_types );
@@ -42,7 +42,7 @@ class PLL_REST_Post extends PLL_REST_Translated_Object {
 	}
 
 	/**
-	 * Filters the query per language according to the 'lang' parameter
+	 * Filters the query per language according to the 'lang' parameter.
 	 *
 	 * @since 2.6.9
 	 *
@@ -121,7 +121,7 @@ class PLL_REST_Post extends PLL_REST_Translated_Object {
 	 * @return mixed
 	 */
 	public function save_language_and_translations( $result, $server, $request ) {
-		if ( ! current_user_can( 'edit_posts' ) || null === $request->get_param( 'is_block_editor' ) || ! $this->is_save_post_request( $request ) ) {
+		if ( ! current_user_can( 'edit_posts' ) || ! pll_is_edit_rest_request( $request ) || ! $this->is_save_post_request( $request ) ) {
 			return $result;
 		}
 
@@ -155,7 +155,11 @@ class PLL_REST_Post extends PLL_REST_Translated_Object {
 	 * @return mixed
 	 */
 	public function register_rest_translation_table_field( $result, $server, $request ) {
-		if ( ! current_user_can( 'edit_posts' ) || null === $request->get_param( 'is_block_editor' ) ) {
+		if (
+			! current_user_can( 'edit_posts' )
+			|| ! $this->is_allowed_namespace( $request->get_route() )
+			|| ! pll_is_edit_rest_request( $request )
+			) {
 			return $result;
 		}
 
@@ -164,8 +168,8 @@ class PLL_REST_Post extends PLL_REST_Translated_Object {
 				$this->get_rest_field_type( $post_type ),
 				'translations_table',
 				array(
-					'get_callback'    => array( $this, 'get_translations_table' ),
-					'schema'          => array(
+					'get_callback' => array( $this, 'get_translations_table' ),
+					'schema'       => array(
 						'translations_table' => __( 'Translations table', 'polylang-pro' ),
 						'type'               => 'object',
 					),
@@ -245,7 +249,7 @@ class PLL_REST_Post extends PLL_REST_Translated_Object {
 	 *
 	 * @since 2.6
 	 *
-	 * @param array $object Post array
+	 * @param array $object Post array.
 	 * @return array
 	 */
 	public function get_translations_table( $object ) {
@@ -284,23 +288,53 @@ class PLL_REST_Post extends PLL_REST_Translated_Object {
 	 *
 	 * @since 3.2
 	 *
-	 * @param int          $id               The id of the existing post to get datas for the translations table element.
-	 * @param int          $tr_id            The id of the translated post for the given language if exists.
-	 * @param PLL_Language $language         The given language object.
+	 * @param int          $id       The id of the existing post to get datas for the translations table element.
+	 * @param int          $tr_id    The id of the translated post for the given language if exists.
+	 * @param PLL_Language $language The given language object.
 	 * @return array The translation data of the given language.
 	 */
 	public function get_translation_table_data( $id, $tr_id, $language ) {
-		$translation_data = array();
+		$translation_data = array(
+			'lang'            => $language,
+			'caps'            => array(
+				'add'    => false,
+				'edit'   => false,
+				'delete' => false,
+			),
+			'links'           => array(
+				'add_link' => '',
+			),
+			'site_editor'     => array(
+				'edit_link' => '',
+			),
+			'block_editor'    => array(
+				'edit_link' => '',
+			),
+			'translated_post' => array(),
+		);
 
-		$translation_data['lang'] = $language;
-
-		$link = $this->links->get_new_post_translation_link( $id, $language, 'keep ampersand' );
-		$translation_data['links']['add_link'] = $link;
+		// When no post exist in DB, we need to return a non-empty value in the add_link item.
+		$post_type = get_post_type( $id );
+		if ( ! empty( $post_type ) ) {
+			$type = get_post_type_object( $post_type );
+			$translation_data['caps']['add'] = ! empty( $type ) && current_user_can( $type->cap->create_posts );
+			if ( $translation_data['caps']['add'] ) {
+				$translation_data['links']['add_link'] = $this->links->get_new_post_translation_link( $id, $language, 'keep ampersand' );
+			}
+		}
 
 		// If a translation of the given post exist in the desired language, then we can add the edit link and the translated post information.
 		if ( ! empty( $tr_id ) ) {
+			$translation_data['caps']['edit'] = current_user_can( 'edit_post', $tr_id );
+			if ( $translation_data['caps']['edit'] ) {
+				$translation_data['site_editor']['edit_link']  = $this->get_site_editor_edit_post_link( $tr_id );
+				$translation_data['block_editor']['edit_link'] = (string) get_edit_post_link( $tr_id, 'keep ampersand' );
+			}
+
+			// Verify the user can delete post to add the delete link.
+			$translation_data['caps']['delete'] = current_user_can( 'delete_post', $tr_id );
+
 			$translated_post = get_post( $tr_id, ARRAY_A );
-			$translation_data['links']['edit_link'] = get_edit_post_link( $tr_id, 'keep ampersand' );
 			$translation_data['translated_post'] = array(
 				'id'    => $translated_post['ID'],
 				'title' => $translated_post['post_title'],
@@ -314,11 +348,19 @@ class PLL_REST_Post extends PLL_REST_Translated_Object {
 	 * Returns the post id of the post that we come from to create a translation.
 	 *
 	 * @since 3.2
+	 * @since 3.4.5 Returns the source post ID sooner for a REST request.
 	 *
 	 * @return int The post id of the original post.
 	 */
 	public function get_from_post_id() {
-		// When we come from a post new creation.
+		if ( $this->request instanceof WP_REST_Request ) {
+			$from_post = $this->request->get_param( 'from_post' );
+
+			if ( ! empty( $from_post ) ) {
+				return is_int( $from_post ) ? $from_post : 0;
+			}
+		}
+
 		return isset( $_GET['from_post'] ) ? (int) $_GET['from_post'] : 0; // phpcs:ignore WordPress.Security.NonceVerification
 	}
 
@@ -342,5 +384,41 @@ class PLL_REST_Post extends PLL_REST_Translated_Object {
 		if ( ! empty( $lang ) ) {
 			$this->model->post->set_language( $post_id, $lang );
 		}
+	}
+
+	/**
+	 * Returns edit post link for site editor.
+	 *
+	 * @since 3.4.5
+	 *
+	 * @param int $post_id ID of the post to get edit link from.
+	 * @return string|null The edit post link for the given post. Null if none found.
+	 */
+	protected function get_site_editor_edit_post_link( $post_id ) {
+		$post_type = (string) get_post_type( $post_id );
+		if ( empty( $post_type ) ) {
+			return (string) get_edit_post_link( $post_id, 'keep ampersand' );
+		}
+
+		return add_query_arg(
+			array(
+				'postId'   => $post_id,
+				'postType' => $post_type,
+				'canvas'   => 'edit',
+			),
+			admin_url( 'site-editor.php' )
+		);
+	}
+
+	/**
+	 * Tells whether or not the given route is in an allowed namespace for the `translation_table` REST field.
+	 *
+	 * @since 3.5
+	 *
+	 * @param string $route The route to check.
+	 * @return bool True if in an allowed namespace, false otherwise.
+	 */
+	protected function is_allowed_namespace( $route ) {
+		return (bool) preg_match( '@^/wp/v2/@', $route );
 	}
 }

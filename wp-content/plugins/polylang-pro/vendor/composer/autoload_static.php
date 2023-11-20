@@ -4,9 +4,10 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInitf9a15455068539a5b79444d7b0a23bbf
+class ComposerStaticInit90077f9a07ba7509961aaf7f0e3d81a5
 {
     public static $classMap = array (
+        'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
         'PLL_ACF' => __DIR__ . '/../..' . '/integrations/acf/acf.php',
         'PLL_ACF_Auto_Translate' => __DIR__ . '/../..' . '/integrations/acf/acf-auto-translate.php',
         'PLL_ACF_Sync_Metas' => __DIR__ . '/../..' . '/integrations/acf/acf-sync-metas.php',
@@ -86,6 +87,7 @@ class ComposerStaticInitf9a15455068539a5b79444d7b0a23bbf
         'PLL_FSE_Filter_Block_Types' => __DIR__ . '/../..' . '/modules/full-site-editing/fse-filter-block-types.php',
         'PLL_FSE_Language' => __DIR__ . '/../..' . '/modules/full-site-editing/fse-language.php',
         'PLL_FSE_Language_Slug_Change' => __DIR__ . '/../..' . '/modules/full-site-editing/fse-language-slug-change.php',
+        'PLL_FSE_Post_Deletion' => __DIR__ . '/../..' . '/modules/full-site-editing/fse-post-deletion.php',
         'PLL_FSE_Post_Types' => __DIR__ . '/../..' . '/modules/full-site-editing/fse-post-types.php',
         'PLL_FSE_Query_Filters' => __DIR__ . '/../..' . '/modules/full-site-editing/fse-query-filters.php',
         'PLL_FSE_REST_Duplicate_Template' => __DIR__ . '/../..' . '/modules/full-site-editing/fse-rest-duplicate-template.php',
@@ -93,7 +95,6 @@ class ComposerStaticInitf9a15455068539a5b79444d7b0a23bbf
         'PLL_FSE_REST_Route' => __DIR__ . '/../..' . '/modules/full-site-editing/fse-rest-route.php',
         'PLL_FSE_REST_Template' => __DIR__ . '/../..' . '/modules/full-site-editing/fse-rest-template.php',
         'PLL_FSE_Recreate_Language' => __DIR__ . '/../..' . '/modules/full-site-editing/fse-recreate-language.php',
-        'PLL_FSE_Template_Deletion' => __DIR__ . '/../..' . '/modules/full-site-editing/fse-template-deletion.php',
         'PLL_FSE_Template_Model' => __DIR__ . '/../..' . '/modules/full-site-editing/fse-template-model.php',
         'PLL_FSE_Template_Slug' => __DIR__ . '/../..' . '/modules/full-site-editing/fse-template-slug.php',
         'PLL_FSE_Template_Slug_Sync' => __DIR__ . '/../..' . '/modules/full-site-editing/fse-template-slug-sync.php',
@@ -101,6 +102,7 @@ class ComposerStaticInitf9a15455068539a5b79444d7b0a23bbf
         'PLL_Featured_Content' => __DIR__ . '/..' . '/wpsyntex/polylang/integrations/jetpack/featured-content.php',
         'PLL_File_Format' => __DIR__ . '/../..' . '/modules/import-export/file-format/file-format.php',
         'PLL_File_Format_Factory' => __DIR__ . '/../..' . '/modules/import-export/file-format/file-format-factory.php',
+        'PLL_Filter_REST_Routes' => __DIR__ . '/..' . '/wpsyntex/polylang/include/filter-rest-routes.php',
         'PLL_Filters' => __DIR__ . '/..' . '/wpsyntex/polylang/include/filters.php',
         'PLL_Filters_Links' => __DIR__ . '/..' . '/wpsyntex/polylang/include/filters-links.php',
         'PLL_Filters_Sanitization' => __DIR__ . '/..' . '/wpsyntex/polylang/include/filters-sanitization.php',
@@ -258,7 +260,7 @@ class ComposerStaticInitf9a15455068539a5b79444d7b0a23bbf
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->classMap = ComposerStaticInitf9a15455068539a5b79444d7b0a23bbf::$classMap;
+            $loader->classMap = ComposerStaticInit90077f9a07ba7509961aaf7f0e3d81a5::$classMap;
 
         }, null, ClassLoader::class);
     }

@@ -380,7 +380,7 @@ class PLL_FSE_Template_Slug_Sync extends PLL_FSE_Abstract_Module implements PLL_
 			array(
 				'post__in'               => $translations,
 				'posts_per_page'         => count( $translations ),
-				'post_type'              => PLL_FSE_Tools::get_post_types(),
+				'post_type'              => PLL_FSE_Tools::get_template_post_types(),
 				'ignore_sticky_posts'    => true,
 				'update_post_meta_cache' => false,
 				'lang'                   => '',

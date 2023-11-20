@@ -41,10 +41,10 @@ abstract class PLL_REST_Filtered_Object {
 	 *
 	 * @since 2.6.9
 	 *
-	 * @param object $rest_api      Instance of PLL_REST_API
-	 * @param array  $content_types Array of arrays with content type as keys and options as values
-	 *                              The possible options are:
-	 *                              filters:      whether to filter queries, defaults to true
+	 * @param PLL_REST_API $rest_api      Instance of PLL_REST_API.
+	 * @param array        $content_types Array of arrays with content type as keys and options as values.
+	 *                                    The possible options are:
+	 *                                    filters:      whether to filter queries, defaults to true.
 	 */
 	public function __construct( &$rest_api, $content_types ) {
 		$this->model = &$rest_api->model;
@@ -63,12 +63,12 @@ abstract class PLL_REST_Filtered_Object {
 	}
 
 	/**
-	 * Get the rest field type for a content type
+	 * Get the rest field type for a content type.
 	 *
 	 * @since 2.3.11
 	 *
-	 * @param string $type Post type or taxonomy name
-	 * @return string REST API field type
+	 * @param string $type Post type or taxonomy name.
+	 * @return string REST API field type.
 	 */
 	protected function get_rest_field_type( $type ) {
 		return $type;

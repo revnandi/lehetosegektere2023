@@ -128,12 +128,9 @@ class PLL_Sync_Post {
 	 *
 	 * @since 3.2
 	 *
-	 * @param (int|string[])[] $tr       {
-	 *     List of translations with lang codes as array keys and IDs as array values.
-	 *     Also in this array:
-	 *
-	 *     @type string[] $sync List of synchronized translations with lang codes as array keys and array values.
-	 * }
+	 * @param (int|string[])[] $tr       List of translations with language codes as array keys and post IDs as array values.
+	 *                                   An optional element defined by the 'sync' key includes an array of synchronized translations
+	 *                                   with target language code as array keys and source language code as values.
 	 * @param string           $old_slug The old language slug.
 	 * @param string           $new_slug The new language slug.
 	 * @return (int|string[])[]

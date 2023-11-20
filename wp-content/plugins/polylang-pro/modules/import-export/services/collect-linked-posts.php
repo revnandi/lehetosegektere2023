@@ -33,18 +33,36 @@ class PLL_Collect_Linked_Posts {
 	 *
 	 * @since 3.3
 	 * @since 3.4 Parameter changed from int[] to WP_Post[].
+	 * @since 3.5 Renamed from get_linked_post_ids and now returns a WP_Post array.
+	 *            Also added a second parameter for the post types to retrieve.
 	 *
-	 * @param WP_Post[] $posts An array of posts.
-	 * @return int[] An array of linked post ids.
+	 * @param WP_Post[] $posts      The posts for which searching linked posts.
+	 * @param string[]  $post_types Limits the linked posts search to these post types.
+	 * @return WP_Post[] An array of linked post objects.
 	 */
-	public function get_linked_post_ids( $posts ) {
+	public function get_linked_posts( array $posts, array $post_types ) {
 		$linked_ids = array();
 
 		foreach ( $posts as $post ) {
 			$linked_ids = array_merge( $linked_ids, $this->get_post_ids_from_post( $post ) );
 		}
 
-		return array_unique( $linked_ids );
+		$linked_ids = array_unique( $linked_ids );
+
+		if ( empty( $linked_ids ) ) {
+			return array();
+		}
+
+		// Query all the linked posts outside the PLL_Export_Bulk_Option::translate() loop to avoid multiple SQL queries with get_post() call.
+		return get_posts(
+			array(
+				'include'     => $linked_ids,
+				'post_type'   => $post_types,
+				'post_status' => 'any',
+				'orderby'     => 'ID',
+				'order'       => 'ASC',
+			)
+		);
 	}
 
 	/**

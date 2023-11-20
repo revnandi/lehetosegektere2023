@@ -1,0 +1,13 @@
+{
+  "name": "acf/big-carousel-alt",
+  "title": "Nagy Slider B",
+  "description": "Nagy képes slider dobozzal",
+  "style": [ "file:./big-carousel-alt.css" ],
+  "category": "formatting",
+  "icon": "images-alt2",
+  "keywords": ["big-carousel-alt", "quote"],
+  "acf": {
+      "mode": "preview",
+      "renderTemplate": "big-carousel-alt.php"
+  }
+}

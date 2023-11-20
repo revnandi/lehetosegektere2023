@@ -49,7 +49,7 @@ class PLL_FSE_Language extends PLL_FSE_Abstract_Module implements PLL_Module_Int
 			return $curlang;
 		}
 
-		$editor_lang = $this->get_site_editor_language( $polylang->model );
+		$editor_lang = $this->get_site_editor_language();
 
 		if ( empty( $editor_lang ) ) {
 			return false;
@@ -62,18 +62,28 @@ class PLL_FSE_Language extends PLL_FSE_Abstract_Module implements PLL_Module_Int
 	 * Returns the language object to use in the site editor.
 	 *
 	 * @since 3.2
+	 * @since 3.5 Removed `$model` parameter.
 	 *
-	 * @param  PLL_Model $model Instance of Polylang's model.
 	 * @return PLL_Language|false
 	 */
-	private function get_site_editor_language( PLL_Model $model ) {
-		$post = PLL_FSE_Tools::get_template_post();
+	private function get_site_editor_language() {
+		if ( empty( $_GET['postType'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			return $this->model->get_default_language();
+		}
+
+		$post = null;
+
+		if ( PLL_FSE_Tools::is_template_post_type( sanitize_key( $_GET['postType'] ) ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			$post = PLL_FSE_Tools::get_template_post();
+		} elseif ( ! empty( $_GET['postId'] ) && is_numeric( sanitize_key( $_GET['postId'] ) ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			$post = get_post( (int) $_GET['postId'] ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		}
 
 		if ( empty( $post ) ) {
 			return $this->model->get_default_language();
 		}
 
-		$post_lang = $model->post->get_language( $post->ID );
+		$post_lang = $this->model->post->get_language( $post->ID );
 
 		if ( empty( $post_lang ) ) {
 			return $this->model->get_default_language();

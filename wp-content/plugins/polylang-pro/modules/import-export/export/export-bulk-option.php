@@ -196,6 +196,7 @@ class PLL_Export_Bulk_Option extends PLL_Bulk_Translate_Option {
 	protected function export( PLL_Export_Download_Zip $downloader, array $posts_by_lang, array $args = array() ) {
 		$include_translated_items = ! empty( $args['include_translated_items'] );
 		$taxonomies               = $this->model->get_translated_taxonomies();
+		$post_types               = $this->model->get_translated_post_types();
 		$collect_posts            = new PLL_Collect_Linked_Posts( $this->model->options );
 		$collect_terms            = new PLL_Collect_Linked_Terms();
 
@@ -206,27 +207,27 @@ class PLL_Export_Bulk_Option extends PLL_Bulk_Translate_Option {
 				continue;
 			}
 
-			$post_ids        = wp_list_pluck( $posts, 'ID' );
-			$linked_post_ids = $collect_posts->get_linked_post_ids( $posts );
+			$linked_posts = $collect_posts->get_linked_posts( $posts, $post_types );
 
 			if ( ! $include_translated_items ) {
 				// Remove items that are already translated in this language.
-				foreach ( $linked_post_ids as $i => $linked_post_id ) {
-					if ( $this->model->post->get_translation( $linked_post_id, $lang_slug ) ) {
+				foreach ( $linked_posts as $i => $linked_post ) {
+					if ( $this->model->post->get_translation( $linked_post->ID, $lang_slug ) ) {
 						// A translation already exists.
-						unset( $linked_post_ids[ $i ] );
+						unset( $linked_posts[ $i ] );
 					}
 				}
 			}
 
-			$post_ids_to_export = array_merge( $post_ids, $linked_post_ids );
+			$posts_to_export = array_merge( $posts, $linked_posts );
 
 			// Export posts, and posts collected in them.
-			foreach ( $post_ids_to_export as $post_id ) {
-				$this->translate( $post_id, $lang_slug );
+			foreach ( $posts_to_export as $post ) {
+				$this->translate( $post->ID, $lang_slug );
 			}
 
 			// Get terms assigned to linked posts.
+			$post_ids   = wp_list_pluck( $posts, 'ID' );
 			$post_terms = wp_get_object_terms( $post_ids, $taxonomies );
 			$post_terms = is_array( $post_terms ) ? $post_terms : array();
 

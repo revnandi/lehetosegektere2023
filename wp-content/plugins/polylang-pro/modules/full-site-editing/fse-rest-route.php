@@ -185,7 +185,7 @@ class PLL_FSE_REST_Route {
 			return $this->rest_bases;
 		}
 
-		foreach ( PLL_FSE_Tools::get_post_types() as $post_type ) {
+		foreach ( PLL_FSE_Tools::get_template_post_types() as $post_type ) {
 			$obj = get_post_type_object( $post_type );
 
 			if ( empty( $obj ) ) {
