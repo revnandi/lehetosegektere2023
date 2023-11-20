@@ -116,3 +116,11 @@ article > *:not(.entry-content),
 h1.has-background, h2.has-background, h3.has-background, h4.has-background, h5.has-background, h6.has-background {
   @apply px-4 py-0 pt-8;
 }
+
+.edit-post-visual-editor .is-root-container {
+  font-family: "Krona One", sans-serif!important;
+}
+
+.edit-post-visual-editor .is-root-container .block-editor-block-list__block.wp-block {
+  max-width: unset!important;
+}

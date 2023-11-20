@@ -6,7 +6,7 @@
 
   <?php do_action('tailpress_content_start'); ?>
 
-  <div class="container px-8 py-16 mx-auto my-8">
+  <div class="container px-8 pt-16 pb-8 mx-auto my-8">
 
     <div class="text-center">
       <h2
@@ -70,6 +70,8 @@
   </div>
 
 </div>
+
+<?php get_template_part('template-parts/big-image'); ?>
 
 <?php
 get_footer();
