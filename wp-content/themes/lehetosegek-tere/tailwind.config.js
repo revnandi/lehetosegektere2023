@@ -15,7 +15,9 @@ module.exports = {
     'placeholder:text-turquoise',
     'placeholder:uppercase',
     'md:ml-2',
-    'md:mr-2'
+    'md:mr-2',
+    'bg-turquoise',
+    'text-white'
   ],
   theme: {
     translate: {

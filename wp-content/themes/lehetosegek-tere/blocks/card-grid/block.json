@@ -13,13 +13,9 @@
   ],
   "acf": {
     "mode": "preview",
-    "renderTemplate": "card-grid.php",
-    "supports": {
-      "color": {
-        "background": true,
-        "gradients": true,
-        "text": false
-      }
-    }
+    "renderTemplate": "card-grid.php"
+  },
+  "supports": {
+    "anchor": true
   }
 }

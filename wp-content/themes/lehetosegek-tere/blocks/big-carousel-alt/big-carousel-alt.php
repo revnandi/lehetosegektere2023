@@ -1,6 +1,6 @@
 <?php
 /**
- * Testimonial Block template.
+ * Big Carousel Alt Block template.
  *
  * @param array $block The block settings and attributes.
  */

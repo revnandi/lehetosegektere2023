@@ -3790,7 +3790,7 @@ __webpack_require__.r(__webpack_exports__);
 window.addEventListener("load", function () {
   var _this = this,
     _document$getElementB;
-  (0,unlazy__WEBPACK_IMPORTED_MODULE_5__.lazyLoad)();
+  (0,unlazy__WEBPACK_IMPORTED_MODULE_5__.lazyLoad)('img[data-custom-lazy]');
   var puzzle = new _components_puzzle__WEBPACK_IMPORTED_MODULE_0__.Puzzle({
     wrapperId: "lt_puzzle",
     innerId: "lt_puzzle_inner",

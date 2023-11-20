@@ -35,7 +35,10 @@
             <?php if ($image): ?>
               <div
                 class="relative mb-8 overflow-hidden border group aspect-wide-header aspect-square ">
-                <img class="object-cover w-full h-full" loading="lazy"
+                <img
+                  class="object-cover w-full h-full"
+                  loading="lazy"
+                  data-custom-lazy
                   src="<?php echo $image['sizes']['lqip']; ?>"
                   data-srcset="<?php echo $image['sizes']['thumbnail']; ?> 150w, <?php echo $image['sizes']['medium']; ?> 300w, <?php echo $image['sizes']['large'];?> 1024w"
                   data-sizes="auto" />

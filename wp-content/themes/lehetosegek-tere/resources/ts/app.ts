@@ -6,7 +6,7 @@ import { lazyLoad } from "unlazy";
 import { Gallery } from "./components/gallery";
 
 window.addEventListener("load", function () {
-  lazyLoad();
+  lazyLoad('img[data-custom-lazy]');
   const puzzle = new Puzzle({
     wrapperId: "lt_puzzle",
     innerId: "lt_puzzle_inner",

@@ -33,7 +33,10 @@
             <?php if (has_post_thumbnail()): ?>
               <div
                 class="relative col-span-1 mb-8 overflow-hidden bg-white border border-white rounded-full group md:col-span-5 aspect-wide-header aspect-square">
-                <img class="object-cover w-full h-full p-8" loading="lazy"
+                <img
+                  class="object-cover w-full h-full p-8"
+                  loading="lazy"
+                  data-custom-lazy
                   src="<?php echo get_the_post_thumbnail_url(null, 'lqip') ?>"
                   data-srcset="<?php echo get_the_post_thumbnail_url(null, 'thumbnail') ?> 150w, <?php echo get_the_post_thumbnail_url(null, 'medium') ?> 300w, <?php echo get_the_post_thumbnail_url(null, 'large') ?> 1024w"
                   data-sizes="auto" />

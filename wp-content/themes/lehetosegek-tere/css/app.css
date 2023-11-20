@@ -914,6 +914,9 @@ video {
 .px-1{
   padding-left: 0.25rem;
   padding-right: 0.25rem}
+.px-10{
+  padding-left: 2.5rem;
+  padding-right: 2.5rem}
 .px-12{
   padding-left: 3rem;
   padding-right: 3rem}
@@ -956,9 +959,6 @@ video {
 .py-8{
   padding-top: 2rem;
   padding-bottom: 2rem}
-.px-10{
-  padding-left: 2.5rem;
-  padding-right: 2.5rem}
 .pb-16{
   padding-bottom: 4rem}
 .pb-2{
@@ -977,8 +977,6 @@ video {
   padding-top: 6rem}
 .pt-8{
   padding-top: 2rem}
-.pt-20{
-  padding-top: 5rem}
 .text-center{
   text-align: center}
 .text-right{
