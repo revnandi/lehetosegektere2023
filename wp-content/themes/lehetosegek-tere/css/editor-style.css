@@ -669,6 +669,10 @@
     padding-top: 2rem;
     padding-bottom: 2rem
 }
+.px-10 {
+    padding-left: 2.5rem;
+    padding-right: 2.5rem
+}
 .pb-16 {
     padding-bottom: 4rem
 }
@@ -695,6 +699,9 @@
 }
 .pt-8 {
     padding-top: 2rem
+}
+.pt-20 {
+    padding-top: 5rem
 }
 .text-center {
     text-align: center

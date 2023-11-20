@@ -16,8 +16,7 @@ $slides = $slides ?: [];
   <section class="lt_splide_alt splide relative h-[100dvh] w-full bg-white py-8" aria-label="Carousel">
     <div class="h-full splide__track">
       <ul class="splide__list">
-        <?php while (have_rows('slides')):
-          the_row();
+        <?php while (have_rows('slides')): the_row();
           $image = get_sub_field('image');
 
           $text = get_sub_field('text');

@@ -318,6 +318,7 @@ function fz_register_acf_blocks() {
 	register_block_type( __DIR__ . '/blocks/testimonial' );
 	register_block_type( __DIR__ . '/blocks/big-carousel' );
 	register_block_type( __DIR__ . '/blocks/big-carousel-alt' );
+	register_block_type( __DIR__ . '/blocks/card-grid' );
 }
 // Here we call our fz_register_acf_block() function on init.
 add_action( 'init', 'fz_register_acf_blocks' );

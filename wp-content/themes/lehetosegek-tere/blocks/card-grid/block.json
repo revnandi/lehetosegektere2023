@@ -1,0 +1,25 @@
+{
+  "name": "acf/card-grid",
+  "title": "Kártyás grid",
+  "description": "Kártyás grid",
+  "style": [
+    "file:./card-grid.css"
+  ],
+  "category": "formatting",
+  "icon": "screenoptions",
+  "keywords": [
+    "card-grid",
+    "quote"
+  ],
+  "acf": {
+    "mode": "preview",
+    "renderTemplate": "card-grid.php",
+    "supports": {
+      "color": {
+        "background": true,
+        "gradients": true,
+        "text": false
+      }
+    }
+  }
+}
