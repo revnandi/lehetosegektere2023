@@ -40,7 +40,7 @@ window.addEventListener("load", function () {
   const bigCarousels: Carousel[] = [];
   const bigCarouselWrappers = document.querySelectorAll('.lt_splide');
 
-  if(bigCarouselWrappers && bigCarouselWrappers.length > 0) {
+  if (bigCarouselWrappers && bigCarouselWrappers.length > 0) {
     bigCarouselWrappers.forEach(wrapper => {
       const newCarusel = new Carousel(wrapper as HTMLElement, {
         rewind: true,
@@ -62,7 +62,7 @@ window.addEventListener("load", function () {
   const bigAltCarousels: Carousel[] = [];
   const bigAltCarouselWrappers = document.querySelectorAll('.lt_splide_alt');
 
-  if(bigAltCarouselWrappers && bigAltCarouselWrappers.length > 0) {
+  if (bigAltCarouselWrappers && bigAltCarouselWrappers.length > 0) {
     bigAltCarouselWrappers.forEach(wrapper => {
       const newCarusel = new Carousel(wrapper as HTMLElement, {
         rewind: true,
@@ -115,8 +115,8 @@ window.addEventListener("load", function () {
 
   console.log(bigCarousels)
 
-  bigCarousels.forEach(carousel =>  carousel.init())
-  bigAltCarousels.forEach(carousel =>  carousel.init())
+  bigCarousels.forEach(carousel => carousel.init())
+  bigAltCarousels.forEach(carousel => carousel.init())
 
   console.log(picker);
   console.log(eventPopUp);
@@ -229,7 +229,6 @@ window.addEventListener("load", function () {
   }
 
   // Handle anchor scrolling
-
   const extractHash = (url: string): string => {
     const lastHashtagIndex = url.lastIndexOf('#');
     const lastHashtag = url.substring(lastHashtagIndex);
@@ -267,5 +266,27 @@ window.addEventListener("load", function () {
         }
       }
     });
+
+  // Desktop header scroll animation
+  const header: HTMLElement | null = document.getElementById('lt_header');
+  const sticky: number = header ? header.offsetTop : 80;
+ 
+  let lastScrollTop: number = 0;
+ 
+  window.onscroll = (): void => {
+    const scrollTop: number = window.scrollY || document.documentElement.scrollTop;
+    const isScrollingUp: boolean = scrollTop < lastScrollTop - 10;
+    const isScrollingDown: boolean = scrollTop > lastScrollTop;
+
+    if (isScrollingDown) {
+      header?.classList.remove('header-on-top');
+    }
+    if (isScrollingUp) {
+      header?.classList.add('header-on-top');
+    }
+    lastScrollTop = scrollTop <= 0 ? 0 : scrollTop; // For Mobile or negative scrolling
+  };
+ 
+
 
 });

@@ -136,3 +136,11 @@ h1.has-background, h2.has-background, h3.has-background, h4.has-background, h5.h
 .wp-admin .wp-list-table.fixed {
   position: relative!important;
 }
+
+.header-transform {
+  transform: translateY(-100%);
+}
+
+.header-on-top {
+  transform: translateY(0);
+}

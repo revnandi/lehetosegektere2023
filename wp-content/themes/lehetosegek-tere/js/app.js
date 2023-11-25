@@ -3987,6 +3987,22 @@ window.addEventListener("load", function () {
       }
     }
   });
+  // Desktop header scroll animation
+  var header = document.getElementById('lt_header');
+  var sticky = header ? header.offsetTop : 80;
+  var lastScrollTop = 0;
+  window.onscroll = function () {
+    var scrollTop = window.scrollY || document.documentElement.scrollTop;
+    var isScrollingUp = scrollTop < lastScrollTop - 10;
+    var isScrollingDown = scrollTop > lastScrollTop;
+    if (isScrollingDown) {
+      header === null || header === void 0 || header.classList.remove('header-on-top');
+    }
+    if (isScrollingUp) {
+      header === null || header === void 0 || header.classList.add('header-on-top');
+    }
+    lastScrollTop = scrollTop <= 0 ? 0 : scrollTop; // For Mobile or negative scrolling
+  };
 });
 
 /***/ }),

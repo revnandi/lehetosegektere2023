@@ -19,9 +19,9 @@
 
 		<?php do_action('tailpress_header'); ?>
 
-		<header>
+		<header id="lt_header" class="z-10 md:fixed md:w-full md:transition-transform md:ease-in-out md:duration-700 header-transform header-on-top">
 			<div class="px-4 mx-auto bg-white md:px-11">
-				<div class="py-6 border-b lg:flex lg:justify-between lg:items-center">
+				<div class="py-6 lg:flex lg:justify-between lg:items-center">
 					<div class="flex items-center justify-between">
 
 						<div class="w-32 md:w-32 lg:w-60">

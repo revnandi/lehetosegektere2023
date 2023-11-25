@@ -46,6 +46,9 @@
 .relative {
     position: relative
 }
+.sticky {
+    position: sticky
+}
 .bottom-0 {
     bottom: 0px
 }
@@ -1009,6 +1012,9 @@ body {
     }
 }
 @media (min-width: 782px) {
+    .md\:fixed {
+        position: fixed
+    }
     .md\:bottom-4 {
         bottom: 1rem
     }
@@ -1057,6 +1063,9 @@ body {
     }
     .md\:w-auto {
         width: auto
+    }
+    .md\:w-full {
+        width: 100%
     }
     .md\:grow-0 {
         flex-grow: 0
@@ -1112,6 +1121,17 @@ body {
     .md\:text-xs {
         font-size: 0.75rem;
         line-height: 1rem
+    }
+    .md\:transition-transform {
+        transition-property: transform;
+        transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+        transition-duration: 150ms
+    }
+    .md\:duration-700 {
+        transition-duration: 700ms
+    }
+    .md\:ease-in-out {
+        transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1)
     }
 }
 @media (min-width: 960px) {

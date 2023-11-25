@@ -17,7 +17,9 @@ module.exports = {
     'md:ml-2',
     'md:mr-2',
     'bg-turquoise',
-    'text-white'
+    'text-white',
+    'md:-translate-y-full',
+    '-translate-y-full'
   ],
   theme: {
     translate: {

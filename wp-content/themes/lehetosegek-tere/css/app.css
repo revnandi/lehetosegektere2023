@@ -521,6 +521,8 @@ video {
   position: absolute}
 .relative{
   position: relative}
+.sticky{
+  position: sticky}
 .bottom-0{
   bottom: 0px}
 .bottom-6{
@@ -1262,6 +1264,12 @@ h1.has-background, h2.has-background, h3.has-background, h4.has-background, h5.h
 .wp-admin .wp-list-table.fixed {
   position: relative!important;
 }
+.header-transform {
+  transform: translateY(-100%);
+}
+.header-on-top {
+  transform: translateY(0);
+}
 html {
   scroll-behavior: smooth;
 }
@@ -1425,6 +1433,9 @@ body:not(.wp-admin) * {
     line-height: 2.25rem}}
 @media (min-width: 782px){
 
+  .md\:fixed{
+    position: fixed}
+
   .md\:bottom-4{
     bottom: 1rem}
 
@@ -1473,6 +1484,9 @@ body:not(.wp-admin) * {
 
   .md\:w-auto{
     width: auto}
+
+  .md\:w-full{
+    width: 100%}
 
   .md\:grow-0{
     flex-grow: 0}
@@ -1527,7 +1541,18 @@ body:not(.wp-admin) * {
 
   .md\:text-xs{
     font-size: 0.75rem;
-    line-height: 1rem}}
+    line-height: 1rem}
+
+  .md\:transition-transform{
+    transition-property: transform;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms}
+
+  .md\:duration-700{
+    transition-duration: 700ms}
+
+  .md\:ease-in-out{
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1)}}
 @media (min-width: 960px){
 
   .lg\:-mx-4{
