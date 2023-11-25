@@ -1121,6 +1121,9 @@ body {
     .md\:pt-20 {
         padding-top: 5rem
     }
+    .md\:pt-16 {
+        padding-top: 4rem
+    }
     .md\:text-3xl {
         font-size: 1.875rem;
         line-height: 2.25rem
