@@ -220,4 +220,4 @@
 		</div> -->
 
 
-		<main>
+		<main class="md:pt-20">

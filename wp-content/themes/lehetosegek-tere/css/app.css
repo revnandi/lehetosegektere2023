@@ -979,6 +979,14 @@ video {
   padding-top: 6rem}
 .pt-8{
   padding-top: 2rem}
+.pt-4{
+  padding-top: 1rem}
+.pb-4{
+  padding-bottom: 1rem}
+.pt-10{
+  padding-top: 2.5rem}
+.pt-20{
+  padding-top: 5rem}
 .text-center{
   text-align: center}
 .text-right{
@@ -1526,6 +1534,9 @@ body:not(.wp-admin) * {
   .md\:px-11{
     padding-left: 2.75rem;
     padding-right: 2.75rem}
+
+  .md\:pt-20{
+    padding-top: 5rem}
 
   .md\:text-3xl{
     font-size: 1.875rem;
