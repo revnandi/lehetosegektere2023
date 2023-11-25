@@ -2,7 +2,7 @@
   <div id="lt_puzzle_inner" class="relative w-full h-full">
     <div class="absolute w-1/3 h-1/3 top-0 left-0 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] cursor-pointer" data-item-number="1" data-rotation="0">
       <div class="flex items-center justify-center w-full h-full text-white">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
+        <svg class="w-100 h-100" class="w-100 h-100" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
           <defs>
             <linearGradient id="a" x1="200" x2="200" y1="400" gradientUnits="userSpaceOnUse">
               <stop offset="0" stop-color="#f9101e"/><stop offset="1" stop-color="#eb6b2d"/>
@@ -16,7 +16,7 @@
     </div>
     <div class="absolute w-1/3 h-1/3 top-0 left-0 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] cursor-pointer" data-item-number="2" data-rotation="0">
       <div class="flex items-center justify-center w-full h-full text-white">
-        <svg
+        <svg class="w-100 h-100"
         width="100%"
         height="100%"
         viewBox="0 0 50 50"
@@ -36,7 +36,7 @@
     </div>
     <div class="absolute w-1/3 h-1/3 top-0 left-0 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] cursor-pointer" data-item-number="3" data-rotation="0">
       <div class="flex items-center justify-center w-full h-full text-white">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
+        <svg class="w-100 h-100" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
           <defs>
             <linearGradient id="puzzle_square" x1="200" x2="200" y1="400" gradientUnits="userSpaceOnUse">
               <stop offset="0" stop-color="#ff00fd"/>
@@ -49,7 +49,7 @@
     </div>
     <div class="absolute w-1/3 h-1/3 top-0 left-0 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] cursor-pointer" data-item-number="4" data-rotation="0">
       <div class="flex items-center justify-center w-full h-full text-white">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
+        <svg class="w-100 h-100" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
           <defs>
             <linearGradient id="puzzle_slice" x2="400" y1="200" y2="200" gradientUnits="userSpaceOnUse">
               <stop offset="0" stop-color="#f9101e"/>
@@ -62,7 +62,7 @@
     </div>
     <div class="absolute w-1/3 h-1/3 top-0 left-0 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] cursor-pointer" data-item-number="5" data-rotation="0">
       <div class="flex items-center justify-center w-full h-full text-white">
-        <svg
+        <svg class="w-100 h-100"
         width="100%"
         height="100%"
         viewBox="0 0 50 50"
@@ -82,7 +82,7 @@
     </div>
     <div class="absolute w-1/3 h-1/3 top-0 left-0 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] cursor-pointer" data-item-number="6" data-rotation="0">
       <div class="flex items-center justify-center w-full h-full text-white">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
+        <svg class="w-100 h-100" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
           <defs>
             <linearGradient id="puzzle_half_cirlce_right_a" x1="100" x2="100" y2="400" gradientUnits="userSpaceOnUse">
               <stop offset="0" stop-color="#f9101e"/>
@@ -100,7 +100,7 @@
     </div>
     <div class="absolute w-1/3 h-1/3 top-0 left-0 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] cursor-pointer" data-item-number="7" data-rotation="0">
       <div class="flex items-center justify-center w-full h-full text-white">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+        <svg class="w-100 h-100" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
           <defs>
             <linearGradient id="puzzle_gate_left" x2="100" y1="50" y2="50" gradientUnits="userSpaceOnUse">
               <stop offset="0" stop-color="#f9101e"/>
@@ -113,7 +113,7 @@
     </div>
     <div class="absolute w-1/3 h-1/3 top-0 left-0 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] cursor-pointer" data-item-number="8" data-rotation="0">  
       <div class="flex items-center justify-center w-full h-full text-white">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+        <svg class="w-100 h-100" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
           <defs>
             <linearGradient id="puzzle_gate_right" x2="200" y1="100" y2="100" gradientUnits="userSpaceOnUse">
               <stop offset="0" stop-color="#e83895"/>
