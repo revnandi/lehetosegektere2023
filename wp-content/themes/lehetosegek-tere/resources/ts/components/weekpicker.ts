@@ -1,5 +1,5 @@
 import * as pikaday from 'pikaday';
-import { startOfWeek, addWeeks } from 'date-fns'
+import { startOfWeek, addWeeks, addDays } from 'date-fns'
 
 export class WeekPicker {
   picker: pikaday;
@@ -58,17 +58,15 @@ export class WeekPicker {
   }
 
   public nextWeek(): void {
-    console.log('GOING TO NEXT WEEK')
     let current = this.picker.getDate();
-    console.log({ current })
     if (current) {
       const startOfCurrentWeek = startOfWeek(current, { weekStartsOn: 1 });
       const startOfNextWeek = addWeeks(startOfCurrentWeek, 1);
-      console.log({ startOfCurrentWeek, startOfNextWeek })
 
       this.picker.setDate(startOfNextWeek);
       this.updateSelectedWeek();
       this.updateSelectedDay(null); // as day is not selected yet after switching the week, set this to null
+      this.resetSelectedDay();
     }
     this.pageChangeCallback();
   }
@@ -76,11 +74,13 @@ export class WeekPicker {
   public previousWeek(): void {
     let current = this.picker.getDate();
     if (current) {
-      current.setDate(current.getDate() - 7);
-      this.picker.setDate(current);
+      const startOfCurrentWeek = startOfWeek(current, { weekStartsOn: 1 });
+      const startOfLastWeek = addWeeks(startOfCurrentWeek, -1);
 
+      this.picker.setDate(startOfLastWeek);
       this.updateSelectedWeek();
       this.updateSelectedDay(null); // as day is not selected yet after switching the week, set this to null
+      this.resetSelectedDay();
     }
     this.pageChangeCallback();
   }
@@ -103,20 +103,26 @@ export class WeekPicker {
     const dayButtons = [...dayButtonContainer.children];
 
     for (let i = 0; i < dayButtons.length; i++) {
-      dayButtons[i].addEventListener('click', () => this.selectDay(i));
+      dayButtons[i].addEventListener('click', () => {
+        const dayNumber = (dayButtons[i] as HTMLElement).dataset.day;
+        if (!dayNumber) return;
+        this.selectDay(Number(dayNumber), i)
+      });
     }
   }
 
-  private selectDay(dayIndex: number): void {
-    this.updateDayButtonClasses(dayIndex);
+  private resetSelectedDay() {
+    this.selectedDay = null;
 
-    let current = this.picker.getDate();
-    if (current) {
-      current.setDate(current.getDate() - current.getDay() + dayIndex + 1);
-      this.picker.setDate(current);
+    // Add a non existent index so there are no matches, kind of a hack...
+    this.updateDayButtonClasses(-1)  
+  }
 
-      this.updateSelectedDay(dayIndex);
-    }
+  private selectDay(dayIndex: number, buttonIndex: number): void {
+    this.updateDayButtonClasses(buttonIndex);
+    this.updateSelectedDay(dayIndex);
+
+    console.log(this.selectedDay)
   }
 
   private updateDayButtonClasses(selectedIndex: number): void {
@@ -145,11 +151,22 @@ export class WeekPicker {
 
   private updateSelectedDay(dayIndex: number | null): void {
     if (dayIndex !== null) {
-      this.selectedDay = new Date(this.selectedWeek.getFullYear(), this.selectedWeek.getMonth(), this.selectedWeek.getDate() + dayIndex);
+      this.selectedDay = this.getDayOfWeekDate(this.selectedWeek, dayIndex);
     } else {
       this.selectedDay = null;
     }
   }
+
+  private getDayOfWeekDate(date: Date, dayIndex: number): Date {
+    // Get the start of the week (Monday) for the given date
+    const startOfWeekDate = startOfWeek(date, { weekStartsOn: 1 });
+
+    // Add the number of days to reach the desired day of the week
+    const dayOfWeekDate = addDays(startOfWeekDate, dayIndex === 0 ? 6 : dayIndex - 1);
+
+    return dayOfWeekDate;
+  }
+
 
   public getSelectedWeek(): Date {
     return new Date(this.selectedWeek);

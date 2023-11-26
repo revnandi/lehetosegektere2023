@@ -4582,6 +4582,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var pikaday__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(pikaday__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var date_fns__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! date-fns */ "./node_modules/.pnpm/date-fns@2.30.0/node_modules/date-fns/esm/startOfWeek/index.js");
 /* harmony import */ var date_fns__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! date-fns */ "./node_modules/.pnpm/date-fns@2.30.0/node_modules/date-fns/esm/addWeeks/index.js");
+/* harmony import */ var date_fns__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! date-fns */ "./node_modules/.pnpm/date-fns@2.30.0/node_modules/date-fns/esm/addDays/index.js");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -4657,25 +4658,17 @@ var WeekPicker = /*#__PURE__*/function () {
   }, {
     key: "nextWeek",
     value: function nextWeek() {
-      console.log('GOING TO NEXT WEEK');
       var current = this.picker.getDate();
-      console.log({
-        current: current
-      });
       if (current) {
         var startOfCurrentWeek = (0,date_fns__WEBPACK_IMPORTED_MODULE_1__["default"])(current, {
           weekStartsOn: 1
         });
         var startOfNextWeek = (0,date_fns__WEBPACK_IMPORTED_MODULE_2__["default"])(startOfCurrentWeek, 1);
-        console.log({
-          startOfCurrentWeek: startOfCurrentWeek,
-          startOfNextWeek: startOfNextWeek
-        });
         this.picker.setDate(startOfNextWeek);
         this.updateSelectedWeek();
         this.updateSelectedDay(null); // as day is not selected yet after switching the week, set this to null
+        this.resetSelectedDay();
       }
-
       this.pageChangeCallback();
     }
   }, {
@@ -4683,12 +4676,15 @@ var WeekPicker = /*#__PURE__*/function () {
     value: function previousWeek() {
       var current = this.picker.getDate();
       if (current) {
-        current.setDate(current.getDate() - 7);
-        this.picker.setDate(current);
+        var startOfCurrentWeek = (0,date_fns__WEBPACK_IMPORTED_MODULE_1__["default"])(current, {
+          weekStartsOn: 1
+        });
+        var startOfLastWeek = (0,date_fns__WEBPACK_IMPORTED_MODULE_2__["default"])(startOfCurrentWeek, -1);
+        this.picker.setDate(startOfLastWeek);
         this.updateSelectedWeek();
         this.updateSelectedDay(null); // as day is not selected yet after switching the week, set this to null
+        this.resetSelectedDay();
       }
-
       this.pageChangeCallback();
     }
   }, {
@@ -4708,7 +4704,9 @@ var WeekPicker = /*#__PURE__*/function () {
       var dayButtons = _toConsumableArray(dayButtonContainer.children);
       var _loop = function _loop(i) {
         dayButtons[i].addEventListener('click', function () {
-          return _this2.selectDay(i);
+          var dayNumber = dayButtons[i].dataset.day;
+          if (!dayNumber) return;
+          _this2.selectDay(Number(dayNumber), i);
         });
       };
       for (var i = 0; i < dayButtons.length; i++) {
@@ -4716,15 +4714,18 @@ var WeekPicker = /*#__PURE__*/function () {
       }
     }
   }, {
+    key: "resetSelectedDay",
+    value: function resetSelectedDay() {
+      this.selectedDay = null;
+      // Add a non existent index so there are no matches, kind of a hack...
+      this.updateDayButtonClasses(-1);
+    }
+  }, {
     key: "selectDay",
-    value: function selectDay(dayIndex) {
-      this.updateDayButtonClasses(dayIndex);
-      var current = this.picker.getDate();
-      if (current) {
-        current.setDate(current.getDate() - current.getDay() + dayIndex + 1);
-        this.picker.setDate(current);
-        this.updateSelectedDay(dayIndex);
-      }
+    value: function selectDay(dayIndex, buttonIndex) {
+      this.updateDayButtonClasses(buttonIndex);
+      this.updateSelectedDay(dayIndex);
+      console.log(this.selectedDay);
     }
   }, {
     key: "updateDayButtonClasses",
@@ -4754,10 +4755,21 @@ var WeekPicker = /*#__PURE__*/function () {
     key: "updateSelectedDay",
     value: function updateSelectedDay(dayIndex) {
       if (dayIndex !== null) {
-        this.selectedDay = new Date(this.selectedWeek.getFullYear(), this.selectedWeek.getMonth(), this.selectedWeek.getDate() + dayIndex);
+        this.selectedDay = this.getDayOfWeekDate(this.selectedWeek, dayIndex);
       } else {
         this.selectedDay = null;
       }
+    }
+  }, {
+    key: "getDayOfWeekDate",
+    value: function getDayOfWeekDate(date, dayIndex) {
+      // Get the start of the week (Monday) for the given date
+      var startOfWeekDate = (0,date_fns__WEBPACK_IMPORTED_MODULE_1__["default"])(date, {
+        weekStartsOn: 1
+      });
+      // Add the number of days to reach the desired day of the week
+      var dayOfWeekDate = (0,date_fns__WEBPACK_IMPORTED_MODULE_3__["default"])(startOfWeekDate, dayIndex === 0 ? 6 : dayIndex - 1);
+      return dayOfWeekDate;
     }
   }, {
     key: "getSelectedWeek",
