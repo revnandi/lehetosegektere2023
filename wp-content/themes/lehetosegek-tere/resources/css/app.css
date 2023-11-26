@@ -2,6 +2,7 @@
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 @import "glider-js/glider.min.css";
+@import "pikaday/css/pikaday.css";
 
 @import "custom.css";
 

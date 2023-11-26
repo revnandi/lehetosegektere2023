@@ -1,10 +1,21 @@
 import * as pikaday from 'pikaday';
-import { startOfWeek, addWeeks, addDays, endOfDay } from 'date-fns'
+import { format, startOfWeek, addWeeks, addDays, endOfDay, getMonth, subMonths, addMonths } from 'date-fns'
+import { hu } from 'date-fns/locale';
+
+
+const i18n = {
+	previousMonth	: 'Előző hónap',
+	nextMonth		: 'Következő hónap',
+  months: ['Január', 'Február', 'Március', 'Április', 'Május', 'Június', 'Július', 'Augusztus', 'Szeptember', 'Október', 'November', 'December'],
+  weekdays: ['Vasárnap', 'Hétfő', 'Kedd', 'Szerda', 'Csütörtök', 'Péntek', 'Szombat'],
+  weekdaysShort: ['V', 'H', 'K', 'Sz', 'Cs', 'P', 'Sz']
+};
 
 export class WeekPicker {
   picker: pikaday;
   selectedWeek: Date; // to store the start of the selected week
   selectedDay: Date | null; // to store the selected day of the week if any
+  selectedMonth: number;
   nextButtonId: string;
   prevButtonId: string;
   dayButtonContainerId: string;
@@ -17,6 +28,7 @@ export class WeekPicker {
       pickWholeWeek: true,
       defaultDate: new Date(),
       setDefaultDate: true,
+      i18n: i18n,
       firstDay: 1,
       format: 'D/M/YYYY',
       toString: (date: Date) => this.getWeekString(date),
@@ -35,11 +47,14 @@ export class WeekPicker {
       this.selectedWeek = new Date();
       this.picker.setDate(this.selectedWeek);
     }
-
+    
     this.selectedDay = null;
+    this.selectedMonth = getMonth(this.selectedWeek);
+    this.setMonth();
 
     this.initButtonListeners(nextButtonId, prevButtonId, dayButtonContainerId);
   }
+
 
   private getWeekString(date: Date): string {
     let dayOfWeek = date.getDay();
@@ -85,6 +100,39 @@ export class WeekPicker {
     this.pageChangeCallback();
   }
 
+  public nextMonth() {
+    let current = this.picker.getDate();
+    if (current) {
+      const startOfNextMonth = startOfWeek(addMonths(this.selectedWeek, 1), { weekStartsOn: 1 });
+
+      this.picker.setDate(startOfNextMonth);
+      this.updateSelectedWeek();
+      this.updateSelectedDay(null); // as day is not selected yet after switching the week, set this to null
+      this.resetSelectedDay();
+    }
+    this.pageChangeCallback();
+  }
+
+  public previousMonth() {
+    let current = this.picker.getDate();
+    if (current) {
+      const startOfPreviousMonth = startOfWeek(subMonths(this.selectedWeek, 1), { weekStartsOn: 1 });
+
+      this.picker.setDate(startOfPreviousMonth);
+      this.updateSelectedWeek();
+      this.updateSelectedDay(null); // as day is not selected yet after switching the week, set this to null
+      this.resetSelectedDay();
+    }
+    this.pageChangeCallback();
+  }
+
+  public setMonth(): void {
+    this.selectedMonth = getMonth(this.selectedWeek);
+    const monthLabel = document.getElementById("lt_events_datepicker_month");
+    if(!monthLabel) return;
+    monthLabel.innerText = format(new Date(this.selectedWeek), 'LLLL', { locale: hu }); 
+  }
+
   private initButtonListeners(nextButtonId: string, prevButtonId: string, dayButtonContainerId: string): void {
     const prevButtonElement = document.getElementById(prevButtonId);
     const nextButtonElement = document.getElementById(nextButtonId);
@@ -98,41 +146,49 @@ export class WeekPicker {
     });
   }
 
-  private resetSelectedDay() {
+  public resetSelectedDay() {
     this.selectedDay = null;
 
     // Add a non existent index so there are no matches, kind of a hack... 
-    this.updateDayButtonClasses(-1)
+    this.updateDayButtonClassesAndData(-1)
   }
 
   public selectDay(dayIndex: number, buttonIndex: number): void {
-    this.updateDayButtonClasses(buttonIndex);
+    this.updateDayButtonClassesAndData(buttonIndex);
     this.updateSelectedDay(dayIndex);
-
-    console.log(this.selectedDay)
   }
 
-  private updateDayButtonClasses(selectedIndex: number): void {
+  private updateDayButtonClassesAndData(selectedIndex: number): void {
     const dayButtonContainer = document.getElementById(this.dayButtonContainerId);
 
     if (!dayButtonContainer) return;
     const dayButtons = [...dayButtonContainer.children];
 
-    dayButtons.forEach((button, index) => {
+    dayButtons.forEach((value: Element, index: number) => {
+      const button = value as HTMLButtonElement;
       if (index === selectedIndex) {
-        button.classList.add('bg-black', 'text-white');
+        button.dataset.active = "true";
+        button.classList.add('bg-black', 'text-turquoise');
         button.classList.remove('bg-white', 'text-black');
+        // if(button.dataset.active === "true") {
+        //   this.resetSelectedDay()
+        //   button.dataset.active = "false";
+        //   button.classList.add('bg-white', 'text-black');
+        //   button.classList.remove('bg-black', 'text-turquoise');
+        // }
       } else {
+        button.dataset.active = "false";
         button.classList.add('bg-white', 'text-black');
-        button.classList.remove('bg-black', 'text-white');
+        button.classList.remove('bg-black', 'text-turquoise');
       }
-    });
+     });
   }
 
   private updateSelectedWeek(): void {
     let current = this.picker.getDate();
     if (current) {
       this.selectedWeek = new Date(current.getFullYear(), current.getMonth(), current.getDate() - current.getDay() + 1);
+      this.setMonth();
     }
   }
 
@@ -153,7 +209,6 @@ export class WeekPicker {
 
     return dayOfWeekDate;
   }
-
 
   public getSelectedWeek(): Date {
     return new Date(this.selectedWeek);

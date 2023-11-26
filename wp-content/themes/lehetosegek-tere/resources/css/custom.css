@@ -144,3 +144,7 @@ h1.has-background, h2.has-background, h3.has-background, h4.has-background, h5.h
 .header-on-top {
   transform: translateY(0);
 }
+
+.pika-single {
+  @apply bg-white;
+}

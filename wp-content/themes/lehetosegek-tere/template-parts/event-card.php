@@ -2,8 +2,8 @@
   <div class="aspect-square">
     <img class="w-full h-full object-fit" src="https://picsum.photos/seed/picsum/200/300" alt="">
   </div>
-  <div class="w-full bg-gradient-to-r from-red-orange to-purple-light">
-    <div class="p-2">
+  <div class="flex flex-col justify-between w-full h-full bg-gradient-to-r from-red-orange to-purple-light">
+    <div class="flex flex-col h-full p-2">
       <div class="flex justify-between">
         <?php
           $date_start = get_field('date_start');
@@ -26,7 +26,7 @@
 
       <button class="relative block w-10 h-10 my-3 rounded-full cursor-pointer bg-gradient-to-r from-red to-purple has-cross event-popup-link" data-event-id="<?php the_ID() ?>"></button>
   
-      <div class="text-black uppercase text-3xs">
+      <div class="mt-auto text-black uppercase text-3xs">
         Vezető | Kovács Peti
       </div>
   

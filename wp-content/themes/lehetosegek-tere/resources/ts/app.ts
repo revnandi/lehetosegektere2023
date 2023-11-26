@@ -267,7 +267,24 @@ window.addEventListener("load", function () {
       })
     )
   }
-
+  if (document.getElementById("lt_events_datepicker_month_next")) {
+    (
+      document.getElementById("lt_events_datepicker_month_next") as HTMLButtonElement
+    ).addEventListener("click", function (this: HTMLButtonElement) {
+      picker.nextMonth();
+      const keyword = "";
+      handleEvent.call(this, keyword);
+    });
+  }
+  if (document.getElementById("lt_events_datepicker_month_prev")) {
+    (
+      document.getElementById("lt_events_datepicker_month_prev") as HTMLButtonElement
+    ).addEventListener("click", function (this: HTMLButtonElement) {
+      picker.previousMonth();
+      const keyword = "";
+      handleEvent.call(this, keyword);
+    });
+  }
   // Handle anchor scrolling
   const extractHash = (url: string): string => {
     const lastHashtagIndex = url.lastIndexOf("#");

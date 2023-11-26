@@ -77,7 +77,10 @@ module.exports = {
       },
       animation: {
         puzzleAppear: 'puzzleAppear 1s',
-      }
+      },
+      screens: {
+        '3xl': '1600px',
+      },
     },
     screens: {
       'xs': '480px',
