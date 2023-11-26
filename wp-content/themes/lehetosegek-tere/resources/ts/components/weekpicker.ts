@@ -1,4 +1,5 @@
 import * as pikaday from 'pikaday';
+import { startOfWeek, addWeeks } from 'date-fns'
 
 export class WeekPicker {
   picker: pikaday;
@@ -57,11 +58,15 @@ export class WeekPicker {
   }
 
   public nextWeek(): void {
+    console.log('GOING TO NEXT WEEK')
     let current = this.picker.getDate();
+    console.log({ current })
     if (current) {
-      current.setDate(current.getDate() + 7);
-      this.picker.setDate(current);
-      
+      const startOfCurrentWeek = startOfWeek(current, { weekStartsOn: 1 });
+      const startOfNextWeek = addWeeks(startOfCurrentWeek, 1);
+      console.log({ startOfCurrentWeek, startOfNextWeek })
+
+      this.picker.setDate(startOfNextWeek);
       this.updateSelectedWeek();
       this.updateSelectedDay(null); // as day is not selected yet after switching the week, set this to null
     }
@@ -84,17 +89,16 @@ export class WeekPicker {
     const prevButtonElement = document.getElementById(prevButtonId);
     const nextButtonElement = document.getElementById(nextButtonId);
 
-    if(nextButtonElement) nextButtonElement.addEventListener('click', () => {
+    if (nextButtonElement) nextButtonElement.addEventListener('click', () => {
       this.nextWeek();
-
     });
 
-    if(prevButtonElement) prevButtonElement.addEventListener('click', () => {
+    if (prevButtonElement) prevButtonElement.addEventListener('click', () => {
       this.previousWeek();
     });
 
     const dayButtonContainer = document.getElementById(dayButtonContainerId);
-    if(!dayButtonContainer) return;
+    if (!dayButtonContainer) return;
 
     const dayButtons = [...dayButtonContainer.children];
 
@@ -113,14 +117,12 @@ export class WeekPicker {
 
       this.updateSelectedDay(dayIndex);
     }
-    console.log(current)
-    console.log(this.getWeekRange())
   }
 
   private updateDayButtonClasses(selectedIndex: number): void {
     const dayButtonContainer = document.getElementById(this.dayButtonContainerId);
 
-    if(!dayButtonContainer) return;
+    if (!dayButtonContainer) return;
     const dayButtons = [...dayButtonContainer.children];
 
     dayButtons.forEach((button, index) => {
@@ -158,9 +160,8 @@ export class WeekPicker {
   }
 
   public getWeekRange(): { start: string, end: string } {
-    const start = new Date(this.selectedWeek.getTime());
-    start.setDate(start.getDate() - start.getDay() + 1); // set to Monday of current week
-    const end = new Date(start.getTime());
+    const start = startOfWeek(new Date(this.selectedWeek), { weekStartsOn: 1 })
+    const end = new Date(start);
     end.setDate(start.getDate() + 6); // set to Sunday of the current week
 
     const startDateString = this.formatDate(start);

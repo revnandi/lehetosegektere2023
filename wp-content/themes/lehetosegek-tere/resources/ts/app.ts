@@ -206,9 +206,12 @@ window.addEventListener("load", function () {
     // Search keyword input event listeners
     (
       document.getElementById("lt_search_keyword_input") as HTMLInputElement
-    ).addEventListener("input", function (this: HTMLInputElement) {
-      const keyword = this.value;
-      handleEvent.call(this, keyword);
+    ).addEventListener("keydown", function (this: HTMLInputElement, event: KeyboardEvent) {
+      if (event.key === "Enter") {
+        event.preventDefault();
+        const keyword = this.value;
+        handleEvent.call(this, keyword);
+      }
     });
   }
   if (document.getElementById("lt_events_datepicker_next")) {

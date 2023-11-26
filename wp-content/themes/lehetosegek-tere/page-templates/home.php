@@ -33,49 +33,51 @@
       $currentDate = new DateTime();
 
       // Calculate the start of the week (Monday).
-      $startOfWeek = $currentDate->modify('this week monday')->format('Y-m-d');
+      $startOfWeek = $currentDate->modify('this week monday')->format('Y-m-d H:i:s');
 
       // Calculate the end of the week (Sunday).
-      $endOfWeek = $currentDate->modify('this week sunday')->format('Y-m-d');
+      $endOfWeek = $currentDate->modify('this week sunday')->format('Y-m-d H:i:s');
+
+      // pretty_dump($startOfWeek);
 
       $events = new WP_Query([
         'post_type' => 'event',
         'posts_per_page' => -1,
         'order_by' => 'date',
         'order' => 'desc',
-        // 'meta_query' => [
-        //   'relation' => 'AND',
-        //   [
-        //     'relation' => 'OR',
-        //     [
-        //       'key' => 'date_start',
-        //       'value' => $startOfWeek,
-        //       'compare' => '>=',
-        //       'type' => 'DATE',
-        //     ],
-        //     [
-        //       'key' => 'date_end',
-        //       'value' => $startOfWeek,
-        //       'compare' => '>=',
-        //       'type' => 'DATE',
-        //     ]
-        //   ],
-        //   [
-        //     'relation' => 'OR',
-        //     [
-        //       'key' => 'date_start',
-        //       'value' => $endOfWeek,
-        //       'compare' => '<=',
-        //       'type' => 'DATE',
-        //     ],
-        //     [
-        //       'key' => 'date_end',
-        //       'value' => $endOfWeek,
-        //       'compare' => '<=',
-        //       'type' => 'DATE',
-        //     ]
-        //   ]
-        // ],
+        'meta_query' => [
+          'relation' => 'AND',
+          [
+            'relation' => 'OR',
+            [
+              'key' => 'date_start',
+              'value' => $startOfWeek,
+              'compare' => '>=',
+              'type' => 'DATE',
+            ],
+            [
+              'key' => 'date_end',
+              'value' => $startOfWeek,
+              'compare' => '>=',
+              'type' => 'DATE',
+            ]
+          ],
+          [
+            'relation' => 'OR',
+            [
+              'key' => 'date_start',
+              'value' => $endOfWeek,
+              'compare' => '<=',
+              'type' => 'DATE',
+            ],
+            [
+              'key' => 'date_end',
+              'value' => $endOfWeek,
+              'compare' => '<=',
+              'type' => 'DATE',
+            ]
+          ]
+        ],
       ]);
       ?>
 
@@ -83,9 +85,8 @@
       <?php if ($events->have_posts()): ?>
         <div class="grid grid-cols-1 gap-4 project-tiles lg:grid-cols-2">
           <?php
-          while ($events->have_posts()):
-            $events->the_post();
-            get_template_part('/template-parts/event-card.php');
+          while ($events->have_posts()): $events->the_post();
+            get_template_part('/template-parts/event-card');
           endwhile;
           ?>
         </div>

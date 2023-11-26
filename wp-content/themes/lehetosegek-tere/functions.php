@@ -130,14 +130,14 @@ function filter_events()
 	$after = $_POST['after'];
 	$before = $_POST['before'];
 
-	$acf_after = date('Y-m-d', strtotime($_POST['after']));
-	$acf_before = date('Y-m-d', strtotime($_POST['before']));
+	$acf_after = date('Y-m-d H:i:s', strtotime($_POST['after']));
+	$acf_before = date('Y-m-d H:i:s', strtotime($_POST['before']));
 
 	$ajaxposts = new WP_Query([
 		'post_type' => $postType,
 		'posts_per_page' => -1,
 		'category_name' => $catSlug,
-		'orderby' => 'menu_order',
+		'order_by' => 'date',
 		'order' => 'desc',
 		's' => $keyword,
 		'meta_query' => [
@@ -148,11 +148,13 @@ function filter_events()
 					'key' => 'date_start',
 					'value' => $acf_after,
 					'compare' => '>=',
+					'type' => 'DATE',
 				],
 				[
 					'key' => 'date_end',
-					'value' => $acf_before,
+					'value' => $acf_after,
 					'compare' => '>=',
+					'type' => 'DATE',
 				]
 			],
 			[
@@ -161,20 +163,21 @@ function filter_events()
 					'key' => 'date_start',
 					'value' => $acf_before,
 					'compare' => '<=',
+					'type' => 'DATE',
 				],
 				[
 					'key' => 'date_end',
-					'value' => $acf_after,
+					'value' => $acf_before,
 					'compare' => '<=',
+					'type' => 'DATE',
 				]
 			]
-		]
+		],
 	]);
 	$response = '';
 
-	if ($ajaxposts->have_posts()) { ?>
-
-		<?php while ($ajaxposts->have_posts()):
+	if ($ajaxposts->have_posts()) :
+		while ($ajaxposts->have_posts()):
 			$ajaxposts->the_post();
 			ob_start(); // start output buffering
 
@@ -182,11 +185,11 @@ function filter_events()
 
 			$response .= ob_get_clean(); // Clean the output buffer and return it as a string, then concatenate to response.
 
-		endwhile; ?>
+		endwhile;
 
-	<?php } else {
+	else: 
 		$response = 'empty';
-	}
+	endif;
 
 	echo $response;
 	die();
