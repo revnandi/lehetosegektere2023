@@ -43,39 +43,39 @@
         'posts_per_page' => -1,
         'order_by' => 'date',
         'order' => 'desc',
-        'meta_query' => [
-          'relation' => 'AND',
-          [
-            'relation' => 'OR',
-            [
-              'key' => 'date_start',
-              'value' => $startOfWeek,
-              'compare' => '>=',
-              'type' => 'DATE',
-            ],
-            [
-              'key' => 'date_end',
-              'value' => $startOfWeek,
-              'compare' => '>=',
-              'type' => 'DATE',
-            ]
-          ],
-          [
-            'relation' => 'OR',
-            [
-              'key' => 'date_start',
-              'value' => $endOfWeek,
-              'compare' => '<=',
-              'type' => 'DATE',
-            ],
-            [
-              'key' => 'date_end',
-              'value' => $endOfWeek,
-              'compare' => '<=',
-              'type' => 'DATE',
-            ]
-          ]
-        ],
+        // 'meta_query' => [
+        //   'relation' => 'AND',
+        //   [
+        //     'relation' => 'OR',
+        //     [
+        //       'key' => 'date_start',
+        //       'value' => $startOfWeek,
+        //       'compare' => '>=',
+        //       'type' => 'DATE',
+        //     ],
+        //     [
+        //       'key' => 'date_end',
+        //       'value' => $startOfWeek,
+        //       'compare' => '>=',
+        //       'type' => 'DATE',
+        //     ]
+        //   ],
+        //   [
+        //     'relation' => 'OR',
+        //     [
+        //       'key' => 'date_start',
+        //       'value' => $endOfWeek,
+        //       'compare' => '<=',
+        //       'type' => 'DATE',
+        //     ],
+        //     [
+        //       'key' => 'date_end',
+        //       'value' => $endOfWeek,
+        //       'compare' => '<=',
+        //       'type' => 'DATE',
+        //     ]
+        //   ]
+        // ],
       ]);
       ?>
 

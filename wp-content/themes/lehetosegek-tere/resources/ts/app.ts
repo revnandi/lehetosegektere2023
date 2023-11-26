@@ -6,14 +6,12 @@ import { lazyLoad } from "unlazy";
 import { Gallery } from "./components/gallery";
 
 window.addEventListener("load", function () {
-  lazyLoad('img[data-custom-lazy]');
+  lazyLoad("img[data-custom-lazy]");
   const puzzle = new Puzzle({
     wrapperId: "lt_puzzle",
     innerId: "lt_puzzle_inner",
     notificationId: "lt_puzzle_notification",
   });
-
-  console.log(puzzle);
 
   const eventPopUp = new EventPopUp("lt_events_popup");
 
@@ -25,26 +23,28 @@ window.addEventListener("load", function () {
     () => eventPopUp.initEventListeners()
   );
 
+  eventPopUp.loadEventContentFromUrl();
+
   // const smallCarousel = new Carousel("lt_small_carousel", {
   //   rewind: true,
-  //   type: 'fade',
+  //   type: "fade",
   //   arrows: false,
   //   classes: {
   //     pagination:
   //       "z-10 absolute bottom-0 left-0 w-full flex justify-center py-2 space-x-0.5 bg-white [&>li]:h-fit [&>li]:flex",
   //     page: "w-2.5 h-2.5 bg-black rounded-full [&.is-active]:bg-turquoise",
   //   },
-  //   // dots: '#lt_small_carousel_dots'
+  //   // dots: "#lt_small_carousel_dots"
   // });
 
   const bigCarousels: Carousel[] = [];
-  const bigCarouselWrappers = document.querySelectorAll('.lt_splide');
+  const bigCarouselWrappers = document.querySelectorAll(".lt_splide");
 
   if (bigCarouselWrappers && bigCarouselWrappers.length > 0) {
     bigCarouselWrappers.forEach(wrapper => {
       const newCarusel = new Carousel(wrapper as HTMLElement, {
         rewind: true,
-        type: 'fade',
+        type: "fade",
         arrows: false,
         lazyLoad: true,
         classes: {
@@ -52,7 +52,7 @@ window.addEventListener("load", function () {
             "z-10 absolute bottom-6 left-11 flex justify-center py-2 space-x-2 [&>li]:h-fit [&>li]:flex",
           page: "w-4 h-4 bg-black rounded-full [&.is-active]:bg-turquoise",
         },
-        // dots: '#lt_small_carousel_dots'
+        // dots: "#lt_small_carousel_dots"
       });
 
       bigCarousels.push(newCarusel)
@@ -60,13 +60,13 @@ window.addEventListener("load", function () {
   }
 
   const bigAltCarousels: Carousel[] = [];
-  const bigAltCarouselWrappers = document.querySelectorAll('.lt_splide_alt');
+  const bigAltCarouselWrappers = document.querySelectorAll(".lt_splide_alt");
 
   if (bigAltCarouselWrappers && bigAltCarouselWrappers.length > 0) {
     bigAltCarouselWrappers.forEach(wrapper => {
       const newCarusel = new Carousel(wrapper as HTMLElement, {
         rewind: true,
-        type: 'fade',
+        type: "fade",
         arrows: false,
         lazyLoad: true,
         pagination: false,
@@ -74,20 +74,20 @@ window.addEventListener("load", function () {
           pagination: "z-10 absolute bottom-6 left-11 flex justify-center py-2 space-x-2 [&>li]:h-fit [&>li]:flex",
           page: "w-4 h-4 bg-black rounded-full [&.is-active]:bg-turquoise",
         },
-        // dots: '#lt_small_carousel_dots'
+        // dots: "#lt_small_carousel_dots"
       });
 
       bigAltCarousels.push(newCarusel)
 
-      const prevButtons = wrapper.querySelectorAll('.lt_button_prev')
+      const prevButtons = wrapper.querySelectorAll(".lt_button_prev")
 
-      prevButtons.forEach(item => item.addEventListener('click', () => {
+      prevButtons.forEach(item => item.addEventListener("click", () => {
         newCarusel.prev()
       }))
 
-      const nextButtons = wrapper.querySelectorAll('.lt_button_next')
+      const nextButtons = wrapper.querySelectorAll(".lt_button_next")
 
-      nextButtons.forEach(item => item.addEventListener('click', () => {
+      nextButtons.forEach(item => item.addEventListener("click", () => {
         newCarusel.next()
       }))
     })
@@ -96,7 +96,7 @@ window.addEventListener("load", function () {
 
   const gallery = new Gallery("lt_gallery", {
     rewind: true,
-    type: 'fade',
+    type: "fade",
     pagination: false,
     lazyLoad: true,
     classes: {
@@ -104,7 +104,7 @@ window.addEventListener("load", function () {
         "z-10 absolute bottom-6 left-11 flex justify-center py-2 space-x-2 [&>li]:h-fit [&>li]:flex",
       page: "w-4 h-4 bg-black rounded-full [&.is-active]:bg-turquoise",
     },
-    // dots: '#lt_small_carousel_dots'
+    // dots: "#lt_small_carousel_dots"
   });
 
   puzzle.init();
@@ -118,8 +118,8 @@ window.addEventListener("load", function () {
   bigCarousels.forEach(carousel => carousel.init())
   bigAltCarousels.forEach(carousel => carousel.init())
 
-  console.log(picker);
-  console.log(eventPopUp);
+  // console.log(picker);
+  // console.log(eventPopUp);
 
   interface HTMLAnchorElementWithDataset extends HTMLAnchorElement {
     dataset: DOMStringMap & {
@@ -230,63 +230,67 @@ window.addEventListener("load", function () {
 
   // Handle anchor scrolling
   const extractHash = (url: string): string => {
-    const lastHashtagIndex = url.lastIndexOf('#');
+    const lastHashtagIndex = url.lastIndexOf("#");
     const lastHashtag = url.substring(lastHashtagIndex);
     return lastHashtag;
   };
 
   const isUrlOnCurrentPage = (url: string): boolean => {
-    const parts = url.split('#');
+    const parts = url.split("#");
     const textName = parts[0];
     const path = this.location.pathname;
 
-    return path.replace(/\//g, '') === textName.replace(/\//g, '');
+    return path.replace(/\//g, "") === textName.replace(/\//g, "");
   };
 
   const anchors = document
-    .getElementById('primary-menu')
-    ?.querySelectorAll('a');
+    .getElementById("primary-menu")
+    ?.querySelectorAll("a");
   const anchorArray = anchors ? Array.from(anchors) : [];
 
   anchorArray
     .filter((anchor: HTMLAnchorElement) => {
-      const href = anchor.getAttribute('href');
-      return href && href.includes('#');
+      const href = anchor.getAttribute("href");
+      return href && href.includes("#");
     })
     .forEach((anchor: HTMLAnchorElement) => {
-      const href = anchor.getAttribute('href');
+      const href = anchor.getAttribute("href");
       if (href) {
         const targetHash = extractHash(href);
         if (isUrlOnCurrentPage(href)) {
-          anchor.addEventListener('click', (event) => {
+          anchor.addEventListener("click", (event) => {
             event.preventDefault();
             const targetElement = document.querySelector(targetHash)
-            if (targetElement) targetElement.scrollIntoView({ behavior: 'smooth' });
+            if (targetElement) targetElement.scrollIntoView({ behavior: "smooth" });
           });
         }
       }
     });
 
   // Desktop header scroll animation
-  const header: HTMLElement | null = document.getElementById('lt_header');
+  const header: HTMLElement | null = document.getElementById("lt_header");
   const sticky: number = header ? header.offsetTop : 80;
- 
+
   let lastScrollTop: number = 0;
- 
+
   window.onscroll = (): void => {
     const scrollTop: number = window.scrollY || document.documentElement.scrollTop;
     const isScrollingUp: boolean = scrollTop < lastScrollTop - 10;
     const isScrollingDown: boolean = scrollTop > lastScrollTop;
 
     if (isScrollingDown) {
-      header?.classList.remove('header-on-top');
+      header?.classList.remove("header-on-top");
     }
     if (isScrollingUp) {
-      header?.classList.add('header-on-top');
+      header?.classList.add("header-on-top");
     }
     lastScrollTop = scrollTop <= 0 ? 0 : scrollTop; // For Mobile or negative scrolling
   };
- 
 
+  // 
+
+  window.addEventListener('hashchange', function (event) {
+    // Your function here
+  });
 
 });

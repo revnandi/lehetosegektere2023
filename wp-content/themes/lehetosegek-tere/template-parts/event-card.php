@@ -24,7 +24,7 @@
         <?php the_title(); ?>
       </h3>
 
-      <a class="relative block w-10 h-10 my-3 rounded-full cursor-pointer bg-gradient-to-r from-red to-purple has-cross event-popup-link" data-event-id="<?php the_ID() ?>"></a>
+      <button class="relative block w-10 h-10 my-3 rounded-full cursor-pointer bg-gradient-to-r from-red to-purple has-cross event-popup-link" data-event-id="<?php the_ID() ?>"></button>
   
       <div class="text-black uppercase text-3xs">
         Vezető | Kovács Peti

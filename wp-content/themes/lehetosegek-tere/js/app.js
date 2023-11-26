@@ -3790,54 +3790,54 @@ __webpack_require__.r(__webpack_exports__);
 window.addEventListener("load", function () {
   var _this = this,
     _document$getElementB;
-  (0,unlazy__WEBPACK_IMPORTED_MODULE_5__.lazyLoad)('img[data-custom-lazy]');
+  (0,unlazy__WEBPACK_IMPORTED_MODULE_5__.lazyLoad)("img[data-custom-lazy]");
   var puzzle = new _components_puzzle__WEBPACK_IMPORTED_MODULE_0__.Puzzle({
     wrapperId: "lt_puzzle",
     innerId: "lt_puzzle_inner",
     notificationId: "lt_puzzle_notification"
   });
-  console.log(puzzle);
   var eventPopUp = new _components_event_popup__WEBPACK_IMPORTED_MODULE_3__.EventPopUp("lt_events_popup");
   var picker = new _components_weekpicker__WEBPACK_IMPORTED_MODULE_2__.WeekPicker("lt_events_datepicker", "lt_events_datepicker_next", "lt_events_datepicker_prev", "lt_events_datepicker_daybuttons_container", function () {
     return eventPopUp.initEventListeners();
   });
+  eventPopUp.loadEventContentFromUrl();
   // const smallCarousel = new Carousel("lt_small_carousel", {
   //   rewind: true,
-  //   type: 'fade',
+  //   type: "fade",
   //   arrows: false,
   //   classes: {
   //     pagination:
   //       "z-10 absolute bottom-0 left-0 w-full flex justify-center py-2 space-x-0.5 bg-white [&>li]:h-fit [&>li]:flex",
   //     page: "w-2.5 h-2.5 bg-black rounded-full [&.is-active]:bg-turquoise",
   //   },
-  //   // dots: '#lt_small_carousel_dots'
+  //   // dots: "#lt_small_carousel_dots"
   // });
   var bigCarousels = [];
-  var bigCarouselWrappers = document.querySelectorAll('.lt_splide');
+  var bigCarouselWrappers = document.querySelectorAll(".lt_splide");
   if (bigCarouselWrappers && bigCarouselWrappers.length > 0) {
     bigCarouselWrappers.forEach(function (wrapper) {
       var newCarusel = new _components_carousel__WEBPACK_IMPORTED_MODULE_1__.Carousel(wrapper, {
         rewind: true,
-        type: 'fade',
+        type: "fade",
         arrows: false,
         lazyLoad: true,
         classes: {
           pagination: "z-10 absolute bottom-6 left-11 flex justify-center py-2 space-x-2 [&>li]:h-fit [&>li]:flex",
           page: "w-4 h-4 bg-black rounded-full [&.is-active]:bg-turquoise"
         }
-        // dots: '#lt_small_carousel_dots'
+        // dots: "#lt_small_carousel_dots"
       });
 
       bigCarousels.push(newCarusel);
     });
   }
   var bigAltCarousels = [];
-  var bigAltCarouselWrappers = document.querySelectorAll('.lt_splide_alt');
+  var bigAltCarouselWrappers = document.querySelectorAll(".lt_splide_alt");
   if (bigAltCarouselWrappers && bigAltCarouselWrappers.length > 0) {
     bigAltCarouselWrappers.forEach(function (wrapper) {
       var newCarusel = new _components_carousel__WEBPACK_IMPORTED_MODULE_1__.Carousel(wrapper, {
         rewind: true,
-        type: 'fade',
+        type: "fade",
         arrows: false,
         lazyLoad: true,
         pagination: false,
@@ -3845,19 +3845,19 @@ window.addEventListener("load", function () {
           pagination: "z-10 absolute bottom-6 left-11 flex justify-center py-2 space-x-2 [&>li]:h-fit [&>li]:flex",
           page: "w-4 h-4 bg-black rounded-full [&.is-active]:bg-turquoise"
         }
-        // dots: '#lt_small_carousel_dots'
+        // dots: "#lt_small_carousel_dots"
       });
 
       bigAltCarousels.push(newCarusel);
-      var prevButtons = wrapper.querySelectorAll('.lt_button_prev');
+      var prevButtons = wrapper.querySelectorAll(".lt_button_prev");
       prevButtons.forEach(function (item) {
-        return item.addEventListener('click', function () {
+        return item.addEventListener("click", function () {
           newCarusel.prev();
         });
       });
-      var nextButtons = wrapper.querySelectorAll('.lt_button_next');
+      var nextButtons = wrapper.querySelectorAll(".lt_button_next");
       nextButtons.forEach(function (item) {
-        return item.addEventListener('click', function () {
+        return item.addEventListener("click", function () {
           newCarusel.next();
         });
       });
@@ -3865,14 +3865,14 @@ window.addEventListener("load", function () {
   }
   var gallery = new _components_gallery__WEBPACK_IMPORTED_MODULE_4__.Gallery("lt_gallery", {
     rewind: true,
-    type: 'fade',
+    type: "fade",
     pagination: false,
     lazyLoad: true,
     classes: {
       pagination: "z-10 absolute bottom-6 left-11 flex justify-center py-2 space-x-2 [&>li]:h-fit [&>li]:flex",
       page: "w-4 h-4 bg-black rounded-full [&.is-active]:bg-turquoise"
     }
-    // dots: '#lt_small_carousel_dots'
+    // dots: "#lt_small_carousel_dots"
   });
 
   puzzle.init();
@@ -3887,8 +3887,6 @@ window.addEventListener("load", function () {
   bigAltCarousels.forEach(function (carousel) {
     return carousel.init();
   });
-  console.log(picker);
-  console.log(eventPopUp);
   // Event handling
   function handleEvent(keyword, anchor) {
     var _target, _target2, _target3;
@@ -3957,38 +3955,38 @@ window.addEventListener("load", function () {
   }
   // Handle anchor scrolling
   var extractHash = function extractHash(url) {
-    var lastHashtagIndex = url.lastIndexOf('#');
+    var lastHashtagIndex = url.lastIndexOf("#");
     var lastHashtag = url.substring(lastHashtagIndex);
     return lastHashtag;
   };
   var isUrlOnCurrentPage = function isUrlOnCurrentPage(url) {
-    var parts = url.split('#');
+    var parts = url.split("#");
     var textName = parts[0];
     var path = _this.location.pathname;
-    return path.replace(/\//g, '') === textName.replace(/\//g, '');
+    return path.replace(/\//g, "") === textName.replace(/\//g, "");
   };
-  var anchors = (_document$getElementB = document.getElementById('primary-menu')) === null || _document$getElementB === void 0 ? void 0 : _document$getElementB.querySelectorAll('a');
+  var anchors = (_document$getElementB = document.getElementById("primary-menu")) === null || _document$getElementB === void 0 ? void 0 : _document$getElementB.querySelectorAll("a");
   var anchorArray = anchors ? Array.from(anchors) : [];
   anchorArray.filter(function (anchor) {
-    var href = anchor.getAttribute('href');
-    return href && href.includes('#');
+    var href = anchor.getAttribute("href");
+    return href && href.includes("#");
   }).forEach(function (anchor) {
-    var href = anchor.getAttribute('href');
+    var href = anchor.getAttribute("href");
     if (href) {
       var targetHash = extractHash(href);
       if (isUrlOnCurrentPage(href)) {
-        anchor.addEventListener('click', function (event) {
+        anchor.addEventListener("click", function (event) {
           event.preventDefault();
           var targetElement = document.querySelector(targetHash);
           if (targetElement) targetElement.scrollIntoView({
-            behavior: 'smooth'
+            behavior: "smooth"
           });
         });
       }
     }
   });
   // Desktop header scroll animation
-  var header = document.getElementById('lt_header');
+  var header = document.getElementById("lt_header");
   var sticky = header ? header.offsetTop : 80;
   var lastScrollTop = 0;
   window.onscroll = function () {
@@ -3996,13 +3994,17 @@ window.addEventListener("load", function () {
     var isScrollingUp = scrollTop < lastScrollTop - 10;
     var isScrollingDown = scrollTop > lastScrollTop;
     if (isScrollingDown) {
-      header === null || header === void 0 || header.classList.remove('header-on-top');
+      header === null || header === void 0 || header.classList.remove("header-on-top");
     }
     if (isScrollingUp) {
-      header === null || header === void 0 || header.classList.add('header-on-top');
+      header === null || header === void 0 || header.classList.add("header-on-top");
     }
     lastScrollTop = scrollTop <= 0 ? 0 : scrollTop; // For Mobile or negative scrolling
   };
+  // 
+  window.addEventListener('hashchange', function (event) {
+    // Your function here
+  });
 });
 
 /***/ }),
@@ -4121,45 +4123,84 @@ var EventPopUp = /*#__PURE__*/function () {
       return Array.from(document.querySelectorAll('.event-popup-link'));
     }
   }, {
+    key: "fetchAndUpdateEventContent",
+    value: function fetchAndUpdateEventContent(eventId) {
+      var _this = this;
+      // Create a FormData object to store the data to be sent with the AJAX request
+      var formData = new FormData();
+      formData.append('action', 'get_event_cpt');
+      formData.append('event_id', String(eventId));
+      // Make an AJAX call to retrieve the event content
+      fetch('/wp-admin/admin-ajax.php', {
+        method: 'POST',
+        body: formData
+      }).then(function (response) {
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw new Error('Error: ' + response.status);
+        }
+      }).then(function (eventContent) {
+        console.log(eventContent);
+        _this.wrapper.innerHTML = _this.getPopUpContent(eventContent);
+        document.querySelectorAll('.popup-button-close').forEach(function (button) {
+          button.addEventListener('click', function (event) {
+            if (event.target === button) {
+              // console.log(event.target)
+              // console.log(button)
+              _this.closePopUp();
+              _this.removePopupParamFromUrl();
+            }
+          });
+        });
+        _this.togglePopUpVisibility();
+      })["catch"](function (error) {
+        console.error(error);
+      });
+    }
+  }, {
+    key: "loadEventContent",
+    value: function loadEventContent(eventId) {
+      this.fetchAndUpdateEventContent(eventId);
+    }
+  }, {
     key: "initEventListeners",
     value: function initEventListeners() {
-      var _this = this;
+      var _this2 = this;
       this.getPopUpLinks().forEach(function (item) {
         return item.addEventListener('click', function () {
           // Get the event ID from the link's data attribute
           var eventId = item.dataset.eventId;
-          // Create a FormData object to store the data to be sent with the AJAX request
-          var formData = new FormData();
-          formData.append('action', 'get_event_cpt');
-          formData.append('event_id', String(eventId));
-          // Make an AJAX call to retrieve the event content
-          fetch('/wp-admin/admin-ajax.php', {
-            method: 'POST',
-            body: formData
-          }).then(function (response) {
-            if (response.ok) {
-              return response.json();
-            } else {
-              throw new Error('Error: ' + response.status);
-            }
-          }).then(function (eventContent) {
-            console.log(eventContent);
-            _this.wrapper.innerHTML = _this.getPopUpContent(eventContent);
-            document.querySelectorAll('.popup-button-close').forEach(function (button) {
-              button.addEventListener('click', function (event) {
-                if (event.target === button) {
-                  console.log(event.target);
-                  console.log(button);
-                  _this.closePopUp();
-                }
-              });
-            });
-            _this.togglePopUpVisibility();
-          })["catch"](function (error) {
-            console.error(error);
-          });
+          // Add the event ID to the URL as a search parameter
+          var currentUrl = window.location.href;
+          var url = new URL(currentUrl);
+          url.searchParams.set('popup', eventId);
+          // Update the URL without causing a page reload
+          history.pushState({}, '', url.toString());
+          // Call the method to fetch and update event content
+          _this2.fetchAndUpdateEventContent(eventId);
         });
       });
+    }
+  }, {
+    key: "loadEventContentFromUrl",
+    value: function loadEventContentFromUrl() {
+      var currentUrl = window.location.href;
+      var url = new URL(currentUrl);
+      var popupParam = url.searchParams.get('popup');
+      if (popupParam) {
+        this.loadEventContent(popupParam);
+      }
+    }
+  }, {
+    key: "removePopupParamFromUrl",
+    value: function removePopupParamFromUrl() {
+      var currentUrl = window.location.href;
+      var url = new URL(currentUrl);
+      // Delete the popup parameter
+      url.searchParams["delete"]('popup');
+      // Update the URL without causing a page reload
+      history.pushState({}, '', url.toString());
     }
   }, {
     key: "closePopUp",
@@ -4182,12 +4223,12 @@ var EventPopUp = /*#__PURE__*/function () {
         featured_image = _ref.featured_image,
         categories = _ref.categories;
       console.log(featured_image);
-      return "\n      <div class=\"absolute top-44 left-1/2 -translate-x-50 container mx-auto lg:max-w-prose\">\n        <button class=\"popup-button-close absolute top-0 right-0 w-6 h-6 bg-close bg-center bg-no-repeat bg-turquoise bg-[length:0.625rem_0.625rem]\"></button>\n        <div class=\"max-w-full aspect-popup-image\">\n        ".concat(featured_image.length > 0 ? "<img class=\"w-full h-full object-cover object-center\" width=\"".concat(featured_image['thumbnail'].width, "\" height=\"").concat(featured_image['thumbnail'].height, "\" src=\"").concat(featured_image['thumbnail'].url, "\" srcset=\"").concat(Object.entries(featured_image).map(function (_ref2) {
+      return "\n      <div class=\"absolute top-44 left-1/2 -translate-x-50 container mx-auto lg:max-w-prose\">\n        <button class=\"popup-button-close absolute top-0 right-0 w-6 h-6 bg-close bg-center bg-no-repeat bg-turquoise bg-[length:0.625rem_0.625rem]\"></button>\n        ".concat(featured_image.length > 0 ? "<div class=\"max-w-full aspect-popup-image\">\n        <img class=\"w-full h-full object-cover object-center\" width=\"".concat(featured_image['thumbnail'].width, "\" height=\"").concat(featured_image['thumbnail'].height, "\" src=\"").concat(featured_image['thumbnail'].url, "\" srcset=\"").concat(Object.entries(featured_image).map(function (_ref2) {
         var _ref3 = _slicedToArray(_ref2, 2),
           size = _ref3[0],
           details = _ref3[1];
         return "".concat(details.url, " ").concat(details.width, "w");
-      }).join(', '), "\" loading=\"lazy\" alt=\"\">") : '', "\n      </div>\n        <div class=\"bg-white\">\n          <div class=\"grid grid-cols-12\">\n            <div class=\"col-span-12 md:col-span-7 p-4 text-xl uppercase space-y-2\">\n              ").concat(date_start ? "<div>".concat((0,_utils__WEBPACK_IMPORTED_MODULE_0__.formatDatetimeToShortMonthAndDay)(date_start), "</div>") : '', "\n              ").concat(title ? "<h3>".concat(title, "</h3>") : '', "\n            </div>\n            <div class=\"col-span-12 md:col-span-5 p-4 bg-turquoise\">\n              <div class=\"flex justify-between\">\n                ").concat(date_start ? "<div class=\"text-xl text-white tracking-widest\">".concat((0,_utils__WEBPACK_IMPORTED_MODULE_0__.formatDatetimeToTimeRange)(date_start, date_end), "</div>") : '', "\n                ").concat(categories && categories.length > 0 ? "<div class=\"flex flex-col space-y-1\">".concat(categories.map(function (category) {
+      }).join(', '), "\" loading=\"lazy\" alt=\"\">\n      </div>") : '', "\n        <div class=\"bg-white\">\n          <div class=\"grid grid-cols-12\">\n            <div class=\"col-span-12 md:col-span-7 p-4 text-xl uppercase space-y-2\">\n              ").concat(date_start ? "<div>".concat((0,_utils__WEBPACK_IMPORTED_MODULE_0__.formatDatetimeToShortMonthAndDay)(date_start), "</div>") : '', "\n              ").concat(title ? "<h3>".concat(title, "</h3>") : '', "\n            </div>\n            <div class=\"col-span-12 md:col-span-5 p-4 bg-turquoise\">\n              <div class=\"flex justify-between\">\n                ").concat(date_start ? "<div class=\"text-xl text-white tracking-widest\">".concat((0,_utils__WEBPACK_IMPORTED_MODULE_0__.formatDatetimeToTimeRange)(date_start, date_end), "</div>") : '', "\n                ").concat(categories && categories.length > 0 ? "<div class=\"flex flex-col space-y-1\">".concat(categories.map(function (category) {
         return "<div class=\"flex items-center justify-center px-3 py-1 rounded-2xl bg-white text-xs text-turquoise uppercase\">".concat(category, "</div>");
       }).join(''), "</div>") : '', "\n              </div>\n              <div class=\"mt-3 text-2xs text-white uppercase\">\n                ").concat(location ? "Helysz\xEDn | ".concat(location, "<br/>") : '', "\n              </div>\n            </div>\n          </div>\n          <div class=\"p-4 [&_p]:mb-4\">\n            ").concat(content ? content : '', "\n          </div>\n        </div>\n      </div>\n    ");
     }

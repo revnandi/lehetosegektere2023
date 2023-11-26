@@ -48,49 +48,87 @@ export class EventPopUp {
     return Array.from(document.querySelectorAll('.event-popup-link'));
   }
 
+  private fetchAndUpdateEventContent(eventId: string): void {
+    // Create a FormData object to store the data to be sent with the AJAX request
+    const formData = new FormData();
+    formData.append('action', 'get_event_cpt');
+    formData.append('event_id', String(eventId));
+
+    // Make an AJAX call to retrieve the event content
+    fetch('/wp-admin/admin-ajax.php', {
+      method: 'POST',
+      body: formData,
+    })
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw new Error('Error: ' + response.status);
+        }
+      })
+      .then((eventContent) => {
+        console.log(eventContent)
+        this.wrapper.innerHTML = this.getPopUpContent(eventContent);
+
+        document.querySelectorAll('.popup-button-close').forEach(button => {
+          button.addEventListener('click', (event) => {
+            if (event.target === button) {
+              // console.log(event.target)
+              // console.log(button)
+              this.closePopUp();
+              this.removePopupParamFromUrl();
+            }
+          })
+        })
+
+        this.togglePopUpVisibility();
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
+
+  public loadEventContent(eventId: string): void {
+    this.fetchAndUpdateEventContent(eventId);
+  }
+
   public initEventListeners(): void {
     this.getPopUpLinks().forEach(item => item.addEventListener('click', () => {
       // Get the event ID from the link's data attribute
       const eventId = item.dataset.eventId;
 
+      // Add the event ID to the URL as a search parameter
+      let currentUrl = window.location.href;
+      let url = new URL(currentUrl);
+      url.searchParams.set('popup', eventId);
 
-      // Create a FormData object to store the data to be sent with the AJAX request
-      const formData = new FormData();
-      formData.append('action', 'get_event_cpt');
-      formData.append('event_id', String(eventId));
+      // Update the URL without causing a page reload
+      history.pushState({}, '', url.toString());
 
-      // Make an AJAX call to retrieve the event content
-      fetch('/wp-admin/admin-ajax.php', {
-        method: 'POST',
-        body: formData,
-      })
-        .then((response) => {
-          if (response.ok) {
-            return response.json();
-          } else {
-            throw new Error('Error: ' + response.status);
-          }
-        })
-        .then((eventContent) => {
-          console.log(eventContent)
-          this.wrapper.innerHTML = this.getPopUpContent(eventContent);
-
-          document.querySelectorAll('.popup-button-close').forEach(button => {
-            button.addEventListener('click', (event) => {
-              if (event.target === button) {
-                console.log(event.target)
-                console.log(button)
-                this.closePopUp();
-              }
-            })
-          })
-
-          this.togglePopUpVisibility();
-        })
-        .catch((error) => {
-          console.error(error);
-        });
+      // Call the method to fetch and update event content
+      this.fetchAndUpdateEventContent(eventId);
     }));
+  }
+
+  public loadEventContentFromUrl(): void {
+    let currentUrl = window.location.href;
+    let url = new URL(currentUrl);
+    let popupParam = url.searchParams.get('popup');
+
+    if (popupParam) {
+      this.loadEventContent(popupParam);
+    }
+  }
+
+  public removePopupParamFromUrl(): void {
+    let currentUrl = window.location.href;
+    let url = new URL(currentUrl);
+
+    // Delete the popup parameter
+    url.searchParams.delete('popup');
+
+    // Update the URL without causing a page reload
+    history.pushState({}, '', url.toString());
   }
 
   private closePopUp(): void {
@@ -113,9 +151,9 @@ export class EventPopUp {
     return `
       <div class="absolute top-44 left-1/2 -translate-x-50 container mx-auto lg:max-w-prose">
         <button class="popup-button-close absolute top-0 right-0 w-6 h-6 bg-close bg-center bg-no-repeat bg-turquoise bg-[length:0.625rem_0.625rem]"></button>
-        <div class="max-w-full aspect-popup-image">
-        ${(featured_image.length > 0) ? `<img class="w-full h-full object-cover object-center" width="${featured_image['thumbnail'].width}" height="${featured_image['thumbnail'].height}" src="${featured_image['thumbnail'].url}" srcset="${Object.entries(featured_image).map(([size, details]) => `${details.url} ${details.width}w`).join(', ')}" loading="lazy" alt="">` : ''}
-      </div>
+        ${(featured_image.length > 0) ? `<div class="max-w-full aspect-popup-image">
+        <img class="w-full h-full object-cover object-center" width="${featured_image['thumbnail'].width}" height="${featured_image['thumbnail'].height}" src="${featured_image['thumbnail'].url}" srcset="${Object.entries(featured_image).map(([size, details]) => `${details.url} ${details.width}w`).join(', ')}" loading="lazy" alt="">
+      </div>` : ''}
         <div class="bg-white">
           <div class="grid grid-cols-12">
             <div class="col-span-12 md:col-span-7 p-4 text-xl uppercase space-y-2">
