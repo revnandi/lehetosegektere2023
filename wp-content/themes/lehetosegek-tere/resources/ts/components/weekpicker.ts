@@ -101,7 +101,7 @@ export class WeekPicker {
   private resetSelectedDay() {
     this.selectedDay = null;
 
-    // Add a non existent index so there are no matches, kind of a hack...
+    // Add a non existent index so there are no matches, kind of a hack... 
     this.updateDayButtonClasses(-1)
   }
 

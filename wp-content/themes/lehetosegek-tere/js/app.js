@@ -3789,7 +3789,7 @@ __webpack_require__.r(__webpack_exports__);
 
 window.addEventListener("load", function () {
   var _this = this,
-    _document$getElementB2;
+    _document$getElementB3;
   (0,unlazy__WEBPACK_IMPORTED_MODULE_5__.lazyLoad)("img[data-custom-lazy]");
   var puzzle = new _components_puzzle__WEBPACK_IMPORTED_MODULE_0__.Puzzle({
     wrapperId: "lt_puzzle",
@@ -3925,7 +3925,20 @@ window.addEventListener("load", function () {
     }).then(function (response) {
       return response.text();
     }).then(function (text) {
-      document.querySelector(".project-tiles").innerHTML = text;
+      var _document$getElementB;
+      var currrentChildNodes = (_document$getElementB = document.getElementById("lt_event_grid")) === null || _document$getElementB === void 0 ? void 0 : _document$getElementB.childNodes;
+      // Filter out the #text stuff
+      var filteredCurrrentChildNodes = Array.from(currrentChildNodes).filter(function (node) {
+        return node.nodeType == 1;
+      });
+      var parser = new DOMParser();
+      var parsedNewHtml = parser.parseFromString(text, "text/html");
+      filteredCurrrentChildNodes === null || filteredCurrrentChildNodes === void 0 || filteredCurrrentChildNodes.forEach(function (child, index) {
+        if (index > 0) child.remove();
+      });
+      Array.from(parsedNewHtml.body.children).forEach(function (element) {
+        document.getElementById("lt_event_grid").append(element);
+      });
       eventPopUp.initEventListeners();
     })["catch"](function (error) {
       console.error("Error:", error);
@@ -3963,8 +3976,8 @@ window.addEventListener("load", function () {
     });
   }
   if (this.document.getElementById("lt_events_datepicker_daybuttons_container")) {
-    var _document$getElementB;
-    (_document$getElementB = document.getElementById("lt_events_datepicker_daybuttons_container")) === null || _document$getElementB === void 0 || _document$getElementB.querySelectorAll("button").forEach(function (button, index) {
+    var _document$getElementB2;
+    (_document$getElementB2 = document.getElementById("lt_events_datepicker_daybuttons_container")) === null || _document$getElementB2 === void 0 || _document$getElementB2.querySelectorAll("button").forEach(function (button, index) {
       button.addEventListener("click", function () {
         var dayNumber = button.dataset.day;
         if (!dayNumber) return;
@@ -3986,7 +3999,7 @@ window.addEventListener("load", function () {
     var path = _this.location.pathname;
     return path.replace(/\//g, "") === textName.replace(/\//g, "");
   };
-  var anchors = (_document$getElementB2 = document.getElementById("primary-menu")) === null || _document$getElementB2 === void 0 ? void 0 : _document$getElementB2.querySelectorAll("a");
+  var anchors = (_document$getElementB3 = document.getElementById("primary-menu")) === null || _document$getElementB3 === void 0 ? void 0 : _document$getElementB3.querySelectorAll("a");
   var anchorArray = anchors ? Array.from(anchors) : [];
   anchorArray.filter(function (anchor) {
     var href = anchor.getAttribute("href");
@@ -4723,7 +4736,7 @@ var WeekPicker = /*#__PURE__*/function () {
     key: "resetSelectedDay",
     value: function resetSelectedDay() {
       this.selectedDay = null;
-      // Add a non existent index so there are no matches, kind of a hack...
+      // Add a non existent index so there are no matches, kind of a hack... 
       this.updateDayButtonClasses(-1);
     }
   }, {

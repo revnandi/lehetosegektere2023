@@ -191,9 +191,9 @@ function filter_events()
 
 	else:
 		if (function_exists('pll__')):
-			$response = pll__('Ebben az időpontban nincsenek események');
+			$response = '<div>' . pll__('Ebben az időpontban nincsenek események') . '</div>';
 		else:
-			$response = 'Ebben az időpontban nincsenek események';
+			$response = '<div>' .  'Ebben az időpontban nincsenek események' . '</div>';
 		endif;
 	endif;
 

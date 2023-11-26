@@ -182,7 +182,23 @@ window.addEventListener("load", function () {
         return response.text();
       })
       .then((text: string) => {
-        document.querySelector<HTMLElement>(".project-tiles")!.innerHTML = text;
+        const currrentChildNodes = document.getElementById("lt_event_grid")?.childNodes!;
+        // Filter out the #text stuff
+        const filteredCurrrentChildNodes = Array.from(currrentChildNodes).filter(
+          node => node.nodeType == 1
+        )
+        const parser = new DOMParser();
+        const parsedNewHtml = parser.parseFromString(text, "text/html");
+
+        filteredCurrrentChildNodes?.forEach((child, index) => {
+            if (index > 0) child.remove()
+          }
+        )
+
+        Array.from(parsedNewHtml.body.children).forEach((element) => {
+          document.getElementById("lt_event_grid")!.append(element);
+       });
+
         eventPopUp.initEventListeners();
       })
       .catch((error: Error) => {
