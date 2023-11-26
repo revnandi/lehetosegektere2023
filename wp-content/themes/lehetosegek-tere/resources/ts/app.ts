@@ -153,8 +153,16 @@ window.addEventListener("load", function () {
         innerElem.classList.remove("text-turquoise", "bg-white");
         innerElem.classList.add("text-white");
       });
-    target?.classList.remove("text-white");
-    target?.classList.add("text-turquoise", "bg-white");
+    if (
+      target?.classList.contains(".cat-list_item")
+    ) {
+      target?.classList.remove("text-white");
+      target?.classList.add("text-turquoise", "bg-white");
+    }
+
+    const afterDate = new Date((picker.selectedDay ? picker.selectedDay : picker.getWeekRange().start)).toISOString();
+    // @ts-expect-error
+    const beforeDate = new Date(picker.selectedDay ? picker.getEndOfSelectedDay() : picker.getWeekRange().end).toISOString();
 
     fetch("/wp-admin/admin-ajax.php", {
       method: "POST",
@@ -166,8 +174,8 @@ window.addEventListener("load", function () {
         category: anchor && anchor.dataset.slug ? anchor.dataset.slug : "",
         type: anchor && anchor.dataset.type ? anchor.dataset.type : "event",
         keyword: keyword,
-        after: picker.getWeekRange().start,
-        before: picker.getWeekRange().end,
+        after: afterDate,
+        before: beforeDate
       }),
     })
       .then((response: Response) => {
@@ -229,6 +237,19 @@ window.addEventListener("load", function () {
       const keyword = "";
       handleEvent.call(this, keyword);
     });
+  }
+  if (this.document.getElementById("lt_events_datepicker_daybuttons_container")) {
+    (
+      document.getElementById("lt_events_datepicker_daybuttons_container")?.querySelectorAll("button").forEach((button, index) => {
+        button.addEventListener("click", function (this: HTMLButtonElement) {
+          const dayNumber = (button as HTMLElement).dataset.day;
+          if (!dayNumber) return;
+          picker.selectDay(Number(dayNumber), index)
+          const keyword = "";
+          handleEvent.call(this, keyword);
+        });
+      })
+    )
   }
 
   // Handle anchor scrolling

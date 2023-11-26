@@ -3789,7 +3789,7 @@ __webpack_require__.r(__webpack_exports__);
 
 window.addEventListener("load", function () {
   var _this = this,
-    _document$getElementB;
+    _document$getElementB2;
   (0,unlazy__WEBPACK_IMPORTED_MODULE_5__.lazyLoad)("img[data-custom-lazy]");
   var puzzle = new _components_puzzle__WEBPACK_IMPORTED_MODULE_0__.Puzzle({
     wrapperId: "lt_puzzle",
@@ -3889,7 +3889,7 @@ window.addEventListener("load", function () {
   });
   // Event handling
   function handleEvent(keyword, anchor) {
-    var _target, _target2, _target3;
+    var _target, _target2;
     var target = this instanceof Element ? this : document.querySelector(".cat-list_item.active");
     if (target == null) {
       console.error("No active category!");
@@ -3901,8 +3901,14 @@ window.addEventListener("load", function () {
       innerElem.classList.remove("text-turquoise", "bg-white");
       innerElem.classList.add("text-white");
     });
-    (_target2 = target) === null || _target2 === void 0 || _target2.classList.remove("text-white");
-    (_target3 = target) === null || _target3 === void 0 || _target3.classList.add("text-turquoise", "bg-white");
+    if ((_target2 = target) !== null && _target2 !== void 0 && _target2.classList.contains(".cat-list_item")) {
+      var _target3, _target4;
+      (_target3 = target) === null || _target3 === void 0 || _target3.classList.remove("text-white");
+      (_target4 = target) === null || _target4 === void 0 || _target4.classList.add("text-turquoise", "bg-white");
+    }
+    var afterDate = new Date(picker.selectedDay ? picker.selectedDay : picker.getWeekRange().start).toISOString();
+    // @ts-expect-error
+    var beforeDate = new Date(picker.selectedDay ? picker.getEndOfSelectedDay() : picker.getWeekRange().end).toISOString();
     fetch("/wp-admin/admin-ajax.php", {
       method: "POST",
       headers: {
@@ -3913,8 +3919,8 @@ window.addEventListener("load", function () {
         category: anchor && anchor.dataset.slug ? anchor.dataset.slug : "",
         type: anchor && anchor.dataset.type ? anchor.dataset.type : "event",
         keyword: keyword,
-        after: picker.getWeekRange().start,
-        before: picker.getWeekRange().end
+        after: afterDate,
+        before: beforeDate
       })
     }).then(function (response) {
       return response.text();
@@ -3956,6 +3962,18 @@ window.addEventListener("load", function () {
       handleEvent.call(this, keyword);
     });
   }
+  if (this.document.getElementById("lt_events_datepicker_daybuttons_container")) {
+    var _document$getElementB;
+    (_document$getElementB = document.getElementById("lt_events_datepicker_daybuttons_container")) === null || _document$getElementB === void 0 || _document$getElementB.querySelectorAll("button").forEach(function (button, index) {
+      button.addEventListener("click", function () {
+        var dayNumber = button.dataset.day;
+        if (!dayNumber) return;
+        picker.selectDay(Number(dayNumber), index);
+        var keyword = "";
+        handleEvent.call(this, keyword);
+      });
+    });
+  }
   // Handle anchor scrolling
   var extractHash = function extractHash(url) {
     var lastHashtagIndex = url.lastIndexOf("#");
@@ -3968,7 +3986,7 @@ window.addEventListener("load", function () {
     var path = _this.location.pathname;
     return path.replace(/\//g, "") === textName.replace(/\//g, "");
   };
-  var anchors = (_document$getElementB = document.getElementById("primary-menu")) === null || _document$getElementB === void 0 ? void 0 : _document$getElementB.querySelectorAll("a");
+  var anchors = (_document$getElementB2 = document.getElementById("primary-menu")) === null || _document$getElementB2 === void 0 ? void 0 : _document$getElementB2.querySelectorAll("a");
   var anchorArray = anchors ? Array.from(anchors) : [];
   anchorArray.filter(function (anchor) {
     var href = anchor.getAttribute("href");
@@ -4583,6 +4601,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var date_fns__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! date-fns */ "./node_modules/.pnpm/date-fns@2.30.0/node_modules/date-fns/esm/startOfWeek/index.js");
 /* harmony import */ var date_fns__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! date-fns */ "./node_modules/.pnpm/date-fns@2.30.0/node_modules/date-fns/esm/addWeeks/index.js");
 /* harmony import */ var date_fns__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! date-fns */ "./node_modules/.pnpm/date-fns@2.30.0/node_modules/date-fns/esm/addDays/index.js");
+/* harmony import */ var date_fns__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! date-fns */ "./node_modules/.pnpm/date-fns@2.30.0/node_modules/date-fns/esm/endOfDay/index.js");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -4699,19 +4718,6 @@ var WeekPicker = /*#__PURE__*/function () {
       if (prevButtonElement) prevButtonElement.addEventListener('click', function () {
         _this2.previousWeek();
       });
-      var dayButtonContainer = document.getElementById(dayButtonContainerId);
-      if (!dayButtonContainer) return;
-      var dayButtons = _toConsumableArray(dayButtonContainer.children);
-      var _loop = function _loop(i) {
-        dayButtons[i].addEventListener('click', function () {
-          var dayNumber = dayButtons[i].dataset.day;
-          if (!dayNumber) return;
-          _this2.selectDay(Number(dayNumber), i);
-        });
-      };
-      for (var i = 0; i < dayButtons.length; i++) {
-        _loop(i);
-      }
     }
   }, {
     key: "resetSelectedDay",
@@ -4795,6 +4801,15 @@ var WeekPicker = /*#__PURE__*/function () {
         start: startDateString,
         end: endDateString
       };
+    }
+  }, {
+    key: "getEndOfSelectedDay",
+    value: function getEndOfSelectedDay() {
+      if (this.selectedDay) {
+        return (0,date_fns__WEBPACK_IMPORTED_MODULE_4__["default"])(this.selectedDay);
+      } else {
+        return null;
+      }
     }
   }, {
     key: "formatDate",
@@ -7068,6 +7083,48 @@ function addWeeks(dirtyDate, dirtyAmount) {
   var amount = (0,_lib_toInteger_index_js__WEBPACK_IMPORTED_MODULE_1__["default"])(dirtyAmount);
   var days = amount * 7;
   return (0,_addDays_index_js__WEBPACK_IMPORTED_MODULE_2__["default"])(dirtyDate, days);
+}
+
+/***/ }),
+
+/***/ "./node_modules/.pnpm/date-fns@2.30.0/node_modules/date-fns/esm/endOfDay/index.js":
+/*!****************************************************************************************!*\
+  !*** ./node_modules/.pnpm/date-fns@2.30.0/node_modules/date-fns/esm/endOfDay/index.js ***!
+  \****************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ endOfDay)
+/* harmony export */ });
+/* harmony import */ var _toDate_index_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../toDate/index.js */ "./node_modules/.pnpm/date-fns@2.30.0/node_modules/date-fns/esm/toDate/index.js");
+/* harmony import */ var _lib_requiredArgs_index_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../_lib/requiredArgs/index.js */ "./node_modules/.pnpm/date-fns@2.30.0/node_modules/date-fns/esm/_lib/requiredArgs/index.js");
+
+
+/**
+ * @name endOfDay
+ * @category Day Helpers
+ * @summary Return the end of a day for the given date.
+ *
+ * @description
+ * Return the end of a day for the given date.
+ * The result will be in the local timezone.
+ *
+ * @param {Date|Number} date - the original date
+ * @returns {Date} the end of a day
+ * @throws {TypeError} 1 argument required
+ *
+ * @example
+ * // The end of a day for 2 September 2014 11:55:00:
+ * const result = endOfDay(new Date(2014, 8, 2, 11, 55, 0))
+ * //=> Tue Sep 02 2014 23:59:59.999
+ */
+function endOfDay(dirtyDate) {
+  (0,_lib_requiredArgs_index_js__WEBPACK_IMPORTED_MODULE_0__["default"])(1, arguments);
+  var date = (0,_toDate_index_js__WEBPACK_IMPORTED_MODULE_1__["default"])(dirtyDate);
+  date.setHours(23, 59, 59, 999);
+  return date;
 }
 
 /***/ }),

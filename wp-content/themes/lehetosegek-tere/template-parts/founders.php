@@ -22,8 +22,6 @@
     ];
 
     $query = new WP_Query($args);
-
-    // pretty_dump($query);
     
     if ($query->have_posts()): ?>
       <div

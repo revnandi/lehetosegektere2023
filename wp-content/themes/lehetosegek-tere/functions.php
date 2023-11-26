@@ -119,7 +119,8 @@ add_filter('nav_menu_submenu_css_class', 'tailpress_nav_menu_add_submenu_class',
 function pretty_dump($data)
 {
 	highlight_string("<?php\n\$data =\n" . var_export($data, true) . ";\n?>");
-};
+}
+;
 
 // Custom events filter
 function filter_events()
@@ -127,6 +128,7 @@ function filter_events()
 	$postType = $_POST['type'];
 	$catSlug = $_POST['category'];
 	$keyword = $_POST['keyword'];
+	$day = $_POST['day'];
 	$after = $_POST['after'];
 	$before = $_POST['before'];
 
@@ -176,7 +178,7 @@ function filter_events()
 	]);
 	$response = '';
 
-	if ($ajaxposts->have_posts()) :
+	if ($ajaxposts->have_posts()):
 		while ($ajaxposts->have_posts()):
 			$ajaxposts->the_post();
 			ob_start(); // start output buffering
@@ -187,8 +189,12 @@ function filter_events()
 
 		endwhile;
 
-	else: 
-		$response = 'empty';
+	else:
+		if (function_exists('pll__')):
+			$response = pll__('Ebben az időpontban nincsenek események');
+		else:
+			$response = 'Ebben az időpontban nincsenek események';
+		endif;
 	endif;
 
 	echo $response;
@@ -220,14 +226,14 @@ function get_event_cpt()
 		foreach ($image_sizes as $size) {
 			// Get the URL of the featured image in the current size
 			$image_src = wp_get_attachment_image_src($featured_image_id, $size);
-		
+
 			// If the size is valid, add it to the array
 			if ($image_src) {
 				$featured_image_urls[$size] = array(
-								 'url'   => $image_src[0],
-								 'width'  => $image_src[1],
-								 'height' => $image_src[2]
-						);
+					'url' => $image_src[0],
+					'width' => $image_src[1],
+					'height' => $image_src[2]
+				);
 			}
 		}
 
@@ -271,36 +277,38 @@ function my_acf_init()
 add_action('acf/init', 'my_acf_init');
 
 // Disable Block editor on specified post types
-function my_disable_gutenberg( $current_status, $post_type ) {
+function my_disable_gutenberg($current_status, $post_type)
+{
 
 	// Disabled post types
-	$disabled_post_types = array( 'staff', 'gallery', 'publication', 'founder' );
+	$disabled_post_types = array('staff', 'gallery', 'publication', 'founder');
 
 	// Change $can_edit to false for any post types in the disabled post types array
-	if ( in_array( $post_type, $disabled_post_types, true ) ) {
-			$current_status = false;
+	if (in_array($post_type, $disabled_post_types, true)) {
+		$current_status = false;
 	}
 
 	return $current_status;
 }
-add_filter( 'use_block_editor_for_post_type', 'my_disable_gutenberg', 10, 2 );
+add_filter('use_block_editor_for_post_type', 'my_disable_gutenberg', 10, 2);
 
 
 // Register string for Polylang
-if(function_exists('pll_register_string')) {
-	pll_register_string( 'cpttitles', 'Partnereink' );
-	pll_register_string( 'cpttitles', 'Stáb' );
-	pll_register_string( 'cpttitles', 'Galéria' );
-	pll_register_string( 'cpttitles', 'Kiadványaink' );
-	pll_register_string( 'cpttitles', 'Alapító Tagok' );
-	pll_register_string( 'sectiontitles', 'Iratkozz fel a
-	programajánlónk' );
-	pll_register_string( 'sectiontitles', 'Rólunk mondták' );
-	pll_register_string( 'partners', 'A Lehetőségek Tere a tranzit.hu kezdeményezése. A tranzit.hu fő partnere az erste alapítvány.' );
-	pll_register_string( 'random', 'elérhető' );
-	pll_register_string( 'footer', 'Kövessetek bennünket!' );
-	pll_register_string( 'footer', 'Partnerek' );
-	pll_register_string( 'footer', 'Kapcsolat' );
+if (function_exists('pll_register_string')) {
+	pll_register_string('cpttitles', 'Partnereink');
+	pll_register_string('cpttitles', 'Stáb');
+	pll_register_string('cpttitles', 'Galéria');
+	pll_register_string('cpttitles', 'Kiadványaink');
+	pll_register_string('cpttitles', 'Alapító Tagok');
+	pll_register_string('sectiontitles', 'Iratkozz fel a
+	programajánlónk');
+	pll_register_string('sectiontitles', 'Rólunk mondták');
+	pll_register_string('partners', 'A Lehetőségek Tere a tranzit.hu kezdeményezése. A tranzit.hu fő partnere az erste alapítvány.');
+	pll_register_string('random', 'elérhető');
+	pll_register_string('footer', 'Kövessetek bennünket!');
+	pll_register_string('footer', 'Partnerek');
+	pll_register_string('footer', 'Kapcsolat');
+	pll_register_string('events', 'Ebben az időpontban nincsenek események');
 }
 
 /**
@@ -311,18 +319,19 @@ if(function_exists('pll_register_string')) {
  * @link https://developer.wordpress.org/reference/hooks/init/
  */
 
-function fz_register_acf_blocks() {
+function fz_register_acf_blocks()
+{
 	/**
 	 * We register our block's with WordPress's handy
 	 * register_block_type();
 	 *
 	 * @link https://developer.wordpress.org/reference/functions/register_block_type/
 	 */
-	register_block_type( __DIR__ . '/blocks/testimonial' );
-	register_block_type( __DIR__ . '/blocks/big-carousel' );
-	register_block_type( __DIR__ . '/blocks/big-carousel-alt' );
-	register_block_type( __DIR__ . '/blocks/card-grid' );
-	register_block_type( __DIR__ . '/blocks/partners' );
+	register_block_type(__DIR__ . '/blocks/testimonial');
+	register_block_type(__DIR__ . '/blocks/big-carousel');
+	register_block_type(__DIR__ . '/blocks/big-carousel-alt');
+	register_block_type(__DIR__ . '/blocks/card-grid');
+	register_block_type(__DIR__ . '/blocks/partners');
 }
 // Here we call our fz_register_acf_block() function on init.
-add_action( 'init', 'fz_register_acf_blocks' );
+add_action('init', 'fz_register_acf_blocks');

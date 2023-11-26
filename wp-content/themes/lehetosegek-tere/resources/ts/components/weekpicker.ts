@@ -1,5 +1,5 @@
 import * as pikaday from 'pikaday';
-import { startOfWeek, addWeeks, addDays } from 'date-fns'
+import { startOfWeek, addWeeks, addDays, endOfDay } from 'date-fns'
 
 export class WeekPicker {
   picker: pikaday;
@@ -96,29 +96,16 @@ export class WeekPicker {
     if (prevButtonElement) prevButtonElement.addEventListener('click', () => {
       this.previousWeek();
     });
-
-    const dayButtonContainer = document.getElementById(dayButtonContainerId);
-    if (!dayButtonContainer) return;
-
-    const dayButtons = [...dayButtonContainer.children];
-
-    for (let i = 0; i < dayButtons.length; i++) {
-      dayButtons[i].addEventListener('click', () => {
-        const dayNumber = (dayButtons[i] as HTMLElement).dataset.day;
-        if (!dayNumber) return;
-        this.selectDay(Number(dayNumber), i)
-      });
-    }
   }
 
   private resetSelectedDay() {
     this.selectedDay = null;
 
     // Add a non existent index so there are no matches, kind of a hack...
-    this.updateDayButtonClasses(-1)  
+    this.updateDayButtonClasses(-1)
   }
 
-  private selectDay(dayIndex: number, buttonIndex: number): void {
+  public selectDay(dayIndex: number, buttonIndex: number): void {
     this.updateDayButtonClasses(buttonIndex);
     this.updateSelectedDay(dayIndex);
 
@@ -185,6 +172,14 @@ export class WeekPicker {
     const endDateString = this.formatDate(end);
 
     return { start: startDateString, end: endDateString };
+  }
+
+  public getEndOfSelectedDay() {
+    if (this.selectedDay) {
+      return endOfDay(this.selectedDay);
+    } else {
+      return null;
+    }
   }
 
   private formatDate(date: Date): string {
